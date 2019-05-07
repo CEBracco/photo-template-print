@@ -1,0 +1,36 @@
+{
+  "name": "photo-template-print",
+  "version": "1.0.0",
+  "description": "A tiny program to print photo templates",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "node --require dotenv/config index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CEBracco/photo-template-print.git"
+  },
+  "author": "cbracco",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CEBracco/photo-template-print/issues"
+  },
+  "homepage": "https://github.com/CEBracco/photo-template-print#readme",
+  "dependencies": {
+    "dotenv": "^8.0.0",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "express-force-https": "^1.0.0",
+    "lodash": "^4.17.11",
+    "log4js": "^4.1.1",
+    "module-alias": "^2.2.0"
+  },
+  "_moduleAliases": {
+    "@appSrc": "./app/src",
+    "@localModules": "./modules"
+  },
+  "_moduleDirectories": [
+    "modules"
+  ]
+}

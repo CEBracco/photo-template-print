@@ -1,0 +1,43 @@
+.page {
+    height: calc(30cm * 1);
+    width: calc(20cm * 1);
+    border: 1px solid black;
+    padding-left: calc(0.8cm * 1);
+    background-color: white;
+}
+.photo {
+    border: 1px solid black;
+    float: left;
+    box-sizing: border-box;
+}
+.photo.vertical {
+    height: calc(10.5cm * 1);
+    width: calc(9cm * 1);
+    padding-left: calc(0.5cm * 1);
+    padding-right: calc(0.5cm * 1);
+    padding-top: calc(0.5cm * 1);
+}
+.row .photo.vertical:nth-child(odd) {
+    margin-right: calc(1.5cm * 1);
+}
+.photo.horizontal {
+    height: calc(9cm * 1);
+    width: calc(10.5cm * 1);
+    padding-right: calc(0.5cm * 1);
+    padding-top: calc(0.5cm * 1);
+    padding-bottom: calc(0.5cm * 1);
+}
+
+.image {
+    height: calc(8cm * 1);
+    width: calc(8cm * 1);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.photo.horizontal .image {
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
+    float: right;
+}

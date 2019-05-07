@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Imprimir Fotos</title>
+    <link rel="stylesheet" href="css/style_20x30.css">
+</head>
+
+<body>
+    <div id="page" class="page">
+        <div class="row">
+            <div class="photo vertical">
+                <div class="image" style="background-image: url('photos/1.jpg');"></div>
+            </div>
+            <div class="photo vertical">
+                <div class="image" style="background-image: url('photos/1.jpg');"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="photo vertical">
+                <div class="image" style="background-image: url('photos/1.jpg');"></div>
+            </div>
+            <div class="photo vertical">
+                <div class="image" style="background-image: url('photos/1.jpg');"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="photo horizontal">
+                <div class="image" style="background-image: url('photos/1.jpg');"></div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <button onclick="print()">Imprimir</button>
+</body>
+<script src="lib/dom-to-image/dom-to-image.min.js"></script>
+<script src="lib/FileSaver/FileSaver.min.js"></script>
+<script src="js/base.js"></script>
+
+</html>

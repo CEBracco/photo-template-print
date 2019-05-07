@@ -1,8 +1,8 @@
 .page {
-    height: calc(30cm * 1);
-    width: calc(20cm * 1);
+    height: calc(30cm * 5);
+    width: calc(20cm * 5);
     border: 1px solid black;
-    padding-left: calc(0.8cm * 1);
+    padding-left: calc(0.8cm * 5);
     background-color: white;
 }
 .photo {
@@ -11,26 +11,26 @@
     box-sizing: border-box;
 }
 .photo.vertical {
-    height: calc(10.5cm * 1);
-    width: calc(9cm * 1);
-    padding-left: calc(0.5cm * 1);
-    padding-right: calc(0.5cm * 1);
-    padding-top: calc(0.5cm * 1);
+    height: calc(10.5cm * 5);
+    width: calc(9cm * 5);
+    padding-left: calc(0.5cm * 5);
+    padding-right: calc(0.5cm * 5);
+    padding-top: calc(0.5cm * 5);
 }
 .row .photo.vertical:nth-child(odd) {
-    margin-right: calc(1.5cm * 1);
+    margin-right: calc(1.5cm * 5);
 }
 .photo.horizontal {
-    height: calc(9cm * 1);
-    width: calc(10.5cm * 1);
-    padding-right: calc(0.5cm * 1);
-    padding-top: calc(0.5cm * 1);
-    padding-bottom: calc(0.5cm * 1);
+    height: calc(9cm * 5);
+    width: calc(10.5cm * 5);
+    padding-right: calc(0.5cm * 5);
+    padding-top: calc(0.5cm * 5);
+    padding-bottom: calc(0.5cm * 5);
 }
 
 .image {
-    height: calc(8cm * 1);
-    width: calc(8cm * 1);
+    height: calc(8cm * 5);
+    width: calc(8cm * 5);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

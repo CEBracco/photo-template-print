@@ -19,15 +19,30 @@ app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 
 app.get(['/', '/index.html'], function (req, res) {
+  renamePhotos();
   res.render("index", { foo: "world" });
   res.end();
 });
 
-app.get(['/polaroid.html'], function (req, res) {
-  renamePhotos();
-  res.render("polaroid", { pages: _.chunk(getPhotos(), 5) });
+app.get(['/polaroid'], function (req, res) {
+  res.render("print/polaroid", { pages: _.chunk(getPhotos(), 5) });
   res.end();
 });
+
+app.get(['/print'], function (req, res) {
+  let pageType = req.query.type;
+  res.render("print", getParameters(pageType));
+  res.end();
+});
+
+function getParameters(pageType) {
+  switch (pageType) {
+    case "polaroid":
+      return { pageType: pageType, pages: _.chunk(getPhotos(), 5) };
+    default:
+      return { pageType: pageType };
+  }
+}
 
 function getPhotos() {
   var fs = require('fs');

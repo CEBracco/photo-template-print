@@ -1,0 +1,17 @@
+<% pages.forEach(function(page, pageIndex){ %>
+<div id="page-<%= pageIndex %>" class="page">
+    <div class="row">
+        <% page.forEach(function(photo, photoIndex){ %>
+        <% if ((photoIndex + 1) % 5 != 0) { %>
+        <div class="photo vertical">
+            <div class="image" style="background-image: url('photos/<%= photo %>');"></div>
+        </div>
+        <% } else { %>
+        <div class="photo horizontal">
+            <div class="image" style="background-image: url('photos/<%= photo %>');"></div>
+        </div>
+        <% } %>
+        <% }); %>
+    </div>
+</div>
+<% }); %>

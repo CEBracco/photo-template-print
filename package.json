@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "node --require dotenv/config index.js"
+    "test": "electron --require dotenv/config index.js"
   },
   "repository": {
     "type": "git",
@@ -20,6 +20,7 @@
   "dependencies": {
     "dotenv": "^8.0.0",
     "ejs": "^2.6.1",
+    "electron": "^5.0.1",
     "express": "^4.16.4",
     "express-force-https": "^1.0.0",
     "lodash": "^4.17.11",

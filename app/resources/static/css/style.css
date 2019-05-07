@@ -1,0 +1,9 @@
+#printerIframe {
+    height: 1px;
+    width: 1px;
+    visibility: hidden;
+}
+.container {
+    width: 100%;
+    overflow: auto;
+}

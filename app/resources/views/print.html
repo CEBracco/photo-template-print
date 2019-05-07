@@ -10,9 +10,13 @@
 </head>
 
 <body>
-    <a href="print?type=polaroid">Polaroid</a>
+    <div class="container">
+        <% include preview/polaroid.html %>
+    </div>
+    <button onclick="print()">Imprimir todo</button>
+    <iframe id="printerIframe" src="<%= pageType %>" frameborder="0"></iframe>
 </body>
-<script src="lib/jquery/jquery.min.js"></script>
 <script src="js/base.js"></script>
+<script src="js/print.js"></script>
 
 </html>

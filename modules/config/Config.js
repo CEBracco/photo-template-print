@@ -5,6 +5,14 @@ class Config {
 
   constructor(){}
 
+  static get(key) {
+    return repository.get(key);
+  }
+
+  static getBoolean(key) {
+    return repository.getBoolean(key);
+  }
+
   get(key) {
     return repository.get(key);
   }

@@ -1,0 +1,19 @@
+.sidenav {
+    background-color: #252526;
+}
+.sidenav li>a {
+    color: #dedede;
+}
+.sidenav li>a:hover {
+    background-color: rgba(255,255,255,0.05);
+}
+.sidenav li.active {
+    background-color: #d81b60;
+}
+main, body {
+    background-color: #202020;
+}
+
+.title {
+    color: #dedede;
+}

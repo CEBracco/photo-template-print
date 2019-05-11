@@ -1,22 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Imprimir Fotos</title>
+    <title>Flor Barrau Fotografía</title>
+    <link rel="stylesheet" href="lib/materialize/css/materialize.min.css">
+    <link href="lib/roboto-font/roboto.css" rel="stylesheet">
+    <link href="lib/material-icons/material-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="lib/fontawesome/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/themes/default.css">
 </head>
-
-<body>
-    <div class="container">
-        <% include preview/polaroid.html %>
+<header>
+    <ul id="slide-out" class="sidenav sidenav-fixed">
+        <li class="logo">
+            <img src="img/logo.png">
+        </li>
+        <li><a href="#!">Cargá tus fotos</a></li>
+        <li><a href="index.html">Elegí el formato</a></li>
+        <li class="bold active"><a href="#">Ajusta y Guardá</a></li>
+    </ul>
+</header>
+<main>
+    <div class="row">
+        <div class="col m10 offset-m1">
+            <h3 class="title">Ajustá y Guardá</h3>
+            <div class="fb-container">
+                <% include preview/polaroid.html %>
+            </div>
+            <div class="fixed-action-btn">
+                <a class="btn-floating btn-large pink accent-3 waves-effect waves-light">
+                    <i class="large material-icons" onclick="print()">get_app</i>
+                </a>
+                <ul>
+                    <li><a class="btn-floating deep-purple darken-3 tooltipped" data-position="left" data-tooltip="JPG"><i class="material-icons">photo</i></a></li>
+                    <li><a class="btn-floating deep-purple darken-3 tooltipped" data-position="left" data-tooltip="PNG"><i class="material-icons">gradient</i></a></li>
+                </ul>
+            </div>
+        </div>
     </div>
-    <button onclick="print()">Imprimir todo</button>
     <iframe id="printerIframe" src="<%= pageType %>" frameborder="0"></iframe>
-</body>
+</main>
+
+<script src="lib/jquery/jquery.min.js"></script>
+<script src="lib/materialize/js/materialize.min.js"></script>
 <script src="js/base.js"></script>
-<script src="js/print.js"></script>
+<script src="js/preview.js"></script>
 
 </html>

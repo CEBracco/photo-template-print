@@ -1,9 +1,68 @@
+* {
+    font-family: 'Roboto Condensed', sans-serif;
+}
+header, main, footer {
+    padding-left: 300px;
+}
+@media only screen and (max-width : 992px) {
+    header, main, footer {
+        padding-left: 0;
+    }
+}
+.sidenav li.logo {
+    padding-top: 10px;
+    text-align: center;
+}
+.sidenav li.logo img {
+    width: 75%;
+}
+
 #printerIframe {
     height: 1px;
     width: 1px;
     visibility: hidden;
 }
-.container {
+.fb-container {
     width: 100%;
     overflow: auto;
+}
+
+.photo .image {
+    cursor: pointer;
+}
+.photo .image .image-button {
+    position: relative;
+    text-align: center;
+    color: rgba(255,255,255,.85);
+    text-shadow: 0px 1px 3px rgba(0,0,0,.50);
+    font-size: inherit;
+    line-height: inherit;
+    font-family: inherit;
+}
+.photo .image .image-button.fb-left {
+    top: 14%;
+    right: 43%;
+    -webkit-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+}
+.photo .image .image-button.fb-down {
+    top: 42%;
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
+}
+.photo .image .image-button.fb-right {
+    top: 28.5%;
+    left: 44%;
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+.photo .image .image-button i {
+    transition: color 0.2s;
+    transition-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+.photo .image .image-button i:hover {
+    color: rgba(255,255,255,.95);
+}
+.photo .confirm-buttons { 
+    text-align: center;
 }

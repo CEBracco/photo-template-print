@@ -17,7 +17,7 @@
     padding-right: calc(0.5cm * 5);
     padding-top: calc(0.5cm * 5);
 }
-.row .photo.vertical:nth-child(odd) {
+.fb-row .photo.vertical:nth-child(odd) {
     margin-right: calc(1.5cm * 5);
 }
 .photo.horizontal {

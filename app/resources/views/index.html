@@ -1,18 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Imprimir Fotos</title>
+    <title>Flor Barrau Fotografía</title>
+    <link rel="stylesheet" href="lib/materialize/css/materialize.min.css">
+    <link href="lib/roboto-font/roboto.css" rel="stylesheet">
+    <link href="lib/material-icons/material-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="lib/fontawesome/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/themes/default.css">
 </head>
+<header>
+    <ul id="slide-out" class="sidenav sidenav-fixed">
+        <li class="logo">
+            <img src="img/logo.png">
+        </li>
+        <li><a href="#!">Cargá tus fotos</a></li>
+        <li class="bold active"><a href="#!">Elegí el formato</a></li>
+        <li><a href="print?type=polaroid">Ajusta y Guardá</a></li>
+    </ul>
+</header>
+<main>
+    <div class="row">
+        <div class="col m10 offset-m1">
+            <h3 class="title">Elegí el formato</h3>
+            <a href="print?type=polaroid">Polaroid</a>
+        </div>
+    </div>
+</main>
 
-<body>
-    <a href="print?type=polaroid">Polaroid</a>
-</body>
 <script src="lib/jquery/jquery.min.js"></script>
+<script src="lib/materialize/js/materialize.min.js"></script>
 <script src="js/base.js"></script>
-
-</html>
+<script src="js/preview.js"></script>

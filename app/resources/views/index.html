@@ -18,21 +18,37 @@
         <li class="logo">
             <img src="img/logo.png">
         </li>
-        <li><a href="#!">Cargá tus fotos</a></li>
-        <li class="bold active"><a href="#!">Elegí el formato</a></li>
+        <li class="bold active"><a href="#!">Cargá tus fotos</a></li>
+        <li><a href="#!">Elegí el formato</a></li>
         <li><a href="print?type=polaroid">Ajusta y Guardá</a></li>
     </ul>
 </header>
 <main>
-    <div class="row">
-        <div class="col m10 offset-m1">
-            <h3 class="title">Elegí el formato</h3>
-            <a href="print?type=polaroid">Polaroid</a>
+    <div class="fullscreen-container">
+        <div class="file-uploader">
+            <button class="btn pink accent-3 waves-effect waves-light upload-button right">Cargar Fotos</button>
+            <button class="btn btn-flat waves-effect waves-light clear-button right">Limpiar</button>
+            <div class="row">
+                <div class="col m10 offset-m1">
+                    <ul class="collection file-list"></ul>
+                </div>
+            </div>
         </div>
+    </div>
+    <div class="empty-files-alert">
+        <h5 class="message">Todavía no cargaste ninguna foto, para hacerlo haz click en el botón "Cargar fotos" o arrastrá
+            tus archivos sobre esta ventana.</h5>
+        <button class="btn pink accent-3 waves-effect waves-light upload-button">Cargar Fotos</button>
+    </div>
+    <div class="fixed-action-btn">
+        <a class="btn-floating btn-large pink accent-3 waves-effect waves-light confirm-upload">
+            <i class="large material-icons" onclick="">get_app</i>
+        </a>
     </div>
 </main>
 
 <script src="lib/jquery/jquery.min.js"></script>
 <script src="lib/materialize/js/materialize.min.js"></script>
+<script src="lib/dropzone/dropzone.js"></script>
 <script src="js/base.js"></script>
-<script src="js/preview.js"></script>
+<script src="js/upload.js"></script>

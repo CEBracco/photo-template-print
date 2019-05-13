@@ -66,3 +66,27 @@ header, main, footer {
 .photo .confirm-buttons { 
     text-align: center;
 }
+
+.fullscreen-container {
+    height: 100vh;
+    width: 100%;
+    padding: 25px;
+}
+.file-uploader {
+    padding: 5px;
+    height: 100%;
+    width: 100%;
+    border-radius: 8px;
+    transition: 0.3s;
+    transition-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+.file-uploader .collection:empty {
+    display: none;
+}
+.empty-files-alert {
+    text-align: center;
+    position: fixed;
+    width: 50%;
+    top: 40%;
+    left: 38%;
+}

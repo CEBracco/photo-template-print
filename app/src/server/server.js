@@ -35,6 +35,17 @@ app.get(['/print'], function (req, res) {
   res.end();
 });
 
+app.post('/upload', function(req, res){
+  var fs = require('fs');
+  logger.getLogger().debug(req.file)
+  fs.readFile(req.photo, function (err, data) {
+    var newPath = __dirname + "/uploads/uploadedFileName";
+    fs.writeFile(newPath, data, function (err) {
+      res.end();
+    });
+  });
+});
+
 function getParameters(pageType) {
   switch (pageType) {
     case "polaroid":

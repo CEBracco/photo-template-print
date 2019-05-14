@@ -41,8 +41,12 @@ function save(e) {
     e.stopPropagation();
 }
 
-function print(){
-    document.getElementById("printerIframe").contentWindow.print();
+function printJpeg(){
+    document.getElementById("printerIframe").contentWindow.printJpeg();
+}
+
+function printPng() {
+    document.getElementById("printerIframe").contentWindow.printPng();
 }
 
 function moveUp() {

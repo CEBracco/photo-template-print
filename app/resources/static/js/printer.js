@@ -1,8 +1,17 @@
-function print(){
+function printPng(){
     $('.page').each(function(index){
         domtoimage.toBlob(this)
             .then(function (blob) {
                 window.saveAs(blob, `photo-${index}.png`);
+            });
+    });
+}
+
+function printJpeg(){
+    $('.page').each(function (index) {
+        domtoimage.toJpeg(this)
+            .then(function (dataUrl) {
+                window.saveAs(dataURItoBlob(dataUrl), `photo-${index}.jpeg`);
             });
     });
 }

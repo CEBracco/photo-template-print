@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Flor Barrau Fotografía</title>
     <link rel="stylesheet" href="lib/materialize/css/materialize.min.css">
+    <link rel="stylesheet" href="lib/animate.css/animate.min.css">
     <link href="lib/roboto-font/roboto.css" rel="stylesheet">
     <link href="lib/material-icons/material-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="lib/fontawesome/css/all.min.css">
@@ -18,18 +19,22 @@
         <li class="logo">
             <img src="img/logo.png">
         </li>
-        <li class="bold active"><a href="#!">Cargá tus fotos</a></li>
-        <li><a href="#!">Elegí el formato</a></li>
-        <li><a href="print?type=polaroid">Ajusta y Guardá</a></li>
+        <li class="bold active"><a href="#">Cargá tus fotos</a></li>
+        <li><a href="#">Elegí el formato</a></li>
+        <li><a href="#">Ajusta y Guardá</a></li>
     </ul>
 </header>
 <main>
     <div class="fullscreen-container">
         <div class="file-uploader">
-            <button class="btn pink accent-3 waves-effect waves-light upload-button right">Cargar Fotos</button>
+            <button class="btn pink accent-3 waves-effect waves-light upload-button right"><i class="material-icons left">add_circle</i>Cargar Fotos</button>
             <button class="btn btn-flat waves-effect waves-light clear-button right">Limpiar</button>
-            <div class="row">
+            <div class="row file-list-container">
                 <div class="col m10 offset-m1">
+                    <h4 class="title">Archivos</h4>
+                    <div class="progress grey lighten-4">
+                        <div class="determinate pink accent-3"></div>
+                    </div>
                     <ul class="collection file-list"></ul>
                 </div>
             </div>
@@ -38,11 +43,11 @@
     <div class="empty-files-alert">
         <h5 class="message">Todavía no cargaste ninguna foto, para hacerlo haz click en el botón "Cargar fotos" o arrastrá
             tus archivos sobre esta ventana.</h5>
-        <button class="btn pink accent-3 waves-effect waves-light upload-button">Cargar Fotos</button>
+        <button class="btn pink accent-3 waves-effect waves-light upload-button"><i class="material-icons left">add_circle</i>Cargar Fotos</button>
     </div>
     <div class="fixed-action-btn">
         <a class="btn-floating btn-large pink accent-3 waves-effect waves-light confirm-upload">
-            <i class="large material-icons" onclick="">get_app</i>
+            <i class="material-icons">send</i>
         </a>
     </div>
 </main>

@@ -72,6 +72,10 @@ header, main, footer {
     width: 100%;
     padding: 25px;
 }
+.file-list-container{
+    display: none;
+    transition-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
+}
 .file-uploader {
     padding: 5px;
     height: 100%;
@@ -79,6 +83,9 @@ header, main, footer {
     border-radius: 8px;
     transition: 0.3s;
     transition-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+.file-uploader .progress{
+    display: none;
 }
 .file-uploader .collection:empty {
     display: none;

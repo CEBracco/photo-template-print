@@ -1,6 +1,8 @@
 $(document).ready(function(){
     $(".file-uploader").dropzone({ 
         url: "/upload",
+        acceptedFiles: "image/*",
+        parallelUploads: 50,
         paramName: "photo",
         autoProcessQueue: false,
         clickable: ".upload-button",
@@ -21,6 +23,31 @@ $(document).ready(function(){
         },
         drop: function(){
             $(".file-uploader").removeClass("dragging");
+        },
+        init: function () {
+            this.on("addedfile", function () {
+                $('.empty-files-alert').fadeOut();
+                $('.file-list-container').fadeIn();
+            });
+            this.on("reset", function () {
+                $('.file-list-container').fadeOut();
+                $('.empty-files-alert').fadeIn();
+            });
+            this.on("queuecomplete", function(){
+                $.ajax({
+                    url:"/processPhotos", 
+                    method: "POST"
+                }).done(function () {
+                    window.location.href = "format_selection";
+                });
+            });
+            this.on("processing", function(a){
+                console.log(a);
+            });
+            this.on("totaluploadprogress",function(progress){
+                $(".file-uploader .progress").show();
+                $(".file-uploader .progress .determinate").css("width",`${progress}%`);
+            })
         }
     });
 

@@ -1,0 +1,11 @@
+<% pages.forEach(function(page, pageIndex){ %>
+<div id="page-<%= pageIndex %>" class="page">
+    <div class="fb-row">
+        <% page.forEach(function(photo, photoIndex){ %>
+        <div id="photo-<%= pageIndex %>-<%= photoIndex %>" class="photo">
+            <div class="image" style="background-image: url('photos/<%= photo %>');"></div>
+        </div>
+        <% }); %>
+    </div>
+</div>
+<% }); %>

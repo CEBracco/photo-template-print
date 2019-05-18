@@ -26,16 +26,23 @@
     <div class="row">
         <div class="col m10 offset-m1">
             <h4 class="title">Ajustá y Guardá</h4>
-            <div class="fb-container">
-                <% include preview/polaroid.html %>
+            <div class="progress grey lighten-4" style="display: none">
+                <div class="indeterminate pink accent-3"></div>
             </div>
-            <div class="fixed-action-btn">
+            <div class="fb-container">
+            <% if(pageType == 'polaroid') { %>
+                <% include preview/polaroid.html %>
+            <% } else { %>
+                <% include preview/square.html %>
+            <% } %>            
+            </div>
+            <div id="printButton" class="fixed-action-btn">
                 <a class="btn-floating btn-large pink accent-3 waves-effect waves-light">
-                    <i class="large material-icons" onclick="printJpeg()">get_app</i>
+                    <i class="large material-icons" onclick="printImage()">get_app</i>
                 </a>
                 <ul>
-                    <li><a class="btn-floating deep-purple darken-3 tooltipped" data-position="left" data-tooltip="JPG" onclick="printJpeg()"><i class="material-icons">photo</i></a></li>
-                    <li><a class="btn-floating deep-purple darken-3 tooltipped" data-position="left" data-tooltip="PNG"onclick="printPng()"><i class="material-icons">gradient</i></a></li>
+                    <li><a class="btn-floating deep-purple darken-3 tooltipped" data-position="left" data-tooltip="JPG" onclick="printImage('JPEG')"><i class="material-icons">photo</i></a></li>
+                    <li><a class="btn-floating deep-purple darken-3 tooltipped" data-position="left" data-tooltip="PNG"onclick="printPng('PNG')"><i class="material-icons">gradient</i></a></li>
                 </ul>
             </div>
         </div>

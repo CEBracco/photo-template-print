@@ -1,5 +1,6 @@
 var selectedPhoto;
 var previousValues;
+var printerIframe;
 
 $(document).ready(function(){
     $('.photo').click(function(){
@@ -14,11 +15,12 @@ $(document).ready(function(){
             `);
             $(this).find('.image').after(`
                 <div class="confirm-buttons">
-                <button class="btn-floating btn-small teal" onclick="save(event)"><i class="material-icons">check</i></button>
+                <button class="btn-floating btn-small pink accent-3" onclick="save(event)"><i class="material-icons">check</i></button>
                     <button class="btn-floating btn-small grey lighten-1" style="color: #212121;" onclick="discard(event)"><i class="material-icons">clear</i></button>
                 </div>
             `);
             $(this).addClass('editing');
+            $('#printButton a').addClass('disabled');
         }
     });
 });
@@ -28,6 +30,7 @@ function deselectElement() {
     $(selectedPhoto).find('.confirm-buttons').remove();
     $(selectedPhoto).removeClass('editing')
     selectedPhoto = null;
+    $('#printButton a').removeClass('disabled');
 }
 
 function discard(e) {
@@ -41,32 +44,33 @@ function save(e) {
     e.stopPropagation();
 }
 
-function printJpeg(){
-    document.getElementById("printerIframe").contentWindow.printJpeg();
-}
-
-function printPng() {
-    document.getElementById("printerIframe").contentWindow.printPng();
+function printImage(format = 'JPEG'){
+    $(".progress").show();
+    $('#printButton a').addClass('disabled');
+    printerIframe.printImage(format, function(){
+        $(".progress").hide();
+        $('#printButton a').removeClass('disabled');
+    });
 }
 
 function moveUp() {
     alignPhoto($(selectedPhoto).attr('id'), 'y', 1);
-    document.getElementById("printerIframe").contentWindow.moveUp($(selectedPhoto).attr('id'));
+    printerIframe.moveUp($(selectedPhoto).attr('id'));
 }
 
 function moveDown() {
     alignPhoto($(selectedPhoto).attr('id'), 'y', -1);
-    document.getElementById("printerIframe").contentWindow.moveDown($(selectedPhoto).attr('id'));
+    printerIframe.moveDown($(selectedPhoto).attr('id'));
 }
 
 function moveLeft() {
-    alignPhoto($(selectedPhoto).attr('id'), 'x', -1);
-    document.getElementById("printerIframe").contentWindow.moveLeft($(selectedPhoto).attr('id'));
+    alignPhoto($(selectedPhoto).attr('id'), 'x', 1);
+    printerIframe.moveLeft($(selectedPhoto).attr('id'));
 }
 
 function moveRight() {
-    alignPhoto($(selectedPhoto).attr('id'), 'x', 1);
-    document.getElementById("printerIframe").contentWindow.moveRight($(selectedPhoto).attr('id'));
+    alignPhoto($(selectedPhoto).attr('id'), 'x', -1);
+    printerIframe.moveRight($(selectedPhoto).attr('id'));
 }
 
 function alignPhoto(photoId, axis, increment) {
@@ -79,7 +83,7 @@ function setPreviousValues() {
     var photo = $(selectedPhoto).find('.image');
     photo.css(`background-position-x`, previousValues.x);
     photo.css(`background-position-y`, previousValues.y);
-    document.getElementById("printerIframe").contentWindow.setValues($(selectedPhoto).attr('id'), previousValues);
+    printerIframe.setValues($(selectedPhoto).attr('id'), previousValues);
     previousValues = null;
 }
 
@@ -91,7 +95,39 @@ function savePreviousValues() {
     };
 }
 
+function setKeyboardEvents(){
+    $(document).keydown(function (e) {
+        if (selectedPhoto) {
+            var keycode = e.keycode || e.which
+            switch (keycode) {
+                case 37: //left
+                    moveLeft();
+                    break;
+                case 38: //up
+                    moveUp();
+                    break;
+                case 39: //right
+                    moveRight();
+                    break;
+                case 40: //down
+                    moveDown();
+                    break;
+                case 13: //enter
+                    save(e);
+                    break;
+                case 27: //esc
+                    discard(e)
+                    break;
+                default:
+                    break;
+            }
+        }
+    })
+}
+
 $(document).ready(function () {
     $('.fixed-action-btn').floatingActionButton();
     $('.tooltipped').tooltip();
+    printerIframe = document.getElementById("printerIframe").contentWindow;
+    setKeyboardEvents();
 });

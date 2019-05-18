@@ -42,6 +42,10 @@ app.get(['/polaroid'], function (req, res) {
   res.end();
 });
 
+app.get(['/square'], function (req, res) {
+  res.render("print/square", { pages: _.chunk(getPhotos(), 6) });
+  res.end();
+});
 
 app.post(['/upload'], function(req, res){
   if (Object.keys(req.files).length == 0) {
@@ -64,6 +68,8 @@ function getParameters(pageType) {
   switch (pageType) {
     case "polaroid":
       return { pageType: pageType, pages: _.chunk(getPhotos(), 5) };
+    case "square":
+      return { pageType: pageType, pages: _.chunk(getPhotos(), 6) };
     default:
       return { pageType: pageType };
   }

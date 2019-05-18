@@ -75,3 +75,5 @@ typings/
 # Photos
 app/resources/static/photos/*
 !app/resources/static/photos/.gitkeep
+
+builds

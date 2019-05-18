@@ -1,0 +1,27 @@
+.page {
+    height: calc(30cm * 5);
+    width: calc(20cm * 5);
+    border: 1px solid black;
+    padding-left: calc(0.8cm * 5);
+    background-color: white;
+}
+.photo {
+    border: 1px solid black;
+    float: left;
+    box-sizing: border-box;
+    margin-top: calc(0.25cm * 5);
+    height: calc(9.5cm * 5);
+    width: calc(9.5cm * 5);
+    padding: calc(0.46cm * 5);
+}
+.fb-row .photo:nth-child(odd) {
+    margin-right: calc(0.5cm * 5);
+}
+
+.image {
+    height: calc(8.5cm * 5);
+    width: calc(8.5cm * 5);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}

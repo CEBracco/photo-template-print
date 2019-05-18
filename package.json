@@ -34,5 +34,8 @@
   },
   "_moduleDirectories": [
     "modules"
-  ]
+  ],
+  "devDependencies": {
+    "electron-packager": "^13.1.1"
+  }
 }

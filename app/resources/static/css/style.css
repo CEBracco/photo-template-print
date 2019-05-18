@@ -97,3 +97,6 @@ header, main, footer {
     top: 40%;
     left: 38%;
 }
+.btn-floating.disabled {
+    background-color: #bdbdbd !important;
+}

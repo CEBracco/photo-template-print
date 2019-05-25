@@ -66,6 +66,10 @@ header, main, footer {
 .photo .confirm-buttons { 
     text-align: center;
 }
+.photo.invert-controls .confirm-buttons button { 
+    -webkit-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+}
 
 .fullscreen-container {
     height: 100vh;

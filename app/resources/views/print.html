@@ -30,11 +30,7 @@
                 <div class="indeterminate pink accent-3"></div>
             </div>
             <div class="fb-container">
-            <% if(pageType == 'polaroid') { %>
-                <% include preview/polaroid.html %>
-            <% } else { %>
-                <% include preview/square.html %>
-            <% } %>            
+                <%- include(`preview/${pageType}.html`) %>
             </div>
             <div id="printButton" class="fixed-action-btn">
                 <a class="btn-floating btn-large pink accent-3 waves-effect waves-light">

@@ -1,29 +1,39 @@
 var selectedPhoto;
 var previousValues;
 var printerIframe;
+var invertControls = false;
 
 $(document).ready(function(){
     $('.photo').click(function(){
         if(!selectedPhoto) {
             selectedPhoto = this;
             savePreviousValues();
-            $(this).find('.image').html(`
-                <div class="image-button fb-up"><i class="fas fa-chevron-circle-up" onclick="moveUp()"></i></div>
-                <div class="image-button fb-right"><i class="fas fa-chevron-circle-up" onclick="moveRight()"></i></div>
-                <div class="image-button fb-left"><i class="fas fa-chevron-circle-up" onclick="moveLeft()"></i></div>
-                <div class="image-button fb-down"><i class="fas fa-chevron-circle-up" onclick="moveDown()"></i></div>
-            `);
-            $(this).find('.image').after(`
-                <div class="confirm-buttons">
-                <button class="btn-floating btn-small pink accent-3" onclick="save(event)"><i class="material-icons">check</i></button>
-                    <button class="btn-floating btn-small grey lighten-1" style="color: #212121;" onclick="discard(event)"><i class="material-icons">clear</i></button>
-                </div>
-            `);
+            addPositionButtons($(this).find('.image'));
+            addConfirmButtons($(this).find('.image'));
             $(this).addClass('editing');
             $('#printButton a').addClass('disabled');
         }
     });
 });
+
+function addPositionButtons(imageElem) {
+    invertControls=imageElem.parents('.invert-controls').length == 1;
+    imageElem.html(`
+        <div class="image-button fb-up"><i class="fas fa-chevron-circle-up" onclick="moveUp()"></i></div>
+        <div class="image-button fb-right"><i class="fas fa-chevron-circle-up" onclick="moveRight()"></i></div>
+        <div class="image-button fb-left"><i class="fas fa-chevron-circle-up" onclick="moveLeft()"></i></div>
+        <div class="image-button fb-down"><i class="fas fa-chevron-circle-up" onclick="moveDown()"></i></div>
+    `);
+}
+
+function addConfirmButtons(imageElem) {
+    imageElem.after(`
+        <div class="confirm-buttons">
+        <button class="btn-floating btn-small pink accent-3" onclick="save(event)"><i class="material-icons">check</i></button>
+            <button class="btn-floating btn-small grey lighten-1" style="color: #212121;" onclick="discard(event)"><i class="material-icons">clear</i></button>
+        </div>
+    `);
+}
 
 function deselectElement() {
     $(selectedPhoto).find('.image').empty();
@@ -31,6 +41,7 @@ function deselectElement() {
     $(selectedPhoto).removeClass('editing')
     selectedPhoto = null;
     $('#printButton a').removeClass('disabled');
+    invertControls=false;
 }
 
 function discard(e) {
@@ -55,28 +66,26 @@ function printImage(format = 'JPEG'){
 
 function moveUp() {
     alignPhoto($(selectedPhoto).attr('id'), 'y', 1);
-    printerIframe.moveUp($(selectedPhoto).attr('id'));
 }
 
 function moveDown() {
     alignPhoto($(selectedPhoto).attr('id'), 'y', -1);
-    printerIframe.moveDown($(selectedPhoto).attr('id'));
 }
 
 function moveLeft() {
     alignPhoto($(selectedPhoto).attr('id'), 'x', 1);
-    printerIframe.moveLeft($(selectedPhoto).attr('id'));
 }
 
 function moveRight() {
     alignPhoto($(selectedPhoto).attr('id'), 'x', -1);
-    printerIframe.moveRight($(selectedPhoto).attr('id'));
 }
 
 function alignPhoto(photoId, axis, increment) {
+    axis = getAxis(axis);
     var photo = $(`#${photoId} .image`)
     var valueAxis = parseInt(photo.css(`background-position-${axis}`));
     photo.css(`background-position-${axis}`, `${valueAxis + increment}%`);
+    printerIframe.alignPhoto(photoId, axis, increment);
 }
 
 function setPreviousValues() {
@@ -121,8 +130,16 @@ function setKeyboardEvents(){
                 default:
                     break;
             }
+            e.preventDefault();
         }
     })
+}
+
+function getAxis(axis){
+    if(invertControls){
+        return axis == 'x'? 'y' : 'x';
+    }
+    return axis;
 }
 
 $(document).ready(function () {

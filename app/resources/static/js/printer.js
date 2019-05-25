@@ -1,4 +1,4 @@
-function printImage(format = 'JPEG', complete, suscribersSelector = null) {
+function printImage(format = 'JPEG', complete = function(){}, suscribersSelector = null) {
     var totalPages = $('.page').length
     var pagesProcessed = 0;
     var saveFunction = totalPages > 1 ? zipIt : downloadDirectly;

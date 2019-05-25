@@ -38,12 +38,17 @@ app.get(['/print'], function (req, res) {
 });
 
 app.get(['/polaroid'], function (req, res) {
-  res.render("print/polaroid", { pages: _.chunk(getPhotos(), 5) });
+  res.render("print/polaroid", getParameters('polaroid'));
+  res.end();
+});
+
+app.get(['/instax'], function (req, res) {
+  res.render("print/instax", getParameters('instax'));
   res.end();
 });
 
 app.get(['/square'], function (req, res) {
-  res.render("print/square", { pages: _.chunk(getPhotos(), 6) });
+  res.render("print/square", getParameters('square'));
   res.end();
 });
 
@@ -67,6 +72,8 @@ app.post(['/processPhotos'], function (req, res) {
 function getParameters(pageType) {
   switch (pageType) {
     case "polaroid":
+      return { pageType: pageType, pages: _.chunk(getPhotos(), 5) };
+    case "instax":
       return { pageType: pageType, pages: _.chunk(getPhotos(), 5) };
     case "square":
       return { pageType: pageType, pages: _.chunk(getPhotos(), 6) };

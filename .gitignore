@@ -76,4 +76,4 @@ typings/
 app/resources/static/photos/*
 !app/resources/static/photos/.gitkeep
 
-builds
+dist

@@ -1,0 +1,54 @@
+.page {
+    height: calc(30cm * 5);
+    width: calc(20cm * 5);
+    border: 1px solid black;
+    padding-left: calc(0.8cm * 5);
+    background-color: white;
+}
+.strip {
+    border: 1px solid black;
+    float: left;
+    box-sizing: border-box;
+}
+.strip.vertical {
+    height: calc(18cm * 5);
+    width: calc(4.5cm * 5);
+    padding-left: calc(0.25cm * 5);
+    padding-right: calc(0.25cm * 5);
+    padding-top: calc(0.25cm * 5);
+}
+.strip.horizontal {
+    height: calc(4.5cm * 5);
+    width: calc(18cm * 5);
+    padding-left: calc(0.25cm * 5);
+    padding-right: calc(0.25cm * 5);
+    padding-top: calc(0.25cm * 5);
+    margin-right: calc(0.25cm * 5);
+    margin-top: calc(0.25cm * 5);
+}
+.fb-row .strip.vertical {
+    margin-right: calc(0.25cm * 5);
+    margin-top: calc(0.5cm * 5);
+}
+
+.image {
+    height: calc(3.9cm * 5);
+    width: calc(3.9cm * 5);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.strip.vertical .photo {
+    padding-bottom: calc(0.25cm * 5);
+}
+
+.strip.horizontal .photo {
+    padding-left: calc(0.25cm * 5);
+    float: right;
+}
+.strip.horizontal .photo .image {
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
+    float: right;
+}

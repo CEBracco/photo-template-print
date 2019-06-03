@@ -42,6 +42,11 @@ app.get(['/polaroid'], function (req, res) {
   res.end();
 });
 
+app.get(['/strip'], function (req, res) {
+  res.render("print/strip", getParameters('strip'));
+  res.end();
+});
+
 app.get(['/instax'], function (req, res) {
   res.render("print/instax", getParameters('instax'));
   res.end();
@@ -77,6 +82,8 @@ function getParameters(pageType) {
       return { pageType: pageType, pages: _.chunk(getPhotos(), 7) };
     case "square":
       return { pageType: pageType, pages: _.chunk(getPhotos(), 6) };
+    case "strip":
+      return { pageType: pageType, pages: _.chunk(_.chunk(getPhotos(), 4), 6) };
     default:
       return { pageType: pageType };
   }

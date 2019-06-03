@@ -74,7 +74,7 @@ function getParameters(pageType) {
     case "polaroid":
       return { pageType: pageType, pages: _.chunk(getPhotos(), 5) };
     case "instax":
-      return { pageType: pageType, pages: _.chunk(getPhotos(), 5) };
+      return { pageType: pageType, pages: _.chunk(getPhotos(), 7) };
     case "square":
       return { pageType: pageType, pages: _.chunk(getPhotos(), 6) };
     default:

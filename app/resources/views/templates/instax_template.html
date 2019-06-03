@@ -2,7 +2,7 @@
 <div id="page-<%= pageIndex %>" class="page">
     <div class="fb-row">
         <% page.forEach(function(photo, photoIndex){ %>
-        <% if ((photoIndex + 1) % 5 != 0) { %>
+        <% if ((photoIndex + 1) % 7 != 0) { %>
         <div id="photo-<%= pageIndex %>-<%= photoIndex %>" class="photo vertical">
             <div class="image" style="background-image: url('photos/<%= photo %>');"></div>
         </div>

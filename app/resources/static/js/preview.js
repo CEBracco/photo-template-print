@@ -18,11 +18,15 @@ $(document).ready(function(){
 
 function addPositionButtons(imageElem) {
     invertControls=imageElem.parents('.invert-controls').length == 1;
+    var xMargin = (imageElem.width() / 2) - 7.5;
+    var yMargin = (imageElem.height() / 2) - 13;
+    var heightMargin = imageElem.height() - 16;
+    var widthMargin = imageElem.width() - 15;
     imageElem.html(`
-        <div class="image-button fb-up"><i class="fas fa-chevron-circle-up" onclick="moveUp()"></i></div>
-        <div class="image-button fb-right"><i class="fas fa-chevron-circle-up" onclick="moveRight()"></i></div>
-        <div class="image-button fb-left"><i class="fas fa-chevron-circle-up" onclick="moveLeft()"></i></div>
-        <div class="image-button fb-down"><i class="fas fa-chevron-circle-up" onclick="moveDown()"></i></div>
+        <div class="image-button fb-up" style="margin-top:-5px; margin-left:${xMargin}px"><i class="fas fa-chevron-circle-up" onclick="moveUp()"></i></div>
+        <div class="image-button fb-right" style="margin-top:${yMargin}px; margin-left:${widthMargin}px"><i class="fas fa-chevron-circle-right" onclick="moveRight()"></i></div>
+        <div class="image-button fb-left" style="margin-top:${yMargin}px"><i class="fas fa-chevron-circle-left" onclick="moveLeft()"></i></div>
+        <div class="image-button fb-down" style="margin-top:${heightMargin}px; margin-left:${xMargin}px"><i class="fas fa-chevron-circle-down" onclick="moveDown()"></i></div>
     `);
 }
 

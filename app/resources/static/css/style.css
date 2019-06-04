@@ -31,30 +31,13 @@ header, main, footer {
     cursor: pointer;
 }
 .photo .image .image-button {
-    position: relative;
+    position: absolute;
     text-align: center;
     color: rgba(255,255,255,.85);
     text-shadow: 0px 1px 3px rgba(0,0,0,.50);
     font-size: inherit;
     line-height: inherit;
     font-family: inherit;
-}
-.photo .image .image-button.fb-left {
-    top: 14%;
-    right: 43%;
-    -webkit-transform: rotate(-90deg);
-    transform: rotate(-90deg);
-}
-.photo .image .image-button.fb-down {
-    top: 42%;
-    -webkit-transform: rotate(180deg);
-    transform: rotate(180deg);
-}
-.photo .image .image-button.fb-right {
-    top: 28.5%;
-    left: 44%;
-    -webkit-transform: rotate(90deg);
-    transform: rotate(90deg);
 }
 .photo .image .image-button i {
     transition: color 0.2s;

@@ -16,7 +16,7 @@
     box-sizing: border-box;
 }
 .fb-container .strip.vertical {
-    height: calc(18cm * 0.5);
+    height: calc(18.5cm * 0.5);
     width: calc(4.5cm * 0.5);
     padding-left: calc(0.25cm * 0.5);
     padding-right: calc(0.25cm * 0.5);
@@ -24,7 +24,7 @@
 }
 .fb-container .strip.horizontal {
     height: calc(4.5cm * 0.5);
-    width: calc(18cm * 0.5);
+    width: calc(18.5cm * 0.5);
     padding-left: calc(0.25cm * 0.5);
     padding-right: calc(0.25cm * 0.5);
     padding-top: calc(0.25cm * 0.5);

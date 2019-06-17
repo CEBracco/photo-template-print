@@ -74,6 +74,16 @@ app.post(['/processPhotos'], function (req, res) {
   res.json({ok: true});
 });
 
+app.post(['/rotateImage'], function (req, res) {
+  var Jimp = require('jimp');
+  Jimp.read(path.join(appPath, `/app/resources/static/photos/${req.body.filename}`), (err, image) => {
+    if (err) throw err;
+    image.rotate(req.body.angle ? req.body.angle : 90) 
+    .write(path.join(appPath, `/app/resources/static/photos/${req.body.filename}`)); // save
+    res.json({ ok: true });
+  });
+});
+
 function getParameters(pageType) {
   switch (pageType) {
     case "polaroid":

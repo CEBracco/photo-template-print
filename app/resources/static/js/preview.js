@@ -43,8 +43,8 @@ function addConfirmButtons(imageElem) {
 function addRotationButtons(imageElem) {
     imageElem.before(`
         <div class="confirm-buttons" style="position:absolute; width:${imageElem.width()}px;  transform: translate(0px, -35px);">
-            <button class="btn-floating btn-small grey lighten-1" style="color: #212121;" onclick="rotateLeft(event)"><i class="material-icons">check</i></button>
-            <button class="btn-floating btn-small grey lighten-1" style="color: #212121;" onclick="rotateRight(event)"><i class="material-icons">clear</i></button>
+            <button class="btn-floating btn-small grey darken-3" style="color: #212121;" onclick="rotateLeft()"><i class="material-icons">rotate_left</i></button>
+            <button class="btn-floating btn-small grey darken-3" style="color: #212121;" onclick="rotateRight()"><i class="material-icons">rotate_right</i></button>
         </div>
     `);
 }
@@ -124,16 +124,16 @@ function setKeyboardEvents(){
             var keycode = e.keycode || e.which
             switch (keycode) {
                 case 37: //left
-                    moveLeft();
+                    !invertControls?moveLeft():moveDown();
                     break;
                 case 38: //up
-                    moveUp();
+                    !invertControls?moveUp():moveLeft();
                     break;
                 case 39: //right
-                    moveRight();
+                    !invertControls?moveRight():moveUp();
                     break;
                 case 40: //down
-                    moveDown();
+                    !invertControls?moveDown():moveRight();
                     break;
                 case 13: //enter
                     save(e);
@@ -150,18 +150,36 @@ function setKeyboardEvents(){
 }
 
 function getAxis(axis){
-    if(invertControls){
-        return axis == 'x'? 'y' : 'x';
-    }
+    // if(invertControls){
+    //     return axis == 'x'? 'y' : 'x';
+    // }
     return axis;
 }
 
-function rotateRight(e) {
-    alert("lala");
+function rotateRight() {
+    rotateImage($(selectedPhoto).find('.image'), -90);
 }
 
-function rotateLeft(e) {
-    alert("lala");
+function rotateLeft() {
+    rotateImage($(selectedPhoto).find('.image'), 90);
+}
+
+function rotateImage(photo, angle){
+    var originalUrl = photo.css('background-image').replace(/url\(\"|\"\)/g, "");
+    var filename = originalUrl.split('/').reverse()[0].replace(/\?.*/g, "");
+    $.ajax({
+        url: '/rotateImage',
+        contentType: 'application/json',
+        data: JSON.stringify({ 
+            filename: filename, 
+            angle: angle
+        }),
+        type: 'POST'
+    }).done(function(){
+        var newUrl = `url("${originalUrl}?v=${Math.floor(Math.random() * 100)}")`;
+        photo.css('background-image', newUrl);
+        printerIframe.refreshPhoto($(selectedPhoto).attr('id'), newUrl);
+    });
 }
 
 $(document).ready(function () {

@@ -82,3 +82,8 @@ function setValues(photoId, values) {
     photo.css(`background-position-x`, values.x);
     photo.css(`background-position-y`, values.y);
 }
+
+function refreshPhoto(photoId, newUrl) {
+    var photo = $(`#${photoId} .image`);
+    photo.css('background-image', newUrl);
+}

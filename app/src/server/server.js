@@ -33,7 +33,9 @@ app.get(['/format_selection'], function (req, res) {
 
 app.get(['/print'], function (req, res) {
   let pageType = req.query.type;
-  res.render("print", getParameters(pageType));
+  var previewParameters = getParameters(pageType);
+  previewParameters.backgroundStyles = getBackgroundStyles();
+  res.render("print", previewParameters);
   res.end();
 });
 
@@ -123,6 +125,16 @@ function resetPhotoDirectory(){
     filename = basePath + file;
     fs.unlinkSync(filename);
   });
+}
+
+function getBackgroundStyles() {
+  var fs = require('fs');
+  var collator = new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' });
+  var styles = _.map(
+    fs.readdirSync(path.join(appPath, '/app/resources/static/backgroundStyles')).sort(collator.compare),
+    function (f) { return { name: 'Diseño ' + f.replace(/\..*/g, ''), filename: f } });
+  styles.unshift({ name: 'Ninguno', filename: null })
+  return styles;
 }
 
 function start() {

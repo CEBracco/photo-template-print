@@ -3,11 +3,11 @@
     <div class="fb-row">
         <% page.forEach(function(photo, photoIndex){ %>
         <% if ((photoIndex + 1) % 5 != 0) { %>
-        <div id="photo-<%= pageIndex %>-<%= photoIndex %>" class="photo vertical">
+        <div id="photo-<%= pageIndex %>-<%= photoIndex %>" class="photo vertical paper">
             <div class="image" style="background-image: url('photos/<%= photo %>');"></div>
         </div>
         <% } else { %>
-        <div id="photo-<%= pageIndex %>-<%= photoIndex %>" class="photo horizontal">
+        <div id="photo-<%= pageIndex %>-<%= photoIndex %>" class="photo horizontal paper">
             <div class="image" style="background-image: url('photos/<%= photo %>');"></div>
         </div>
         <% } %>

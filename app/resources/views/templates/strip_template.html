@@ -3,7 +3,7 @@
     <div class="fb-row">
         <% page.forEach(function(strip, stripIndex){ %>
             <% if ((stripIndex + 1) % 5 != 0 && (stripIndex + 1) % 6 != 0) { %>
-                <div id="strip-<%= pageIndex %>-<%= stripIndex %>" class="strip vertical">
+                <div id="strip-<%= pageIndex %>-<%= stripIndex %>" class="strip vertical paper">
                 <% strip.forEach(function(photo, photoIndex){ %>
                     <div id="photo-<%= pageIndex %>-<%= stripIndex %>-<%= photoIndex %>" class="photo">
                         <div class="image" style="background-image: url('photos/<%= photo %>');"></div>
@@ -11,7 +11,7 @@
                 <% }); %>
                 </div>
             <% } else { %>
-                <div id="strip-<%= pageIndex %>-<%= stripIndex %>" class="strip horizontal">
+                <div id="strip-<%= pageIndex %>-<%= stripIndex %>" class="strip horizontal paper">
                     <% strip.forEach(function(photo, photoIndex){ %>
                     <div id="photo-<%= pageIndex %>-<%= stripIndex %>-<%= photoIndex %>" class="photo">
                         <div class="image" style="background-image: url('photos/<%= photo %>');"></div>

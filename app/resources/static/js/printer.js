@@ -87,3 +87,8 @@ function refreshPhoto(photoId, newUrl) {
     var photo = $(`#${photoId} .image`);
     photo.css('background-image', newUrl);
 }
+
+function setBackgroundImage(paperId, backgroundImageValue) {
+    var paper = $(`#${paperId}`);
+    paper.css('background-image', backgroundImageValue);
+}

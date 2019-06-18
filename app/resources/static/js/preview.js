@@ -4,16 +4,17 @@ var printerIframe;
 var invertControls = false;
 
 $(document).ready(function(){
-    $('.photo').click(function(){
+    $('.photo .image').click(function(e){
         if(!selectedPhoto) {
-            selectedPhoto = this;
+            selectedPhoto = $(this).parents('.photo')[0];
             savePreviousValues();
-            addPositionButtons($(this).find('.image'));
-            addConfirmButtons($(this).find('.image'));
-            addRotationButtons($(this).find('.image'));
-            $(this).addClass('editing');
+            addPositionButtons($(selectedPhoto).find('.image'));
+            addConfirmButtons($(selectedPhoto).find('.image'));
+            addRotationButtons($(selectedPhoto).find('.image'));
+            $(selectedPhoto).addClass('editing');
             $('#printButton a').addClass('disabled');
         }
+        e.stopPropagation();
     });
 });
 
@@ -43,8 +44,8 @@ function addConfirmButtons(imageElem) {
 function addRotationButtons(imageElem) {
     imageElem.before(`
         <div class="confirm-buttons" style="position:absolute; width:${imageElem.width()}px;  transform: translate(0px, -35px);">
-            <button class="btn-floating btn-small grey darken-3" style="color: #212121;" onclick="rotateLeft()"><i class="material-icons">rotate_left</i></button>
-            <button class="btn-floating btn-small grey darken-3" style="color: #212121;" onclick="rotateRight()"><i class="material-icons">rotate_right</i></button>
+            <button class="btn-floating btn-small grey darken-3" style="color: #212121;" onclick="rotateLeft(event)"><i class="material-icons">rotate_left</i></button>
+            <button class="btn-floating btn-small grey darken-3" style="color: #212121;" onclick="rotateRight(event)"><i class="material-icons">rotate_right</i></button>
         </div>
     `);
 }
@@ -156,12 +157,14 @@ function getAxis(axis){
     return axis;
 }
 
-function rotateRight() {
+function rotateRight(e) {
     rotateImage($(selectedPhoto).find('.image'), -90);
+    e.stopPropagation();
 }
 
-function rotateLeft() {
+function rotateLeft(e) {
     rotateImage($(selectedPhoto).find('.image'), 90);
+    e.stopPropagation();
 }
 
 function rotateImage(photo, angle){
@@ -182,9 +185,26 @@ function rotateImage(photo, angle){
     });
 }
 
+var selectedPaper;
+$(document).ready(function(params) {
+    $('.paper').click(function (e) {
+        if (!selectedPhoto) {
+            selectedPaper = this;
+            $('#background-selector').modal('open');
+        }
+    });
+    $('.design').click(function() {
+        var backgroundImageValue = $(this).data('filename') ? `url("/backgroundStyles/${$(this).data('filename')}")` : 'none';
+        $(selectedPaper).css('background-image', backgroundImageValue);
+        printerIframe.setBackgroundImage($(selectedPaper).attr('id'), backgroundImageValue);
+        $('#background-selector').modal('close');
+    });
+});
+
 $(document).ready(function () {
     $('.fixed-action-btn').floatingActionButton();
     $('.tooltipped').tooltip();
+    $('.modal').modal();
     printerIframe = document.getElementById("printerIframe").contentWindow;
     setKeyboardEvents();
 });

@@ -38,13 +38,40 @@
                 </a>
                 <ul>
                     <li><a class="btn-floating deep-purple darken-3 tooltipped" data-position="left" data-tooltip="JPG" onclick="printImage('JPEG')"><i class="material-icons">photo</i></a></li>
-                    <li><a class="btn-floating deep-purple darken-3 tooltipped" data-position="left" data-tooltip="PNG"onclick="printPng('PNG')"><i class="material-icons">gradient</i></a></li>
+                    <li><a class="btn-floating deep-purple darken-3 tooltipped" data-position="left" data-tooltip="PNG" onclick="printPng('PNG')"><i class="material-icons">gradient</i></a></li>
                 </ul>
             </div>
         </div>
     </div>
     <iframe id="printerIframe" src="<%= pageType %>" frameborder="0"></iframe>
 </main>
+
+<!-- Background Selector -->
+<div id="background-selector" class="modal modal-fixed-footer" style="width: 60%; height:100%; max-height: 80%;">
+    <div class="modal-content">
+        <h4>Seleccioná el diseño de fondo</h4>
+        <div class="row">
+            <% backgroundStyles.forEach(function(style){ %>
+            <div class="col m2">
+                <% if (style.filename) { %>
+                <div class="design" data-filename="<%= style.filename %>">
+                    <div class="preview" style="background-image: url('backgroundStyles/<%= style.filename %>');"></div>
+                    <span><%= style.name %></span>
+                </div>
+                <% } else { %>
+                <div class="design">
+                <div class="preview" style="background-image: url('img/empty.jpg')"></div>
+                    <span><%= style.name %></span>
+                </div>
+                <% } %>
+            </div>
+            <% }); %>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">cerrar</a>
+    </div>
+</div>
 
 <script src="lib/jquery/jquery.min.js"></script>
 <script src="lib/materialize/js/materialize.min.js"></script>

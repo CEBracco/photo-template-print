@@ -6,4 +6,6 @@ const interface = require('@appSrc/interface/interface.js');
 var logger = new Logger();
 
 server.start();
-interface.start();
+if (process.versions.hasOwnProperty('electron')) {
+    interface.start();
+}

@@ -4,8 +4,8 @@
   "description": "A tiny program to print photo templates",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "test": "electron --require dotenv/config index.js",
+    "start": "electron --require dotenv/config index.js",
+    "test": "node --require dotenv/config index.js",
     "build": "electron-packager . polly --out=dist/win --icon=app/resources/static/img/build-icon.ico"
   },
   "repository": {
@@ -25,6 +25,7 @@
     "express-fileupload": "^1.1.4",
     "express-force-https": "^1.0.0",
     "jimp": "^0.6.4",
+    "jpeg-autorotate": "^5.0.1",
     "lodash": "^4.17.11",
     "log4js": "^4.1.1",
     "module-alias": "^2.2.0"

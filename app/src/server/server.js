@@ -64,10 +64,14 @@ app.post(['/upload'], function(req, res){
     return res.status(400).send('No files were uploaded.');
   }
   let photo = req.files.photo;
-  photo.mv(path.join(appPath, `/app/resources/static/photos/${new Date().getTime()}_${photo.name}`), function (err) {
-    if (err)
+  var photoPath = path.join(appPath, `/app/resources/static/photos/${new Date().getTime()}_${photo.name}`);
+  photo.mv(photoPath, function (err) {
+    if (err) {
       return res.status(500).send(err);
-    res.send('File uploaded!');
+    }
+    fixOrientation(photoPath, function(){
+      res.send('File uploaded!');
+    })
   });
 });
 
@@ -135,6 +139,26 @@ function getBackgroundStyles() {
     function (f) { return { name: 'Diseño ' + f.replace(/\..*/g, ''), filename: f } });
   styles.unshift({ name: 'Ninguno', filename: null })
   return styles;
+}
+
+function fixOrientation(photoPath, callback) {
+  const jo = require('jpeg-autorotate')
+  jo.rotate(photoPath, {}, (error, buffer, orientation, dimensions, quality) => {
+    if (error) {
+      // console.log('An error occurred when rotating the file: ' + error.message)
+      callback(error);
+      return
+    }
+    var fs = require('fs');
+    fs.writeFile(photoPath, buffer, function (err) {
+      if (err) {
+        // console.log('An error occurred when saving the file: ' + err.message)
+        callback(err);
+        return
+      }
+      callback(err);
+    });
+  })
 }
 
 function start() {

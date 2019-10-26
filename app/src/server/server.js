@@ -1,6 +1,7 @@
 const path = require('path');
 const Config = require('@localModules/config/Config.js');
 const Logger = require('@localModules/logger/Logger.js');
+const photoFrame = require('@localModules/utils/photoFrame/photoFrame.js');
 const _ = require('lodash');
 const express = require('express');
 const fileUpload = require('express-fileupload');
@@ -90,16 +91,29 @@ app.post(['/rotateImage'], function (req, res) {
   });
 });
 
+app.post(['/addFrame'], function (req, res) {
+  var fs = require('fs-extra');
+  var framedPhotosDir = path.join(appPath, `/app/resources/static/photos-framed`)
+  var photoPath = path.join(appPath, `/app/resources/static/photos/${req.body.filename}`)
+  var parameters = getParameters(req.body.type)
+  fs.mkdirp(framedPhotosDir, function (err) {
+    photoFrame.add(photoPath, function(photo) {
+      photo.write(path.join(framedPhotosDir, `framed-${req.body.filename}`));
+      res.json({ ok: true });
+    }, parameters.proportion[0], parameters.proportion[1])
+  });
+});
+
 function getParameters(pageType) {
   switch (pageType) {
     case "polaroid":
-      return { pageType: pageType, pages: _.chunk(getPhotos(), 5) };
+      return { pageType: pageType, pages: _.chunk(getPhotos(), 5), proportion: [100,100] };
     case "instax":
-      return { pageType: pageType, pages: _.chunk(getPhotos(), 7) };
+      return { pageType: pageType, pages: _.chunk(getPhotos(), 7), proportion: [62.5, 100] };
     case "square":
-      return { pageType: pageType, pages: _.chunk(getPhotos(), 6) };
+      return { pageType: pageType, pages: _.chunk(getPhotos(), 6), proportion: [100, 100] };
     case "strip":
-      return { pageType: pageType, pages: _.chunk(_.chunk(getPhotos(), 4), 6) };
+      return { pageType: pageType, pages: _.chunk(_.chunk(getPhotos(), 4), 6), proportion: [100, 100] };
     default:
       return { pageType: pageType };
   }
@@ -123,7 +137,8 @@ function renamePhotos() {
 }
 
 function resetPhotoDirectory(){
-  var fs = require('fs');
+  var fs = require('fs-extra');
+  fs.removeSync(path.join(appPath, '/app/resources/static/photos-framed'))
   getPhotos().forEach(function (file, index) {
     let basePath = path.join(appPath, '/app/resources/static/photos/')
     filename = basePath + file;

@@ -98,7 +98,7 @@ app.post(['/addFrame'], function (req, res) {
   var parameters = getParameters(req.body.type)
   fs.mkdirp(framedPhotosDir, function (err) {
     photoFrame.add(photoPath, function(photo) {
-      photo.write(path.join(framedPhotosDir, `framed-${req.body.filename}`));
+      photo.write(path.join(framedPhotosDir, `${req.body.filename}`));
       res.json({ ok: true });
     }, parameters.proportion[0], parameters.proportion[1])
   });
@@ -180,6 +180,8 @@ function start() {
   port = port ? port : 3000;
   app.listen(port, function () {
     logger.getLogger().debug("Static file server running at port => " + port);
+  }).on('error', function (err) {
+    process.exit(0)
   });
 }
 

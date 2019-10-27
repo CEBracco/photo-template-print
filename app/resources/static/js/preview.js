@@ -43,8 +43,10 @@ function addConfirmButtons(imageElem) {
 
 function addRotationButtons(imageElem) {
     imageElem.before(`
-        <div class="confirm-buttons" style="position:absolute; width:${imageElem.width()}px;  transform: translate(0px, -35px);">
+        <div class="confirm-buttons" style="position:absolute; width:${imageElem.width() + 10}px;  transform: translate(-5px, -35px);">
             <button class="btn-floating btn-small grey darken-3" style="color: #212121;" onclick="rotateLeft(event)"><i class="material-icons">rotate_left</i></button>
+            <button class="btn-floating btn-small deep-purple darken-3 frameOn-btn" style="color: #212121; ${ isFrameApplied() ? 'display: none;' : '' }" onclick="addFrame(event)"><i class="material-icons">blur_on</i></button>
+            <button class="btn-floating btn-small deep-purple darken-3 frameOff-btn" style="color: #212121; ${ isFrameApplied() ? '' : 'display: none;' }" onclick="removeFrame(event)"><i class="material-icons">blur_off</i></button>
             <button class="btn-floating btn-small grey darken-3" style="color: #212121;" onclick="rotateRight(event)"><i class="material-icons">rotate_right</i></button>
         </div>
     `);
@@ -168,6 +170,7 @@ function rotateLeft(e) {
 }
 
 function rotateImage(photo, angle){
+    $(".confirm-buttons > .btn-small").attr("disabled", true)
     var originalUrl = photo.css('background-image').replace(/url\(\"|\"\)/g, "");
     var filename = originalUrl.split('/').reverse()[0].replace(/\?.*/g, "");
     $.ajax({
@@ -179,10 +182,61 @@ function rotateImage(photo, angle){
         }),
         type: 'POST'
     }).done(function(){
+        originalUrl = originalUrl.replace(/\?(?!.*\?).*/g, "");
         var newUrl = `url("${originalUrl}?v=${Math.floor(Math.random() * 100)}")`;
+        newUrl = newUrl.replace(/-framed(?!.*-framed)/g, "")
         photo.css('background-image', newUrl);
         printerIframe.refreshPhoto($(selectedPhoto).attr('id'), newUrl);
+        $(".confirm-buttons > .btn-small").attr("disabled", false);
+        $('.frameOff-btn').hide();
+        $('.frameOn-btn').show();
     });
+}
+
+function addFrame(e) {
+    e.stopPropagation();
+    $(".confirm-buttons > .btn-small").attr("disabled", true)
+    var photo = $(selectedPhoto).find('.image');
+    var originalUrl = photo.css('background-image').replace(/url\(\"|\"\)/g, "");
+    var filename = originalUrl.split('/').reverse()[0].replace(/\?.*/g, "");
+    $.ajax({
+        url: '/addFrame',
+        contentType: 'application/json',
+        data: JSON.stringify({
+            filename: filename,
+            type: pageType
+        }),
+        type: 'POST'
+    }).done(function () {
+        originalUrl = originalUrl.replace(/\?(?!.*\?).*/g, "");
+        var newUrl = `url("${originalUrl}?v=${Math.floor(Math.random() * 100)}")`;
+        newUrl = newUrl.replace(/-framed(?!.*-framed)/g, "")
+        newUrl = newUrl.replace(/photos(?!.*photos)/g, "photos-framed")
+        photo.css('background-image', newUrl);
+        printerIframe.refreshPhoto($(selectedPhoto).attr('id'), newUrl);
+        $(".confirm-buttons > .btn-small").attr("disabled", false);
+        $('.frameOn-btn').hide();
+        $('.frameOff-btn').show();
+    });
+}
+
+function removeFrame(e) {
+    e.stopPropagation();
+    var photo = $(selectedPhoto).find('.image');
+    var originalUrl = photo.css('background-image').replace(/url\(\"|\"\)/g, "");
+    originalUrl = originalUrl.replace(/\?(?!.*\?).*/g, "");
+    var newUrl = `url("${originalUrl}?v=${Math.floor(Math.random() * 100)}")`;
+    newUrl = newUrl.replace(/-framed(?!.*-framed)/g, "")
+    photo.css('background-image', newUrl);
+    printerIframe.refreshPhoto($(selectedPhoto).attr('id'), newUrl);
+    $('.frameOff-btn').hide();
+    $('.frameOn-btn').show();
+}
+
+function isFrameApplied() {
+    var photo = $(selectedPhoto).find('.image');
+    var url = photo.css('background-image').replace(/url\(\"|\"\)/g, "");
+    return url.match(/-framed(?!.*-framed)/g);
 }
 
 var selectedPaper;

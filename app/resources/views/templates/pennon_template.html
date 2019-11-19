@@ -1,16 +1,16 @@
 <% pages.forEach(function(page, pageIndex){ %>
 <div id="page-<%= pageIndex %>" class="page">
+    <div class="fb-row">
     <% page.forEach(function(photo, photoIndex){ %>
-        <div class="fb-row">
-            <div id="photo-<%= pageIndex %>-<%= photoIndex %>" class="photo horizontal paper invert-controls">
-                <div class="image" style="background-image: url('photos/<%= photo %>');"></div>
-                <% if (preview) { %>
-                    <img class="triangle" src="img/triangle-preview.png">
-                <% } else { %>
-                    <img class="triangle" src="img/triangle.png">
-                <% } %>
-            </div>
+        <div id="photo-<%= pageIndex %>-<%= photoIndex %>" class="photo vertical paper">
+            <div class="image" style="background-image: url('photos/<%= photo %>');"></div>
+            <% if (preview) { %>
+                <img class="triangle" src="img/triangle-preview.png">
+            <% } else { %>
+                <img class="triangle" src="img/triangle.png">
+            <% } %>
         </div>
-    <% }); %>
+        <% }); %>
+    </div>
 </div>
 <% }); %>

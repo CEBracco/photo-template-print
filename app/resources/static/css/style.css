@@ -107,3 +107,11 @@ header, main, footer {
     background-position: center;
     background-repeat: no-repeat;
 }
+
+.version-label {
+    bottom: 20px;
+    position: absolute;
+    left: 100px;
+    z-index: 9999;
+    color: #dedede;
+}

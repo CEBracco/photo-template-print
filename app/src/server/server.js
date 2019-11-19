@@ -23,12 +23,12 @@ app.set('view engine', 'html');
 
 app.get(['/', '/index.html'], function (req, res) {
   resetPhotoDirectory();
-  res.render("index", {});
+  res.render("index", { version: getVersion()});
   res.end();
 });
 
 app.get(['/format_selection'], function (req, res) {
-  res.render("format_selection", {});
+  res.render("format_selection", { version: getVersion()});
   res.end();
 });
 
@@ -37,6 +37,7 @@ app.get(['/print'], function (req, res) {
   var previewParameters = getParameters(pageType);
   previewParameters.backgroundStyles = getBackgroundStyles();
   previewParameters.preview = true;
+  previewParameters.version = getVersion()
   res.render("print", previewParameters);
   res.end();
 });
@@ -184,6 +185,11 @@ function fixOrientation(photoPath, callback) {
       callback(err);
     });
   })
+}
+
+function getVersion() {
+  var pjson = require(path.join(appPath, '/package.json'));
+  return pjson.version; 
 }
 
 function start() {

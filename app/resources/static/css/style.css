@@ -110,7 +110,7 @@ header, main, footer {
 
 .version-label {
     bottom: 20px;
-    position: absolute;
+    position: fixed;
     left: 100px;
     z-index: 9999;
     color: #dedede;

@@ -36,6 +36,7 @@ app.get(['/print'], function (req, res) {
   let pageType = req.query.type;
   var previewParameters = getParameters(pageType);
   previewParameters.backgroundStyles = getBackgroundStyles();
+  previewParameters.preview = true;
   res.render("print", previewParameters);
   res.end();
 });
@@ -57,6 +58,13 @@ app.get(['/instax'], function (req, res) {
 
 app.get(['/square'], function (req, res) {
   res.render("print/square", getParameters('square'));
+  res.end();
+});
+
+app.get(['/pennon'], function (req, res) {
+  var printParameters = getParameters('pennon');
+  printParameters.preview = false;
+  res.render("print/pennon", printParameters);
   res.end();
 });
 
@@ -114,6 +122,8 @@ function getParameters(pageType) {
       return { pageType: pageType, pages: _.chunk(getPhotos(), 6), proportion: [100, 100] };
     case "strip":
       return { pageType: pageType, pages: _.chunk(_.chunk(getPhotos(), 4), 6), proportion: [100, 100] };
+    case "pennon":
+      return { pageType: pageType, pages: _.chunk(getPhotos(), 2), proportion: [100, 100] };
     default:
       return { pageType: pageType };
   }

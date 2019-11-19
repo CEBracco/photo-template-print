@@ -1,8 +1,15 @@
-$(document).ajaxStart(function () {
-    Pace.restart();
-}).ajaxStop(function () {
-    Pace.stop();
-});
+$(document).ready(function() {
+    setPaceOptions();
+})
+
+function setPaceOptions(){
+    var interval = setInterval(function() {
+        if (window.Pace) {
+            Pace.options.ajax.trackMethods = ['GET', 'POST'];
+            clearInterval(interval)
+        }
+    }, 2000);
+}
 
 function animateCSS(element, animationName, callback) {
     const node = document.querySelector(element)

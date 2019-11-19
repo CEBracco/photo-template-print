@@ -1,0 +1,52 @@
+.fb-container * {
+    box-sizing: initial;
+}
+.fb-container .page {
+    height: calc(30cm * 0.5);
+    width: calc(20cm * 0.5);
+    border: 1px solid black;
+    padding-left: calc(0.8cm * 0.5);
+    padding-top: calc(0.8cm * 0.5);
+    background-color: white;
+    margin: 10px;
+    float: left;
+}
+.fb-container .photo {
+    border: 1px solid black;
+    border-left: 1px solid transparent;
+    float: left;
+    box-sizing: border-box;
+    height: calc(14.5cm * 0.5);
+    width: calc(19.5cm * 0.5);
+    padding-left: calc(1cm * 0.5);
+    padding-right: calc(1cm * 0.5);
+    padding-top: calc(1.15cm * 0.5);
+}
+.fb-container .fb-row .photo.vertical:nth-child(odd) {
+    margin-right: calc(2cm * 0.5);
+}
+.fb-container .fb-row:nth-child(odd) > .photo.horizontal {
+    bottom: calc(0.2cm * 0.5);
+}
+.fb-container .photo.horizontal {
+    position: relative;
+}
+
+.fb-container .image {
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
+    float: right;
+    height: calc(12.5cm * 0.5);
+    width: calc(12.5cm * 0.5);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.fb-container .triangle {
+    width: calc(4cm * 0.5);
+    height: calc(14.5cm * 0.5);
+    position: absolute;
+    top: calc(-0.05cm * 0.5);
+    left: calc(-0.05cm * 0.5);
+}

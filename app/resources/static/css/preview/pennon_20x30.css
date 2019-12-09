@@ -2,14 +2,16 @@
     box-sizing: initial;
 }
 .fb-container .page {
-    height: calc(20cm * 0.5);
-    width: calc(30cm * 0.5);
+    width: calc(1134px * 0.5);
+    height: calc(755px * 0.5);
     border: 1px solid black;
-    padding-left: calc(0.8cm * 0.5);
-    padding-top: calc(0.8cm * 0.5);
     background-color: white;
     margin: 10px;
     float: left;
+}
+.fb-container .fb-row {
+    padding-left: calc(10px * 0.5);
+    padding-top: calc(8px * 0.5);
 }
 .fb-container .photo {
     border: 1px solid black;
@@ -43,7 +45,8 @@
 .fb-container .triangle {
     height: calc(4cm * 0.5);
     width: calc(14.5cm * 0.5);
+    float: right;
     position: relative;
-    top: calc(1.8cm * 0.5);
-    right: calc(1.06cm * 0.5);
+    top: calc(1.85cm * 0.5);
+    left: calc(1cm * 0.5);
 }

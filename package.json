@@ -6,7 +6,7 @@
   "scripts": {
     "start": "electron --require dotenv/config index.js",
     "test": "node --require dotenv/config index.js",
-    "build": "electron-packager . polly --out=dist/win --icon=app/resources/static/img/build-icon.ico"
+    "build": "electron-packager . polly --out=dist/win --icon=app/resources/static/img/build-icon.ico --overwrite"
   },
   "repository": {
     "type": "git",

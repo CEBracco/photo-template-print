@@ -1,9 +1,14 @@
+/* Page 20cm x 30cm */
 .page {
-    height: calc(30cm * 5);
-    width: calc(20cm * 5);
+    height: calc(1134px * 5);
+    width: calc(755px * 5);
     border: 1px solid black;
-    padding-left: calc(0.8cm * 5);
     background-color: white;
+    box-sizing: border-box;
+    margin-bottom: 600px;
+}
+.fb-row {
+    padding-left: calc(10px * 5);
 }
 .photo {
     border: 1px solid black;

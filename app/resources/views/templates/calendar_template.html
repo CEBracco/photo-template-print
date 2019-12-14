@@ -1,0 +1,66 @@
+<%
+    Date.prototype.addDays = function(days) {
+        var date = new Date(this.valueOf());
+        date.setDate(date.getDate() + days);
+        return date;
+    }
+    var months = ['ENE','FEB','MAR','ABR','MAY','JUN','JUL','AGO','SEP','OCT','DIC'];
+    var startYear = new Date().getFullYear() + 1;
+    var calendarDate = new Date(`${startYear}-01-01 00:00:00`);
+%>
+<% pages.forEach(function(page, pageIndex){ %>
+<div id="page-<%= pageIndex %>" class="page">
+    <div class="fb-row">
+    <% page.forEach(function(photo, photoIndex){ %>
+        <div id="photo-<%= pageIndex %>-<%= photoIndex %>" class="photo vertical paper">
+            <%
+                var actualMonth = calendarDate.getMonth();
+                var startDay = calendarDate.getDay();
+            %>
+            <div class="image" style="background-image: url('photos/<%= photo %>');"></div>
+                <div class="polly-calendar">
+                    <div class="month-indicator">
+                        <p class="month calendar-month"><%= months[actualMonth] %></p>
+                        <hr class="calendar-separator">
+                        <p class="year calendar-year"><%= calendarDate.getFullYear() %></p>
+                    </div>
+                    <div class="calendar-grid">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="calendar-day">D</th>
+                                    <th class="calendar-day">L</th>
+                                    <th class="calendar-day">M</th>
+                                    <th class="calendar-day">M</th>
+                                    <th class="calendar-day">J</th>
+                                    <th class="calendar-day">V</th>
+                                    <th class="calendar-day">S</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% if (startDay > 0) { %>
+                                <tr>
+                                    <% for (let emptyDays = 0; emptyDays < startDay; emptyDays++) { %>
+                                        <td></td>
+                                    <% } %>
+                                <% } %>
+                                <% while(calendarDate.getMonth() == actualMonth) { %>
+                                    <% if (calendarDate.getDay() == 0) { %>
+                                    <tr>
+                                    <% } %>
+                                        <td class="calendar-date"><%= calendarDate.getDate() %></td>
+                                    <% if (calendarDate.getDay() == 6) { %>
+                                    </tr>
+                                <% } %>
+                                    <% calendarDate = calendarDate.addDays(1); %>
+                                <% } %>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+    <% }); %>
+    </div>
+</div>
+<% }); %>

@@ -5,7 +5,7 @@
         return date;
     }
     var months = ['ENE','FEB','MAR','ABR','MAY','JUN','JUL','AGO','SEP','OCT','DIC'];
-    var startYear = new Date().getFullYear() + 1;
+    var startYear = selectedYear ? selectedYear : new Date().getFullYear();
     var calendarDate = new Date(`${startYear}-01-01 00:00:00`);
 %>
 <% pages.forEach(function(page, pageIndex){ %>

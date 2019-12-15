@@ -48,7 +48,7 @@
 }
 .fb-container .month-indicator .month {
     margin: 0;
-    font-size: calc(68px * 0.5);
+    font-size: calc(64px * 0.5);
     line-height: 1em;
     font-weight: lighter;
 }

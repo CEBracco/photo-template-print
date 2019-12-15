@@ -34,10 +34,12 @@ app.get(['/format_selection'], function (req, res) {
 
 app.get(['/print'], function (req, res) {
   let pageType = req.query.type;
+  let selectedYear = req.query.year;
   var previewParameters = getParameters(pageType);
   previewParameters.backgroundStyles = getBackgroundStyles();
   previewParameters.preview = true;
-  previewParameters.version = getVersion()
+  previewParameters.selectedYear = selectedYear;
+  previewParameters.version = getVersion();
   res.render("print", previewParameters);
   res.end();
 });
@@ -70,14 +72,11 @@ app.get(['/pennon'], function (req, res) {
 });
 
 app.get(['/calendar'], function (req, res) {
+  let selectedYear = req.query.year;
   var printParameters = getParameters('calendar');
   printParameters.preview = false;
+  printParameters.selectedYear = selectedYear;
   res.render("print/calendar", printParameters);
-  res.end();
-});
-
-app.get(['/calendar-test'], function (req, res) {
-  res.render("calendar", { startDate: "2020-01-01" });
   res.end();
 });
 

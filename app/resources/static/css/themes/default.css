@@ -59,3 +59,6 @@ main, body {
 .card .card-title {
     color: #dedede;
 }
+.year-selector a.collection-item {
+    color: #d81b60;
+}

@@ -18,48 +18,48 @@
                 var startDay = calendarDate.getDay();
             %>
             <div class="image" style="background-image: url('photos/<%= photo %>');"></div>
-                <div class="polly-calendar">
-                    <div class="month-indicator">
-                        <p class="month calendar-month"><%= months[actualMonth] %></p>
-                        <hr class="calendar-separator">
-                        <p class="year calendar-year"><%= calendarDate.getFullYear() %></p>
-                    </div>
-                    <div class="calendar-grid">
-                        <table>
-                            <thead>
+            <div class="polly-calendar">
+                <div class="month-indicator">
+                    <p class="month calendar-month calendar-monthAndYear"><%= months[actualMonth] %></p>
+                    <hr class="calendar-separator">
+                    <p class="year calendar-year calendar-monthAndYear"><%= calendarDate.getFullYear() %></p>
+                </div>
+                <div class="calendar-grid">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="calendar-day">D</th>
+                                <th class="calendar-day">L</th>
+                                <th class="calendar-day">M</th>
+                                <th class="calendar-day">M</th>
+                                <th class="calendar-day">J</th>
+                                <th class="calendar-day">V</th>
+                                <th class="calendar-day">S</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% if (startDay > 0) { %>
+                            <tr>
+                                <% for (let emptyDays = 0; emptyDays < startDay; emptyDays++) { %>
+                                    <td></td>
+                                <% } %>
+                            <% } %>
+                            <% while(calendarDate.getMonth() == actualMonth) { %>
+                                <% if (calendarDate.getDay() == 0) { %>
                                 <tr>
-                                    <th class="calendar-day">D</th>
-                                    <th class="calendar-day">L</th>
-                                    <th class="calendar-day">M</th>
-                                    <th class="calendar-day">M</th>
-                                    <th class="calendar-day">J</th>
-                                    <th class="calendar-day">V</th>
-                                    <th class="calendar-day">S</th>
+                                <% } %>
+                                    <td class="calendar-date"><%= calendarDate.getDate() %></td>
+                                <% if (calendarDate.getDay() == 6) { %>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                <% if (startDay > 0) { %>
-                                <tr>
-                                    <% for (let emptyDays = 0; emptyDays < startDay; emptyDays++) { %>
-                                        <td></td>
-                                    <% } %>
-                                <% } %>
-                                <% while(calendarDate.getMonth() == actualMonth) { %>
-                                    <% if (calendarDate.getDay() == 0) { %>
-                                    <tr>
-                                    <% } %>
-                                        <td class="calendar-date"><%= calendarDate.getDate() %></td>
-                                    <% if (calendarDate.getDay() == 6) { %>
-                                    </tr>
-                                <% } %>
-                                    <% calendarDate = calendarDate.addDays(1); %>
-                                <% } %>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                            <% } %>
+                                <% calendarDate = calendarDate.addDays(1); %>
+                            <% } %>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
+        </div>
     <% }); %>
     </div>
 </div>

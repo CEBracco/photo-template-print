@@ -10,6 +10,9 @@
     <link href="lib/material-icons/material-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="lib/fontawesome/css/all.min.css">
     <link href="lib/pace/pace-theme.css" rel="stylesheet" />
+    <link href="lib/jBox/jBox.all.min.css" rel="stylesheet" />
+    <link href="lib/spectrum/spectrum.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="lib/spectrum/themes/sp-dark.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/themes/default.css">
 </head>
@@ -74,12 +77,48 @@
         <a href="#!" class="modal-close waves-effect waves-green btn-flat">cerrar</a>
     </div>
 </div>
+
+<!-- Calendar mods -->
+<div class="hide">
+    <div id="calendar-mods-panel">
+        <p class="no-margin-top">Opciones de Calendario</p>
+        <p class="color-field">
+            <label>Color de mes y año</label>
+            <input type="text" data-css-element-property="color|calendar-monthAndYear">
+        </p>
+        <p class="color-field">
+            <label>Color de separador</label>
+            <input type="text" data-css-element-property="background-color|calendar-separator">
+        </p>
+        <p class="color-field">
+            <label>Color de encabezados</label>
+            <input type="text" data-css-element-property="color|calendar-day">
+        </p>
+        <p class="color-field">
+            <label>Color de fechas</label>
+            <input type="text" data-css-element-property="color|calendar-date">
+        </p>
+        <p class="color-field">
+            <label>Color de fondo</label>
+            <input type="text" data-css-element-property="background-color|polly-calendar">
+        </p>
+        <p class="center-align">
+            <a class="waves-effect waves-light btn-small pink accent-3 jbox-close save-calendar-changes">Aplicar</a>
+            <a class="waves-effect waves-light btn-small btn-flat white-text clear-button jbox-close" onclick="restoreCalendarsProperties()">Descartar</a>
+        </p>
+    </div>
+</div>
+
 <script>
     var pageType = "<%= pageType %>";
 </script>
 <script src="lib/jquery/jquery.min.js"></script>
 <script src="lib/materialize/js/materialize.min.js"></script>
 <script src="lib/pace/pace.min.js"></script>
+<script src="lib/jBox/jBox.all.min.js"></script>
+<script src="lib/spectrum/spectrum.js"></script>
+<script src="lib/spectrum/i18n/jquery.spectrum-es.js"></script>
+<script src="lib/zoomerang/zoomerang.js"></script>
 <script src="js/base.js"></script>
 <script src="js/preview.js"></script>
 

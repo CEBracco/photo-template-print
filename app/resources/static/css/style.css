@@ -92,6 +92,11 @@ header, main, footer {
     background-color: #bdbdbd !important;
 }
 
+/* Helpers */
+.no-margin-top {
+    margin-top: 0;
+}
+
 /* Design selection */
 .design {
     width: 100%;
@@ -118,4 +123,12 @@ header, main, footer {
     left: 100px;
     z-index: 9999;
     color: #dedede;
+}
+
+/* edition tooltip */
+.color-field .sp-replacer {
+    float: right;
+}
+.color-field label {
+    padding-right: 10px;
 }

@@ -242,6 +242,7 @@ function isFrameApplied() {
 var selectedPaper;
 $(document).ready(function(params) {
     $('.paper').click(function (e) {
+        e.stopPropagation();
         if (!selectedPhoto) {
             selectedPaper = this;
             $('#background-selector').modal('open');
@@ -259,6 +260,74 @@ $(document).ready(function () {
     $('.fixed-action-btn').floatingActionButton();
     $('.tooltipped').tooltip();
     $('.modal').modal();
+    $('.color-field input').spectrum({ 
+        showAlpha: true, 
+        showInput: true,
+        theme: "sp-dark", 
+        preferredFormat: "rgb"
+    });
+    Zoomerang.config({
+        maxHeight: $(window).height() - 50,
+        maxWidth: $(window).width() - 50,
+        bgColor: '#000',
+        bgOpacity: .85
+    }).listen('.page');
     printerIframe = document.getElementById("printerIframe").contentWindow;
     setKeyboardEvents();
 });
+
+$(document).ready(function () {
+    $('.color-field input').change(function(){
+        var cssProperty = $(this).data('cssElementProperty').split('|')[0];
+        var elementClass = $(this).data('cssElementProperty').split('|')[1];
+        $('.' + elementClass).css(cssProperty, $(this).val())
+    });
+})
+
+
+// calendars logic
+var calendarsProperties = []
+$(document).ready(function() {
+    $('.polly-calendar').click(function (e) {
+        e.stopPropagation();
+        selectedCalendar = this
+    }).jBox('Tooltip', {
+        trigger: 'click',
+        content: $('#calendar-mods-panel'),
+        onOpen: function () {
+            saveCalendarsProperties();
+            var jboxTooltip = this
+            $('.jbox-close').one('click',function() {
+                jboxTooltip.close()    
+            })
+        }
+    });
+})
+
+function saveCalendarsProperties() {
+    calendarsProperties = []
+    $('.polly-calendar').each(function() {
+        var calendarProperties = {}
+        calendarProperties["background-color|polly-calendar"] = $(this).css('background-color');
+        calendarProperties["color|calendar-day"] = $(this).find('.calendar-day').css('color');
+        calendarProperties["color|calendar-date"] = $(this).find('.calendar-date').css('color');
+        calendarProperties["color|calendar-monthAndYear"] = $(this).find('.calendar-monthAndYear').css('color');
+        calendarProperties["background-color|calendar-separator"] = $(this).find('.calendar-separator').css('background-color');
+
+        calendarsProperties.push(calendarProperties); 
+    })
+}
+
+function restoreCalendarsProperties() {
+    $('.polly-calendar').each(function (index) {
+        var calendarProperties = calendarsProperties[index];
+        for (const property in calendarProperties) {
+            if (calendarProperties.hasOwnProperty(property)) {
+                const style = calendarProperties[property];
+                const cssProperty = property.split('|')[0];
+                const propertyElement = property.split('|')[1];
+                $(this).find('.' + propertyElement).addBack('.' + propertyElement).css(cssProperty, style);
+            }
+        }
+    })
+}

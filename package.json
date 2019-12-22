@@ -7,7 +7,8 @@
     "start": "electron index.js",
     "test": "node index.js",
     "build:pack": "electron-builder --dir",
-    "build:release": "electron-builder"
+    "build:dist": "electron-builder",
+    "build:release": "electron-builder --publish always",
   },
   "build": {
     "appId": "com.florbarraufotografia.polly",
@@ -17,6 +18,12 @@
     "productName": "Polly",
     "directories": {
       "buildResources": "./app/build"
+    },
+    "win": {
+      "publish": {
+        "provider": "github",
+        "releaseType": "release"
+      }
     }
   },
   "repository": {

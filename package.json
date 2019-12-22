@@ -4,9 +4,20 @@
   "description": "A tiny program to print photo templates",
   "main": "index.js",
   "scripts": {
-    "start": "electron --require dotenv/config index.js",
-    "test": "node --require dotenv/config index.js",
-    "build": "electron-packager . polly --out=dist/win --icon=app/resources/static/img/build-icon.ico --overwrite"
+    "start": "electron index.js",
+    "test": "node index.js",
+    "build:pack": "electron-builder --dir",
+    "build:release": "electron-builder"
+  },
+  "build": {
+    "appId": "com.florbarraufotografia.polly",
+    "mac": {
+      "category": "com.florbarraufotografia.polly"
+    },
+    "productName": "Polly",
+    "directories": {
+      "buildResources": "./app/build"
+    }
   },
   "repository": {
     "type": "git",
@@ -31,15 +42,9 @@
     "log4js": "^4.1.1",
     "module-alias": "^2.2.0"
   },
-  "_moduleAliases": {
-    "@appSrc": "./app/src",
-    "@localModules": "./modules"
-  },
-  "_moduleDirectories": [
-    "modules"
-  ],
   "devDependencies": {
     "electron": "^5.0.1",
+    "electron-builder": "^21.2.0",
     "electron-packager": "^13.1.1"
   }
 }

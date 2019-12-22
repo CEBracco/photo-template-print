@@ -17,6 +17,7 @@ app.use(secure);
 app.use(express.json());
 app.use(fileUpload());
 app.use('/', express.static(appPath + '/app/resources/static'));
+app.use('/', express.static(getPhotosDirPath()));
 app.set('views', appPath + '/app/resources/views');
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
@@ -85,7 +86,7 @@ app.post(['/upload'], function(req, res){
     return res.status(400).send('No files were uploaded.');
   }
   let photo = req.files.photo;
-  var photoPath = path.join(appPath, `/app/resources/static/photos/${new Date().getTime()}_${photo.name}`);
+  var photoPath = path.join(getPhotosDirPath(), `/photos/${new Date().getTime()}_${photo.name}`);
   photo.mv(photoPath, function (err) {
     if (err) {
       return res.status(500).send(err);
@@ -103,18 +104,18 @@ app.post(['/processPhotos'], function (req, res) {
 
 app.post(['/rotateImage'], function (req, res) {
   var Jimp = require('jimp');
-  Jimp.read(path.join(appPath, `/app/resources/static/photos/${req.body.filename}`), (err, image) => {
+  Jimp.read(path.join(getPhotosDirPath(), `/photos/${req.body.filename}`), (err, image) => {
     if (err) throw err;
     image.rotate(req.body.angle ? req.body.angle : 90) 
-    .write(path.join(appPath, `/app/resources/static/photos/${req.body.filename}`)); // save
+      .write(path.join(getPhotosDirPath(), `/photos/${req.body.filename}`)); // save
     res.json({ ok: true });
   });
 });
 
 app.post(['/addFrame'], function (req, res) {
   var fs = require('fs-extra');
-  var framedPhotosDir = path.join(appPath, `/app/resources/static/photos-framed`)
-  var photoPath = path.join(appPath, `/app/resources/static/photos/${req.body.filename}`)
+  var framedPhotosDir = path.join(getPhotosDirPath(), `/photos-framed`)
+  var photoPath = path.join(getPhotosDirPath(), `/photos/${req.body.filename}`)
   var parameters = getParameters(req.body.type)
   fs.mkdirp(framedPhotosDir, function (err) {
     photoFrame.add(photoPath, function(photo) {
@@ -146,7 +147,7 @@ function getParameters(pageType) {
 function getPhotos() {
   var fs = require('fs');
   return _.filter(
-    fs.readdirSync(path.join(appPath, '/app/resources/static/photos')), 
+    fs.readdirSync(path.join(getPhotosDirPath(), '/photos')), 
     function (f) { return !/^\./g.test(f)});
 }
 
@@ -154,7 +155,7 @@ function renamePhotos() {
   var fs = require('fs');
   var files = []
   getPhotos().forEach(function(file, index){
-    let basePath = path.join(appPath, '/app/resources/static/photos/')
+    let basePath = path.join(getPhotosDirPath(), '/photos/')
     filename = basePath + file;
     fs.renameSync(filename, basePath + file.replace(/.*\./g, `${index}.`));
   });
@@ -162,9 +163,9 @@ function renamePhotos() {
 
 function resetPhotoDirectory(){
   var fs = require('fs-extra');
-  fs.removeSync(path.join(appPath, '/app/resources/static/photos-framed'))
+  fs.removeSync(path.join(getPhotosDirPath(), '/photos-framed'))
   getPhotos().forEach(function (file, index) {
-    let basePath = path.join(appPath, '/app/resources/static/photos/')
+    let basePath = path.join(getPhotosDirPath(), '/photos/')
     filename = basePath + file;
     fs.unlinkSync(filename);
   });
@@ -212,6 +213,14 @@ function start() {
   }).on('error', function (err) {
     process.exit(0)
   });
+}
+
+function getPhotosDirPath() {
+  var fs = require('fs-extra');
+  fs.mkdirpSync(config.get('PHOTOS_DIR_PATH'));
+  fs.mkdirpSync(path.join(config.get('PHOTOS_DIR_PATH'), '/photos'));
+  fs.mkdirpSync(path.join(config.get('PHOTOS_DIR_PATH'), '/photos-framed'));
+  return config.get('PHOTOS_DIR_PATH');
 }
 
 module.exports = {

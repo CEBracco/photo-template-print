@@ -1,5 +1,7 @@
+require('./app/src/config/config-tools').configure(__dirname)
+
 require('module-alias/register');
-const Logger = require('./modules/logger/Logger.js');
+const Logger = require('@localModules/logger/Logger.js');
 const server = require('@appSrc/server/server.js');
 const interface = require('@appSrc/interface/interface.js');
 

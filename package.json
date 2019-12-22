@@ -8,7 +8,7 @@
     "test": "node index.js",
     "build:pack": "electron-builder --dir",
     "build:dist": "electron-builder",
-    "build:release": "electron-builder --publish always",
+    "build:release": "electron-builder --publish always"
   },
   "build": {
     "appId": "com.florbarraufotografia.polly",
@@ -39,6 +39,8 @@
   "dependencies": {
     "dotenv": "^8.0.0",
     "ejs": "^2.6.1",
+    "electron-log": "^4.0.0",
+    "electron-updater": "^4.2.0",
     "express": "^4.16.4",
     "express-fileupload": "^1.1.4",
     "express-force-https": "^1.0.0",

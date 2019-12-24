@@ -84,27 +84,33 @@
         <p class="no-margin-top">Opciones de Calendario</p>
         <p class="color-field">
             <label>Color de mes y año</label>
-            <input type="text" data-css-element-property="color|calendar-monthAndYear">
+            <input type="text" data-css-element-property="color|calendar-monthAndYear|calendar">
         </p>
         <p class="color-field">
             <label>Color de separador</label>
-            <input type="text" data-css-element-property="background-color|calendar-separator">
+            <input type="text" data-css-element-property="background-color|calendar-separator|calendar">
         </p>
         <p class="color-field">
             <label>Color de encabezados</label>
-            <input type="text" data-css-element-property="color|calendar-day">
+            <input type="text" data-css-element-property="color|calendar-day|calendar">
         </p>
         <p class="color-field">
             <label>Color de fechas</label>
-            <input type="text" data-css-element-property="color|calendar-date">
+            <input type="text" data-css-element-property="color|calendar-date|calendar">
         </p>
         <p class="color-field">
             <label>Color de fondo</label>
-            <input type="text" data-css-element-property="background-color|polly-calendar">
+            <input type="text" data-css-element-property="background-color|polly-calendar|calendar">
+        </p>
+        <p class="center-align">
+            <label>
+                <input type="checkbox" class="filled-in apply-all-calendars" />
+                <span>Aplicar a todos</span>
+            </label>
         </p>
         <p class="center-align">
             <a class="waves-effect waves-light btn-small pink accent-3 jbox-close save-calendar-changes">Aplicar</a>
-            <a class="waves-effect waves-light btn-small btn-flat white-text clear-button jbox-close" onclick="restoreCalendarsProperties()">Descartar</a>
+            <a class="waves-effect waves-light btn-small btn-flat white-text clear-button jbox-close" onclick="restoreCalendarsProperties(true)">Descartar</a>
         </p>
     </div>
 </div>

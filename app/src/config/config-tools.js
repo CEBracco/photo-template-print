@@ -1,9 +1,11 @@
 function configure(basePath) {
     //autoUpdater
-    const { autoUpdater } = require("electron-updater")
-    autoUpdater.logger = require("electron-log")
-    autoUpdater.logger.transports.file.level = "info"
-    autoUpdater.checkForUpdatesAndNotify()
+    if (process.versions.hasOwnProperty('electron')) {
+        const { autoUpdater } = require("electron-updater")
+        autoUpdater.logger = require("electron-log")
+        autoUpdater.logger.transports.file.level = "info"
+        autoUpdater.checkForUpdatesAndNotify()
+    }
 
     //dotEnv
     require('dotenv').config({ path: `${basePath}/.env` })

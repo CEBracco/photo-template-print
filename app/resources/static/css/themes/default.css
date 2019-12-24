@@ -104,3 +104,9 @@ main, body {
 .sp-dark .sp-input {
     color: white;
 }
+
+/* Checkbox */
+[type="checkbox"].filled-in:checked+span:not(.lever):after {
+    background-color: #d81b60;
+    border: 2px solid #d81b60;
+}

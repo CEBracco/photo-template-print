@@ -92,3 +92,30 @@ function setBackgroundImage(paperId, backgroundImageValue) {
     var paper = $(`#${paperId}`);
     paper.css('background-image', backgroundImageValue);
 }
+
+//Calendars logic
+
+function setCalendarProperties(photoId, properties, applyToAll) {
+    if (applyToAll) {
+        $('.' + properties.elementClass).css(properties.cssProperty, properties.cssValue);
+    } else {
+        $(`#${photoId} .polly-calendar`)
+            .find('.' + properties.elementClass)
+            .addBack('.' + properties.elementClass)
+            .css(properties.cssProperty, properties.cssValue);
+    }
+}
+
+function restoreCalendarsProperties(calendarsProperties) {
+    $('.polly-calendar').each(function (index) {
+        var calendarProperties = calendarsProperties[index];
+        for (const property in calendarProperties) {
+            if (calendarProperties.hasOwnProperty(property)) {
+                const style = calendarProperties[property];
+                const cssProperty = property.split('|')[0];
+                const propertyElement = property.split('|')[1];
+                $(this).find('.' + propertyElement).addBack('.' + propertyElement).css(cssProperty, style);
+            }
+        }
+    })
+}

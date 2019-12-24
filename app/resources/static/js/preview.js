@@ -61,10 +61,10 @@ function deselectElement() {
     invertControls=false;
 }
 
-function discard(e) {
+function discard(e = null) {
     setPreviousValues();
     deselectElement();
-    e.stopPropagation();
+    if (e) { e.stopPropagation();}
 }
 
 function save(e) {
@@ -280,28 +280,41 @@ $(document).ready(function () {
     $('.color-field input').change(function(){
         var cssProperty = $(this).data('cssElementProperty').split('|')[0];
         var elementClass = $(this).data('cssElementProperty').split('|')[1];
-        $('.' + elementClass).css(cssProperty, $(this).val())
+        var elementType = $(this).data('cssElementProperty').split('|')[2];
+        window[elementType + "PreviewChanges"](elementClass, cssProperty, $(this).val())
     });
 })
 
 
 // calendars logic
 var calendarsProperties = []
+var selectedCalendar
 $(document).ready(function() {
     $('.polly-calendar').click(function (e) {
         e.stopPropagation();
+        if (!selectedCalendar && selectedPhoto) { discard() }
         selectedCalendar = this
+        if (selectedPhoto && ($(selectedPhoto).attr('id') != $(selectedCalendar).closest('.photo')[0])) {
+            restoreCalendarsProperties()
+        }
+        selectedPhoto = $(selectedCalendar).closest('.photo')[0]
+        setColorInputs()
     }).jBox('Tooltip', {
         trigger: 'click',
         content: $('#calendar-mods-panel'),
-        onOpen: function () {
+        onOpen: function() {
             saveCalendarsProperties();
-            var jboxTooltip = this
+            var jboxCalendarTooltip = this
             $('.jbox-close').one('click',function() {
-                jboxTooltip.close()    
+                jboxCalendarTooltip.close()
             })
+        },
+        onClose: function() {
+            selectedPhoto = null
+            selectedCalendar = null
         }
     });
+    $('.apply-all-calendars').change(toggleAllStyles)
 })
 
 function saveCalendarsProperties() {
@@ -319,15 +332,44 @@ function saveCalendarsProperties() {
 }
 
 function restoreCalendarsProperties() {
-    $('.polly-calendar').each(function (index) {
-        var calendarProperties = calendarsProperties[index];
-        for (const property in calendarProperties) {
-            if (calendarProperties.hasOwnProperty(property)) {
-                const style = calendarProperties[property];
-                const cssProperty = property.split('|')[0];
-                const propertyElement = property.split('|')[1];
-                $(this).find('.' + propertyElement).addBack('.' + propertyElement).css(cssProperty, style);
+    if (calendarsProperties) {
+        $('.polly-calendar').each(function (index) {
+            var calendarProperties = calendarsProperties[index];
+            for (const property in calendarProperties) {
+                if (calendarProperties.hasOwnProperty(property)) {
+                    const style = calendarProperties[property];
+                    const cssProperty = property.split('|')[0];
+                    const propertyElement = property.split('|')[1];
+                    $(this).find('.' + propertyElement).addBack('.' + propertyElement).css(cssProperty, style);
+                }
             }
-        }
+        })
+        printerIframe.restoreCalendarsProperties(calendarsProperties)
+    }
+}
+
+function calendarPreviewChanges(elementClass, cssProperty, cssValue) {
+    if ($('.apply-all-calendars').is(':checked')) {
+        $('.' + elementClass).css(cssProperty, cssValue);
+    } else {
+        $(selectedCalendar).find('.' + elementClass).addBack('.' + elementClass).css(cssProperty, cssValue);
+    }
+    printerIframe.setCalendarProperties($(selectedPhoto).attr('id'), {
+        elementClass: elementClass,
+        cssProperty: cssProperty,
+        cssValue: cssValue
+    }, $('.apply-all-calendars').is(':checked'));
+}
+
+function toggleAllStyles() {
+    restoreCalendarsProperties()
+    $('#calendar-mods-panel .color-field input').trigger('change')
+}
+
+function setColorInputs() {
+    $('#calendar-mods-panel .color-field input').each(function () {
+        var cssProperty = $(this).data('cssElementProperty').split('|')[0];
+        var elementClass = $(this).data('cssElementProperty').split('|')[1];
+        $(this).spectrum("set", $(selectedCalendar).find('.' + elementClass).addBack('.' + elementClass).first().css(cssProperty));
     })
 }

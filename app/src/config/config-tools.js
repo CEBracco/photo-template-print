@@ -10,6 +10,7 @@ function configure(basePath) {
 
     //autoUpdater
     if (process.versions.hasOwnProperty('electron')) {
+        global.updateAvailable = false
         var wsSender = require('@appSrc/websockets/websocketSender.js');
         const { autoUpdater } = require("electron-updater")
         autoUpdater.logger = require("electron-log")
@@ -18,14 +19,12 @@ function configure(basePath) {
             autoUpdater.logger.info("available!")
         })
         autoUpdater.on('download-progress', function (e) {
-            autoUpdater.logger.info("download progress", e.percent)
             wsSender.sendDownloadStatus(e.percent)
         })
         autoUpdater.on('update-downloaded', function () {
-            autoUpdater.logger.info("downloaded!")
+            global.updateAvailable = true
             wsSender.sendUpdateReady()
         })
-        // autoUpdater.checkForUpdatesAndNotify()
         autoUpdater.checkForUpdates()
     }
 }

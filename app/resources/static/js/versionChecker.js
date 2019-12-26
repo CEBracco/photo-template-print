@@ -35,7 +35,7 @@ function createConnection() {
 
 function showDownloadStatus(progress) {
     $(".version-info .download-status .progress .determinate").css('width', progress + '%');
-    $(".version-info .download-status .progress-percentage").text(progress + '%');
+    $(".version-info .download-status .progress-percentage").text(Math.round(progress) + '%');
     $(".version-info .download-status").removeClass('hide');
 }
 function showUpdateReady() {
@@ -45,4 +45,7 @@ function showUpdateReady() {
 
 $(document).ready(function() {
     createConnection()
+    $('.restart-button').click(function() {
+        $.ajax({url: '/restart', type: 'GET'})
+    })
 })

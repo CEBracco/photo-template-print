@@ -24,12 +24,12 @@ app.set('view engine', 'html');
 
 app.get(['/', '/index.html'], function (req, res) {
   resetPhotoDirectory();
-  res.render("index", { version: getVersion()});
+  res.render("index", { version: getVersion(), updateAvailable: global.updateAvailable });
   res.end();
 });
 
 app.get(['/format_selection'], function (req, res) {
-  res.render("format_selection", { version: getVersion()});
+  res.render("format_selection", { version: getVersion(), updateAvailable: global.updateAvailable });
   res.end();
 });
 
@@ -41,6 +41,7 @@ app.get(['/print'], function (req, res) {
   previewParameters.preview = true;
   previewParameters.selectedYear = selectedYear;
   previewParameters.version = getVersion();
+  previewParameters.updateAvailable = global.updateAvailable
   res.render("print", previewParameters);
   res.end();
 });
@@ -144,18 +145,6 @@ function getParameters(pageType) {
   }
 }
 
-app.post(['/downloadStatus'], function (req, res) {
-  var wsSender = require('@appSrc/websockets/websocketSender.js');
-  wsSender.sendDownloadStatus(req.body.progress)
-  res.json({ ok: true });
-});
-
-app.post(['/updateReady'], function (req, res) {
-  var wsSender = require('@appSrc/websockets/websocketSender.js');
-  wsSender.sendUpdateReady()
-  res.json({ ok: true });
-});
-
 function getPhotos() {
   var fs = require('fs');
   return _.filter(
@@ -250,6 +239,14 @@ function getPhotosDirPath() {
   fs.mkdirpSync(path.join(config.get('PHOTOS_DIR_PATH'), '/photos-framed'));
   return config.get('PHOTOS_DIR_PATH');
 }
+
+app.get(['/restart'], function (req, res) {
+  if (global.electronApp) {
+    global.electronApp.relaunch();
+    global.electronApp.quit();
+  }
+  res.json({ ok: true });
+});
 
 module.exports = {
   start: start

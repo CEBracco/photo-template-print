@@ -23,7 +23,20 @@
         <li class="bold active"><a href="#!">Elegí el formato</a></li>
         <li><a href="#!">Ajusta y Guardá</a></li>
     </ul>
-    <span class="version-label">Polly v<%= version %></span>
+    <div class="version-info">
+        <p class="center-align">Polly v<%= version %></p>
+        <div class="download-status hide">
+            <p class="no-margin"><small>Descargando Actualización...</small><small class="progress-percentage right"
+                    style="margin-top:2px">0%</small></p>
+            <div class="progress grey lighten-4">
+                <div class="determinate pink accent-3"></div>
+            </div>
+        </div>
+        <div class="update-ready center-align <%= updateAvailable ? '' : 'hide' %>" style="margin-bottom:15px">
+            <p class="no-margin">¡Actualización lista para instalarse!</p>
+            <a class="waves-effect waves-light btn-small pink accent-3 waves-effect waves-light restart-button">Reiniciar</a>
+        </div>
+    </div>
 </header>
 <main>
     <div class="row">

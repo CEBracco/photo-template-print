@@ -31,6 +31,7 @@ function start() {
             }, 40);
         });
     });
+    global.electronApp = app
 }
 
 module.exports = {

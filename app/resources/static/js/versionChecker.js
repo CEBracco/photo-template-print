@@ -1,5 +1,5 @@
 function createConnection() {
-    var socket = new WebSocket("ws://localhost:3000");
+    var socket = new WebSocket(`ws://${window.location.host}`);
 
     socket.onopen = function (e) {
         console.log("[open] Connection established");

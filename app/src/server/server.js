@@ -144,6 +144,18 @@ function getParameters(pageType) {
   }
 }
 
+app.post(['/downloadStatus'], function (req, res) {
+  var wsSender = require('@appSrc/websockets/websocketSender.js');
+  wsSender.sendDownloadStatus(req.body.progress)
+  res.json({ ok: true });
+});
+
+app.post(['/updateReady'], function (req, res) {
+  var wsSender = require('@appSrc/websockets/websocketSender.js');
+  wsSender.sendUpdateReady()
+  res.json({ ok: true });
+});
+
 function getPhotos() {
   var fs = require('fs');
   return _.filter(
@@ -209,6 +221,22 @@ function getVersion() {
 function start() {
   port = port ? port : 3000;
   app.listen(port, function () {
+    logger.getLogger().debug("Static file server running at port => " + port);
+  }).on('error', function (err) {
+    process.exit(0)
+  });
+}
+
+function initWebsocketServer(server) {
+  var wsServer = require('@appSrc/websockets/server/websocketServer.js');
+  return wsServer.start(server);
+}
+
+function start() {
+  port = port ? port : 3000;
+  const server = require('http').createServer(app);
+  initWebsocketServer(server);
+  server.listen(port, function () {
     logger.getLogger().debug("Static file server running at port => " + port);
   }).on('error', function (err) {
     process.exit(0)

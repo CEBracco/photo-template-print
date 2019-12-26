@@ -6,6 +6,7 @@ function setPaceOptions(){
     var interval = setInterval(function() {
         if (window.Pace) {
             Pace.options.ajax.trackMethods = ['GET', 'POST'];
+            Pace.options.ajax.trackWebSockets = false;
             clearInterval(interval)
         }
     }, 2000);

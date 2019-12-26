@@ -93,6 +93,10 @@ header, main, footer {
 }
 
 /* Helpers */
+.no-margin {
+    margin: 0;
+}
+
 .no-margin-top {
     margin-top: 0;
 }
@@ -123,6 +127,17 @@ header, main, footer {
     left: 100px;
     z-index: 9999;
     color: #dedede;
+}
+
+.version-info {
+    bottom: 0px;
+    position: fixed;
+    left: 0px;
+    width: 300px;
+    z-index: 9999;
+    color: #dedede;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 /* edition tooltip */

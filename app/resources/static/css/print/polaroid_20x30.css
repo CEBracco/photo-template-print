@@ -22,12 +22,13 @@
 }
 .fb-row .photo.vertical:nth-child(odd) {
     margin-right: calc(1.5cm * 5);
+    padding-right: calc(0.4cm * 5);
 }
 .photo.horizontal {
     -webkit-transform: rotate(90deg);
     transform: rotate(90deg);
     position: relative;
-    bottom: calc(0.77cm * 5);
+    bottom: calc(0.75cm * 5);
     left: calc(0.75cm * 5);
 }
 

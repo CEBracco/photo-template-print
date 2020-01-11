@@ -128,6 +128,103 @@
     </div>
 </div>
 
+<!-- Text mods -->
+<div class="hide">
+    <div id="text-mods-panel">
+        <p class="no-margin-top">Opciones de Texto</p>
+        <div class="textfield-field input-field row">
+            <textarea id="html-content" class="materialize-textarea" data-css-element-property="html-content|text|text" placeholder="Love"></textarea>
+            <label for="html-content">Texto</label>
+        </div>
+        <p class="color-field">
+            <label>Color de fuente</label>
+            <input type="text" data-css-element-property="color|text|text">
+        </p>
+        <div class="number-field row">
+            <div class="label-column col s6">
+                <label>Tamaño de fuente</label>
+            </div>
+            <div class="input-column col s6">
+                <input type="number" data-css-element-property="font-size|text|text" class="right" min="0">
+            </div>
+        </div>
+        <div class="number-field row">
+            <div class="label-column col s6">
+                <label>Espaciamiento superior</label>
+            </div>
+            <div class="input-column col s6">
+                <input type="number" data-css-element-property="padding-top|text-container|text" class="right" min="0">
+            </div>
+        </div>
+        <div class="number-field row">
+            <div class="label-column col s6">
+                <label>Interlineado</label>
+            </div>
+            <div class="input-column col s6">
+                <input type="number" data-css-element-property="line-height|text|text" class="right" min="0">
+            </div>
+        </div>
+        <div class="select-field font-selector row">
+            <div class="label-column col s6">
+                <label>Tipografía</label>
+            </div>
+            <select class="input-column col s6" data-css-element-property="font-family|text|text">
+                <option value="dry-brush">1. Dry Brush</option>
+                <option value="geektastic">2. Geektastic</option>
+                <option value="jadyn-maria">3. Jadyn Maria</option>
+                <option value="good-vibes">4. Good Vibes</option>
+                <option value="love-and-romance">5. Love and Romance</option>
+                <option value="natasa">6. Natasa</option>
+                <option value="notera">7. Notera</option>
+                <option value="prestige">8. Prestige</option>
+                <option value="remachine-script">9. Remachine-script</option>
+                <option value="shutter-stone">10. Shutter-stone</option>
+            </select>
+        </div>
+        <div class="select-field row">
+            <div class="label-column col s6">
+                <label>Alineación</label>
+            </div>
+            <select class="input-column col s6" data-css-element-property="text-align|text-container|text">
+                <option value="left">Izquierda</option>
+                <option value="center">Centro</option>
+                <option value="right">Derecha</option>
+            </select>
+        </div>
+        <p class="color-field">
+            <label>Color de fondo</label>
+            <input type="text" data-css-element-property="background-color|text|text">
+        </p>
+        <div class="number-field row">
+            <div class="label-column col s6">
+                <label>Tamaño de fondo</label>
+            </div>
+            <div class="input-column col s6">
+                <input type="number" data-css-element-property="padding|text|text" class="right" min="0">
+            </div>
+        </div>
+        <div class="number-field row">
+            <div class="label-column col s6">
+                <label>Redondeo de bordes</label>
+            </div>
+            <div class="input-column col s6">
+                <input type="number" data-css-element-property="border-radius|text|text" class="right" min="0">
+            </div>
+        </div>
+        <p class="center-align">
+            <label>
+                <input type="checkbox" class="filled-in apply-all-texts" />
+                <span>Aplicar a todos</span>
+            </label>
+        </p>
+        <p class="center-align">
+            <a class="waves-effect waves-light btn-small pink accent-3 jbox-close save-calendar-changes">Aplicar</a>
+            <a class="waves-effect waves-light btn-small btn-flat white-text clear-button jbox-close"
+                onclick="restoreTextProperties(true)">Descartar</a>
+        </p>
+    </div>
+</div>
+
 <script>
     var pageType = "<%= pageType %>";
 </script>
@@ -141,5 +238,7 @@
 <script src="js/base.js"></script>
 <script src="js/versionChecker.js"></script>
 <script src="js/preview.js"></script>
+<script src="js/elements/text.js"></script>
+<% if(pageType == 'calendar') { %><script src="js/elements/calendar.js"></script><% } %>
 
 </html>

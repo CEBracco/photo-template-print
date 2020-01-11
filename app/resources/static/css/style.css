@@ -1,3 +1,4 @@
+@import "fonts/fonts.css"; 
 * {
     font-family: 'Roboto Condensed', sans-serif;
 }
@@ -140,10 +141,60 @@ header, main, footer {
     padding-right: 10px;
 }
 
+/* Text defaults */
+.photo .text-container {
+    text-align: center;
+}
+.photo .text-container .text {
+    font-family: "dry-brush";
+    font-size: calc(30px * 0.5);
+    line-height: 1.3;
+    display: inline-block;
+}
+
 /* edition tooltip */
 .color-field .sp-replacer {
     float: right;
 }
 .color-field label {
     padding-right: 10px;
+}
+.number-field {
+    margin-bottom: 0px;
+}
+.number-field .label-column {
+    padding-left: 0px;
+}
+.number-field .input-column {
+    padding-right: 0px;
+}
+.number-field .label-column label {
+    margin-top: 10px;
+    display: block;
+}
+.number-field .input-column input {
+    width: 50% !important;
+    height: 2rem !important;
+}
+.select-field {
+    margin-bottom: 0px;
+}
+.select-field .label-column {
+    padding-left: 0px;
+}
+.select-field .label-column label {
+    margin-top: 10px;
+    display: block;
+}
+.select-field input {
+    width: 50% !important;
+    height: 2rem !important;
+    float: right;
+}
+.select-field .select-wrapper .caret {
+    top: 35px;
+    fill: #9e9e9e;
+}
+.font-selector .select-wrapper ul {
+    max-height: 20vh;
 }

@@ -5,10 +5,16 @@
         <% if ((photoIndex + 1) % 5 != 0) { %>
         <div id="photo-<%= pageIndex %>-<%= photoIndex %>" class="photo vertical paper">
             <div class="image" style="background-image: url('photos/<%= photo %>');"></div>
+            <div class="text-container">
+                <span class="text"></span>
+            </div>
         </div>
         <% } else { %>
         <div id="photo-<%= pageIndex %>-<%= photoIndex %>" class="photo horizontal paper invert-controls">
             <div class="image" style="background-image: url('photos/<%= photo %>');"></div>
+            <div class="text-container">
+                <span class="text"></span>
+            </div>
         </div>
         <% } %>
         <% }); %>

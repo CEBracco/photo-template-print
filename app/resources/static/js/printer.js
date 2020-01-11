@@ -94,7 +94,6 @@ function setBackgroundImage(paperId, backgroundImageValue) {
 }
 
 //Calendars logic
-
 function setCalendarProperties(photoId, properties, applyToAll) {
     if (applyToAll) {
         $('.' + properties.elementClass).css(properties.cssProperty, properties.cssValue);
@@ -118,4 +117,69 @@ function restoreCalendarsProperties(calendarsProperties) {
             }
         }
     })
+}
+
+//Texts logic
+function setTextProperties(photoId, properties, applyToAll) {
+    if (applyToAll) {
+        if (properties.cssProperty == 'html-content') {
+            $('.' + properties.elementClass).html(properties.cssValue.replace(/\r?\n/g, '<br>'));
+        } else {
+            $('.' + properties.elementClass).css(properties.cssProperty, properties.cssValue);
+        }
+    } else {
+        if (properties.cssProperty == 'html-content') {
+            $(`#${photoId} .text-container`)
+                .find('.' + properties.elementClass)
+                .addBack('.' + properties.elementClass)
+                .html(properties.cssValue.replace(/\r?\n/g, '<br>'));
+        } else {
+            $(`#${photoId} .text-container`)
+                .find('.' + properties.elementClass)
+                .addBack('.' + properties.elementClass)
+                .css(properties.cssProperty, properties.cssValue);
+        }
+    }
+}
+
+function restoreTextProperties(textsProperties) {
+    if (textsProperties) {
+        $('.photo .text-container').each(function (index) {
+            var textProperties = textsProperties[index];
+            for (const property in textProperties) {
+                if (textProperties.hasOwnProperty(property)) {
+                    const style = textProperties[property];
+                    const cssProperty = property.split('|')[0];
+                    const propertyElement = property.split('|')[1];
+                    if (cssProperty == 'html-content') {
+                        $(this).find('.' + propertyElement).addBack('.' + propertyElement).html(style.replace(/\r?\n/g, '<br>'));
+                    } else {
+                        $(this).find('.' + propertyElement).addBack('.' + propertyElement).css(cssProperty, getRealCssValue(cssProperty, style, 10));
+                    }
+                }
+            }
+        })
+    }
+}
+
+function getRealCssValue(cssProperty, cssValue, scale = 1) {
+    switch (cssProperty) {
+        case 'font-size':
+            cssValue = parseFloat(cssValue);
+            return `calc(${cssValue}px * ${scale})`;
+        case 'padding-top':
+            cssValue = parseFloat(cssValue);
+            return `calc(${cssValue}px * ${scale})`;
+        case 'line-height':
+            cssValue = parseFloat(cssValue);
+            return cssValue;
+        case 'padding':
+            cssValue = parseFloat(cssValue);
+            return `calc(${cssValue}px * ${scale})`;
+        case 'border-radius':
+            cssValue = parseFloat(cssValue);
+            return `calc(${cssValue}px * ${scale})`;
+        default:
+            return cssValue
+    }
 }

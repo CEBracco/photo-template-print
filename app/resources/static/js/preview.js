@@ -43,8 +43,9 @@ function addConfirmButtons(imageElem) {
 
 function addRotationButtons(imageElem) {
     imageElem.before(`
-        <div class="confirm-buttons" style="position:absolute; width:${imageElem.width() + 10}px;  transform: translate(-5px, -35px);">
+        <div class="confirm-buttons" style="position:absolute; width:${imageElem.width() + 50}px;  transform: translate(-20px, -35px);">
             <button class="btn-floating btn-small grey darken-3" style="color: #212121;" onclick="rotateLeft(event)"><i class="material-icons">rotate_left</i></button>
+            <button class="btn-floating btn-small purple darken-3" style="color: #212121;" onclick="openTextEditor(event)" ${ isTextEditionAllowed() ? '' : 'disabled' }><i class="material-icons">text_fields</i></button>
             <button class="btn-floating btn-small deep-purple darken-3 frameOn-btn" style="color: #212121; ${ isFrameApplied() ? 'display: none;' : '' }" onclick="addFrame(event)"><i class="material-icons">blur_on</i></button>
             <button class="btn-floating btn-small deep-purple darken-3 frameOff-btn" style="color: #212121; ${ isFrameApplied() ? '' : 'display: none;' }" onclick="removeFrame(event)"><i class="material-icons">blur_off</i></button>
             <button class="btn-floating btn-small grey darken-3" style="color: #212121;" onclick="rotateRight(event)"><i class="material-icons">rotate_right</i></button>
@@ -123,7 +124,7 @@ function savePreviousValues() {
 
 function setKeyboardEvents(){
     $(document).keydown(function (e) {
-        if (selectedPhoto) {
+        if (selectedPhoto && isImageMoveAvaible()) {
             var keycode = e.keycode || e.which
             switch (keycode) {
                 case 37: //left
@@ -145,11 +146,16 @@ function setKeyboardEvents(){
                     discard(e)
                     break;
                 default:
+                    return true
                     break;
             }
             e.preventDefault();
         }
     })
+}
+
+function isImageMoveAvaible() {
+    return $('.image-button').length != 0
 }
 
 function getAxis(axis){
@@ -239,6 +245,12 @@ function isFrameApplied() {
     return url.match(/-framed(?!.*-framed)/g);
 }
 
+function openTextEditor(e){
+    var tmpSelectedPhoto = selectedPhoto;
+    discard(e)
+    $(tmpSelectedPhoto).find('.text').trigger('click')
+}
+
 var selectedPaper;
 $(document).ready(function(params) {
     $('.paper').click(function (e) {
@@ -277,99 +289,17 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
-    $('.color-field input').change(function(){
-        var cssProperty = $(this).data('cssElementProperty').split('|')[0];
-        var elementClass = $(this).data('cssElementProperty').split('|')[1];
-        var elementType = $(this).data('cssElementProperty').split('|')[2];
-        window[elementType + "PreviewChanges"](elementClass, cssProperty, $(this).val())
-    });
+    $('.textfield-field textarea, .number-field input, .select-field select, .color-field input').change(refreshStyleChanges);
+    $('.textfield-field textarea').keyup(refreshStyleChanges);
 })
 
-
-// calendars logic
-var calendarsProperties = []
-var selectedCalendar
-$(document).ready(function() {
-    $('.polly-calendar').click(function (e) {
-        e.stopPropagation();
-        if (!selectedCalendar && selectedPhoto) { discard() }
-        selectedCalendar = this
-        if (selectedPhoto && ($(selectedPhoto).attr('id') != $(selectedCalendar).closest('.photo')[0])) {
-            restoreCalendarsProperties()
-        }
-        selectedPhoto = $(selectedCalendar).closest('.photo')[0]
-        setColorInputs()
-    }).jBox('Tooltip', {
-        trigger: 'click',
-        content: $('#calendar-mods-panel'),
-        onOpen: function() {
-            saveCalendarsProperties();
-            var jboxCalendarTooltip = this
-            $('.jbox-close').one('click',function() {
-                jboxCalendarTooltip.close()
-            })
-        },
-        onClose: function() {
-            selectedPhoto = null
-            selectedCalendar = null
-        }
-    });
-    $('.apply-all-calendars').change(toggleAllStyles)
-})
-
-function saveCalendarsProperties() {
-    calendarsProperties = []
-    $('.polly-calendar').each(function() {
-        var calendarProperties = {}
-        calendarProperties["background-color|polly-calendar"] = $(this).css('background-color');
-        calendarProperties["color|calendar-day"] = $(this).find('.calendar-day').css('color');
-        calendarProperties["color|calendar-date"] = $(this).find('.calendar-date').css('color');
-        calendarProperties["color|calendar-monthAndYear"] = $(this).find('.calendar-monthAndYear').css('color');
-        calendarProperties["background-color|calendar-separator"] = $(this).find('.calendar-separator').css('background-color');
-
-        calendarsProperties.push(calendarProperties); 
-    })
+function refreshStyleChanges() {
+    var cssProperty = $(this).data('cssElementProperty').split('|')[0];
+    var elementClass = $(this).data('cssElementProperty').split('|')[1];
+    var elementType = $(this).data('cssElementProperty').split('|')[2];
+    window[elementType + "PreviewChanges"](elementClass, cssProperty, $(this).val())
 }
 
-function restoreCalendarsProperties() {
-    if (calendarsProperties) {
-        $('.polly-calendar').each(function (index) {
-            var calendarProperties = calendarsProperties[index];
-            for (const property in calendarProperties) {
-                if (calendarProperties.hasOwnProperty(property)) {
-                    const style = calendarProperties[property];
-                    const cssProperty = property.split('|')[0];
-                    const propertyElement = property.split('|')[1];
-                    $(this).find('.' + propertyElement).addBack('.' + propertyElement).css(cssProperty, style);
-                }
-            }
-        })
-        printerIframe.restoreCalendarsProperties(calendarsProperties)
-    }
-}
-
-function calendarPreviewChanges(elementClass, cssProperty, cssValue) {
-    if ($('.apply-all-calendars').is(':checked')) {
-        $('.' + elementClass).css(cssProperty, cssValue);
-    } else {
-        $(selectedCalendar).find('.' + elementClass).addBack('.' + elementClass).css(cssProperty, cssValue);
-    }
-    printerIframe.setCalendarProperties($(selectedPhoto).attr('id'), {
-        elementClass: elementClass,
-        cssProperty: cssProperty,
-        cssValue: cssValue
-    }, $('.apply-all-calendars').is(':checked'));
-}
-
-function toggleAllStyles() {
-    restoreCalendarsProperties()
-    $('#calendar-mods-panel .color-field input').trigger('change')
-}
-
-function setColorInputs() {
-    $('#calendar-mods-panel .color-field input').each(function () {
-        var cssProperty = $(this).data('cssElementProperty').split('|')[0];
-        var elementClass = $(this).data('cssElementProperty').split('|')[1];
-        $(this).spectrum("set", $(selectedCalendar).find('.' + elementClass).addBack('.' + elementClass).first().css(cssProperty));
-    })
+function isTextEditionAllowed() {
+    return pageType == 'polaroid' || pageType == 'instax';
 }

@@ -12,13 +12,13 @@ function start(server) {
     });
 
     wsServer.on('connect', function (connection) {
-        logger.debug((new Date()) + ' Connection accepted.');
+        // logger.debug((new Date()) + ' Connection accepted.');
         connectionPool.pushConnection(connection);
     })
 
     wsServer.on('close', function (connection) {
         connectionPool.removeConnection(connection);
-        logger.debug((new Date()) + ' Peer ' + connection.remoteAddress + ' disconnected.');
+        // logger.debug((new Date()) + ' Peer ' + connection.remoteAddress + ' disconnected.');
     })
 }
 

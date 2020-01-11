@@ -6,7 +6,7 @@
     width: calc(755px * 0.5);
     border: 1px solid black;
     background-color: white;
-    box-sizing: border-box;
+    /* box-sizing: border-box; */
     margin: 10px;
     float: left;
 }
@@ -25,6 +25,7 @@
 }
 .fb-container .fb-row .photo.vertical:nth-child(odd) {
     margin-right: calc(1.5cm * 0.5);
+    padding-right: calc(0.4cm * 0.5);
 }
 .fb-container .photo.horizontal {
     -webkit-transform: rotate(90deg);

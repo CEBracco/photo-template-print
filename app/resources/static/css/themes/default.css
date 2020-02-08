@@ -166,3 +166,8 @@ textarea.materialize-textarea {
 .dropdown-content li>a, .dropdown-content li>span {
     color: #d81b60;
 }
+
+/* helper */
+.text-primary {
+    color: #d81b60;
+}

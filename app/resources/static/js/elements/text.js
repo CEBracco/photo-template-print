@@ -1,5 +1,6 @@
 var textsProperties = []
 var selectedText
+var useCodeEditor = false
 $(document).ready(function () {
     $('.photo .text').click(function (e) {
         e.stopPropagation();
@@ -26,6 +27,22 @@ $(document).ready(function () {
         }
     });
     $('.apply-all-texts').change(toggleAllTextStyles)
+
+    $('.btn-toggle-editor').click(function() {
+        var textareaContainer = $(this).parents('.textfield-field');
+        var textarea = textareaContainer.find('textarea')[0];
+        if(textareaContainer.find('.CodeMirror').length > 0) {
+            disableCodeEditor(textareaContainer)
+            $(this).text('Usar editor de código');
+            $('.code-tips').hide();
+            useCodeEditor = false
+        } else {
+            enableCodeEditor(textarea)
+            $(this).text('Usar editor de texto');
+            $('.code-tips').show();
+            useCodeEditor = true
+        }
+    })
 })
 
 function saveTextProperties() {
@@ -57,7 +74,8 @@ function restoreTextProperties() {
                     const cssProperty = property.split('|')[0];
                     const propertyElement = property.split('|')[1];
                     if(cssProperty == 'html-content'){
-                        $(this).find('.' + propertyElement).addBack('.' + propertyElement).html(style.replace(/\r?\n/g, '<br>'));
+                        var textToSet = useCodeEditor ? style : style.replace(/\r?\n/g, '<br>');
+                        $(this).find('.' + propertyElement).addBack('.' + propertyElement).html(textToSet);
                     } else {
                         $(this).find('.' + propertyElement).addBack('.' + propertyElement).css(cssProperty, style);
                     }
@@ -72,13 +90,15 @@ function textPreviewChanges(elementClass, cssProperty, cssValue) {
     realCssValue = getRealCssValue(cssProperty,cssValue)
     if ($('.apply-all-texts').is(':checked')) {
         if(cssProperty == 'html-content'){
-            $('.' + elementClass).html(realCssValue.replace(/\r?\n/g, '<br>'));
+            var htmlContent = useCodeEditor ? realCssValue : realCssValue.replace(/\r?\n/g, '<br>')
+            $('.' + elementClass).html(htmlContent);
         } else{
             $('.' + elementClass).css(cssProperty, realCssValue);
         }
     } else {
         if (cssProperty == 'html-content') {
-            $(selectedText).find('.' + elementClass).addBack('.' + elementClass).html(realCssValue.replace(/\r?\n/g, '<br>'));
+            var htmlContent = useCodeEditor ? realCssValue : realCssValue.replace(/\r?\n/g, '<br>')
+            $(selectedText).find('.' + elementClass).addBack('.' + elementClass).html(htmlContent);
         } else {
             $(selectedText).find('.' + elementClass).addBack('.' + elementClass).css(cssProperty, realCssValue);
         }
@@ -115,13 +135,25 @@ function setTextColorInputs() {
         $(this).val($(selectedText).find('.' + elementClass).addBack('.' + elementClass).first().css(cssProperty));
         $('select').formSelect();
     })
-    $('#text-mods-panel .textfield-field textarea').each(function () {
+    $('#text-mods-panel .textfield-field > textarea').each(function () {
         var cssProperty = $(this).data('cssElementProperty').split('|')[0];
         var elementClass = $(this).data('cssElementProperty').split('|')[1];
         if (cssProperty == 'html-content') {
             $(this).val($(selectedText).find('.' + elementClass).addBack('.' + elementClass).first().html().replace(/<br>/g, '\n'));
         }
         M.textareaAutoResize($(this));
+    })
+    $('#text-mods-panel .textfield-field > .CodeMirror').each(function () {
+        var textareaContainer = $(this).parents('.textfield-field');
+        var textarea = textareaContainer.find('textarea')[0];
+        var cssProperty = $(textarea).data('cssElementProperty').split('|')[0];
+        var elementClass = $(textarea).data('cssElementProperty').split('|')[1];
+        
+        this.CodeMirror.setValue($(selectedText).find('.' + elementClass).addBack('.' + elementClass).first().html());
+        var that = this
+        setTimeout(function () {
+            that.CodeMirror.refresh();
+        }, 1);
     })
 }
 
@@ -146,4 +178,25 @@ function getLineHeightPercentage(elem){
     var fontSize=parseFloat(elem.css('font-size'));
     var lineHeightPx = parseFloat(elem.css('line-height'));
     return ((lineHeightPx*100) / fontSize) / 100;
+}
+
+function disableCodeEditor(textareaContainer) {
+    var textarea = textareaContainer.find('textarea')[0];
+    textareaContainer.find('.CodeMirror')[0].CodeMirror.toTextArea();
+    $(textarea).val($(textarea).val().replace(/\n<br>\n|<br>/g, '\n'));
+    M.textareaAutoResize($(textarea));
+}
+
+function enableCodeEditor(textarea) {
+    var codeMirrorTextArea = CodeMirror.fromTextArea(textarea, {
+        lineNumbers: true,
+        theme: 'material-darker',
+        mode: "htmlmixed",
+    });
+    codeMirrorTextArea.on('keyup', function () {
+        codeMirrorTextArea.save()
+        M.textareaAutoResize($(textarea));
+        $(textarea).trigger('change')
+    })
+    codeMirrorTextArea.doc.setValue(codeMirrorTextArea.doc.getValue().replace(/\r?\n/g, '\n<br>\n'));
 }

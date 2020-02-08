@@ -1,3 +1,7 @@
+:root {
+    --property-multiplier: 10;
+}
+
 .paper {
     background-size: cover;
     background-position: center;

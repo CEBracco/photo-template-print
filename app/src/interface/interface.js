@@ -7,8 +7,8 @@ const { app, BrowserWindow } = require('electron');
 
 let mainWindow
 
-
 function start() {
+    createContextMenu()
     app.on("browser-window-created", function (e, window) {
         window.setMenu(null);
     });
@@ -32,6 +32,23 @@ function start() {
         });
     });
     global.electronApp = app
+}
+
+function createContextMenu() {
+    const contextMenu = require('electron-context-menu');
+    contextMenu({
+        showCopyImage: false,
+        showCopyImageAddress: false,
+        showSaveImageAs: false,
+        showInspectElement: false,
+        showLookUpSelection: false,
+        shouldShowMenu: (event, params) => params.isEditable,
+        labels: {
+            copy: 'Copiar',
+            cut: 'Cortar',
+            paste: 'Pegar'
+        }
+    });
 }
 
 module.exports = {

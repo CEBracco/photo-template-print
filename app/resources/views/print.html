@@ -13,6 +13,8 @@
     <link href="lib/jBox/jBox.all.min.css" rel="stylesheet" />
     <link href="lib/spectrum/spectrum.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="lib/spectrum/themes/sp-dark.css">
+    <link rel="stylesheet" href="lib/codemirror/lib/codemirror.css">
+    <link rel="stylesheet" href="lib/codemirror/theme/material-darker.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/themes/default.css">
 </head>
@@ -133,8 +135,10 @@
     <div id="text-mods-panel">
         <p class="no-margin-top">Opciones de Texto</p>
         <div class="textfield-field input-field row">
-            <textarea id="html-content" class="materialize-textarea" data-css-element-property="html-content|text|text" placeholder="Love"></textarea>
+            <textarea id="html-content" class="materialize-textarea no-margin" data-css-element-property="html-content|text|text" placeholder="Love"></textarea>
             <label for="html-content">Texto</label>
+            <p class="no-margin code-tips" style="display: none;"><small class="codeEditorTip">Para propiedades númericas usar calc([valor] * var(--property-multiplier))</small></p>
+            <p class="right-align no-margin text-primary"><small class="btn-toggle-editor" style="cursor: pointer;">Usar editor de código</small></p>
         </div>
         <p class="color-field">
             <label>Color de fuente</label>
@@ -234,6 +238,11 @@
 <script src="lib/jBox/jBox.all.min.js"></script>
 <script src="lib/spectrum/spectrum.js"></script>
 <script src="lib/spectrum/i18n/jquery.spectrum-es.js"></script>
+<script src="lib/codemirror/lib/codemirror.js"></script>
+<script src="lib/codemirror/mode/xml/xml.js"></script>
+<script src="lib/codemirror/mode/javascript/javascript.js"></script>
+<script src="lib/codemirror/mode/css/css.js"></script>
+<script src="lib/codemirror/mode/htmlmixed/htmlmixed.js"></script>
 <script src="lib/zoomerang/zoomerang.js"></script>
 <script src="js/base.js"></script>
 <script src="js/versionChecker.js"></script>

@@ -289,8 +289,8 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
-    $('.textfield-field textarea, .number-field input, .select-field select, .color-field input').change(refreshStyleChanges);
-    $('.textfield-field textarea').keyup(refreshStyleChanges);
+    $('.textfield-field > textarea, .number-field input, .select-field select, .color-field input').change(refreshStyleChanges);
+    $('.textfield-field > textarea').on('keyup', refreshStyleChanges);
 })
 
 function refreshStyleChanges() {

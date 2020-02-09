@@ -50,3 +50,48 @@ function dataURItoBlob(dataURI) {
     return blob;
 
 }
+
+Date.prototype.formatDateTime = function () {
+    return `${paddingTwoZeroNumber(this.getDate())}/${paddingTwoZeroNumber(this.getMonth() + 1)}/${this.getFullYear()} ${paddingTwoZeroNumber(this.getHours())}:${paddingTwoZeroNumber(this.getMinutes())}`
+}
+function paddingTwoZeroNumber(number) {
+    if ((number + '').length == 1) {
+        return '0' + number
+    }
+    return number + ''
+}
+
+var webformConfig;
+function getWebformParameters(success, error) {
+    if (webformConfig) {
+        success(webformConfig)
+    } else {
+        $.ajax({
+            url: '/webformConfig',
+            contentType: 'application/json',
+            type: 'POST'
+        }).done(function (res) {
+            if (res.ok) {
+                webformConfig = res.data
+                success(res.data)
+            } else {
+                error();
+            }
+        })
+    }
+}
+
+function saveWebformConfig(config, success, error = function () {}) {
+    $.ajax({
+        url: "/saveWebformConfig",
+        contentType: 'application/json',
+        data: JSON.stringify({ url: config.url, token: config.token }),
+        method: "POST"
+    }).done(function (res) {
+        if (res.ok) {
+            success()
+        } else {
+            error()
+        }
+    });
+}

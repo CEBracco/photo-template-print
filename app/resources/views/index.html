@@ -41,6 +41,7 @@
 <main>
     <div class="fullscreen-container">
         <div class="file-uploader">
+            <button class="btn purple darken-3 waves-effect waves-light margin-left-5 get-from-order right"><i class="material-icons left">collections</i>Cargar pedido</button>
             <button class="btn pink accent-3 waves-effect waves-light upload-button right"><i class="material-icons left">add_circle</i>Cargar Fotos</button>
             <button class="btn btn-flat waves-effect waves-light clear-button right">Limpiar</button>
             <div class="row file-list-container">
@@ -66,11 +67,134 @@
     </div>
 </main>
 
+<!-- Order List -->
+<div id="order-list" class="modal modal-fixed-footer" style="width: 80%; height:100%; max-height: 80%;">
+    <div class="modal-content">
+        <h4>Cargá el pedido</h4>
+        <div class="row no-margin">
+            <div class="col s12">
+                <p>Filtros</p>
+            </div>
+        </div>
+        <div class="row">
+            <% statuses.forEach(status => { %>
+            <div class="col s6 m2">
+                <div>
+                    <label>
+                        <input type="checkbox" class="filled-in status-filter"
+                            <% if(defaultStatusesActive.includes(status)) { %>checked="checked" <% } %>
+                            data-status="<%= status %>" />
+                        <span><%= getTranslatedStatus(status) %></span>
+                    </label>
+                </div>
+            </div>
+            <% }); %>
+        </div>
+        <div class="row no-margin">
+            <div class="col s12 center-align">
+                <button class="waves-effect waves-light-3 btn btn-small btn-primary btn-filter">Filtrar</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <table id="orders-table" class="striped highlight">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Nombre y Apellido</th>
+                            <th>Producto</th>
+                            <th>Precio</th>
+                            <th class="center-align">Método de Entrega</th>
+                            <th class="center-align">Método de Pago</th>
+                            <th class="center-align">Estado</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- dinamically loaded -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row loading-orders-spinner hide">
+            <div class="col s12 center-align">
+                <div class="lds-dual-ring"></div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">cerrar</a>
+    </div>
+</div>
+
+<div id="order-template" class="hide">
+    <table>
+        <tbody>
+            <tr>
+                <td>{{ order.formattedCreatedAt }}</td>
+                <td>{{ order.clientName }}</td>
+                <td>{{ order.Product.name }}</td>
+                <td class="right-align">${{ order.price }}</td>
+                <td class="center-align">
+                    {{ order.translatedDeliveryMethod }}
+                </td>
+                <td class="center-align">{{ order.translatedPaymentMethod }}</td>
+                <td class="status-container">
+                    <button
+                        class="waves-effect waves-light-3 btn btn-small dropdown-trigger status-dropdown-btn {{ order.status }}-status"
+                        data-status="{{ order.status }}" data-target='dropdown-{{ order.id }}'
+                        onclick='openStatusDropdown(this)'>{{ order.translatedStatus }}</button>
+                    <ul id='dropdown-{{ order.id }}' class='dropdown-content status-dropdown'>
+                        <% statuses.forEach(status => { %>
+                        <li data-status="<%= status %>" onclick="changeOrderStatus(this)">
+                            <a><%= getTranslatedStatus(status) %></a></li>
+                        <% }); %>
+                    </ul>
+                </td>
+                <td>
+                    <a href="#" class="waves-effect waves-light-3 black-text btn-flat" onclick="downloadOrder('{{ order.hash }}')" title="Descargar pedido">
+                        <i class="material-icons">cloud_download</i>
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div id="webform-config-modal" class="modal modal-fixed-footer" style="width: 30%; height:47%; max-height: 45%;">
+    <div class="modal-content">
+        <h5>Configurá el acceso a la tienda online</h5>
+        <div class="row">
+            <div class="col s12">
+                <div class="input-field">
+                    <input class="light" placeholder="https://example.com" id="webform_url" type="text">
+                    <label for="webform_url">URL</label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <div class="input-field">
+                    <input class="light" placeholder="token123" id="webform_token" type="text">
+                    <label for="webform_token">Token</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
+        <a href="#!" class="modal-close btn pink accent-3 waves-effect waves-light btn-save-webformconfig">Guardar</a>
+    </div>
+</div>
+
 <script src="lib/jquery/jquery.min.js"></script>
+<script src="/lib/mustache.js/mustache.min.js"></script>
 <script src="lib/materialize/js/materialize.min.js"></script>
 <script src="lib/pace/pace.min.js"></script>
 <script src="lib/exif-js/exif-js.min.js"></script>
 <script src="lib/dropzone/dropzone.js"></script>
 <script src="js/base.js"></script>
 <script src="js/versionChecker.js"></script>
+<script src="js/services/orderService.js"></script>
+<script src="js/components/ordersList.js"></script>
 <script src="js/upload.js"></script>

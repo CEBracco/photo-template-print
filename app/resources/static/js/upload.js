@@ -34,12 +34,7 @@ $(document).ready(function(){
                 $('.empty-files-alert').fadeIn();
             });
             this.on("queuecomplete", function(){
-                $.ajax({
-                    url:"/processPhotos", 
-                    method: "POST"
-                }).done(function () {
-                    window.location.href = "format_selection";
-                });
+                processPhotosAndComplete()
             });
             this.on("processing", function(a){
                 console.log(a);
@@ -48,25 +43,113 @@ $(document).ready(function(){
                 $(".file-uploader .progress").show();
                 $(".file-uploader .progress .determinate").css("width",`${progress}%`);
             })
+            this.on("removedfile", function () {
+                $(".file-uploader .progress").hide();
+            });
         }
     });
 
     $('.clear-button').click(function(){
         $(".file-uploader")[0].dropzone.removeAllFiles(true);
+        $(".collection-item.saved").each(function () {
+            removePhotoItem($(this));
+        })
     });
 
     $('.confirm-upload').click(function(){
-        $(".file-uploader")[0].dropzone.processQueue();
+        if ($(".file-uploader")[0].dropzone.getQueuedFiles().length > 0) {
+            $(".file-uploader")[0].dropzone.processQueue();
+        } else {
+            if ($('.collection.file-list .collection-item').length > 0) {
+                processPhotosAndComplete()
+            }
+        }
     });
+
+    $('.get-from-order').click(function(){
+        getWebformParameters(function() {
+            listOrders()
+            $('#order-list').modal('open');
+        }, function() {
+            //prompt for configuration
+            $('#webform-config-modal').modal('open')
+        })
+    })
+
+    $('.btn-save-webformconfig').click(function() {
+        var webformURL = $('#webform_url').val().trim();
+        var webformToken = $('#webform_token').val().trim();
+        if(webformURL && webformURL != '' && webformToken && webformToken != '') {
+            saveWebformConfig({
+                url: webformURL,
+                token: webformToken
+            }, function() {
+                $('#webform-config-modal').modal('close');
+                setTimeout(function() {
+                    $('.get-from-order').trigger('click');
+                }, 1000)
+            })
+        }
+    })
+
+    $('.modal').modal();
 });
 
-/* <div class="dz-preview dz-file-preview">
-    <div class="dz-details">
-        <div class="dz-filename"><span data-dz-name></span></div>
-        <div class="dz-size" data-dz-size></div>
-        <img data-dz-thumbnail />
-    </div>
-    <div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress></span></div>
-    <div class="dz-error-message"><span data-dz-errormessage></span></div>
-    <a data-dz-remove>Remove</a>
-</div> */
+function downloadOrder(orderId) {
+    $('#order-list').modal('close');
+    OrderService.download({orderHash: orderId}, function(res) {
+        if (res.ok) {
+            res.data.forEach(file => {
+                addPhotoItem(file.name)
+            });
+        }
+    })
+}
+
+function addPhotoItem(filename) {
+    $('.file-list').append(` 
+    <li class="collection-item saved avatar" data-photo="${filename}">
+        <img class="circle" style="background: url('/photos/${filename}') center no-repeat; background-size: cover;">
+        <span class="title"><span>${filename}</span></span>
+        <p class="details"></p>
+        <a href="#!" class="secondary-content" onclick="onDeletePhotoButton(this)"><i class="material-icons">clear</i></a>
+    </li>
+    `)
+    $('.empty-files-alert').fadeOut();
+    $('.file-list-container').fadeIn();
+}
+
+function processPhotosAndComplete() {
+    $.ajax({
+        url: "/processPhotos",
+        method: "POST"
+    }).done(function () {
+        window.location.href = "format_selection";
+    });
+}
+
+function removePhotoItem(photoItem) {
+    var filename = photoItem.data("photo")
+    $.ajax({
+        url: "/deletePhoto",
+        contentType: 'application/json',
+        data: JSON.stringify({ filename: filename }),
+        method: "POST"
+    }).done(function (res) {
+        if (res.ok) {
+            photoItem.remove();
+            if ($('.collection.file-list .collection-item').length == 0) {
+                $('.file-list-container').fadeOut();
+                $('.empty-files-alert').fadeIn();
+            }
+        }
+    });
+}
+
+function onDeletePhotoButton(button) {
+    removePhotoItem($(button).closest('.collection-item'));
+}
+
+function onSaveWebformConfigButton() {
+    
+}

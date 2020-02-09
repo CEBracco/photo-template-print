@@ -37,6 +37,7 @@
   },
   "homepage": "https://github.com/CEBracco/photo-template-print#readme",
   "dependencies": {
+    "adm-zip": "^0.4.14",
     "dotenv": "^8.0.0",
     "ejs": "^2.6.1",
     "electron-context-menu": "^0.16.0",

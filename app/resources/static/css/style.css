@@ -105,6 +105,10 @@ header, main, footer {
     margin-top: 0;
 }
 
+.margin-left-5 {
+    margin-left: 5px;
+}
+
 /* Design selection */
 .design {
     width: 100%;
@@ -214,4 +218,73 @@ header, main, footer {
   height: auto;
   overflow-y: hidden;
   overflow-x: hidden;
+}
+
+/* statuses  */
+.status-dropdown-btn {
+    min-width: 186px;
+}
+.pending-status,
+.pending-status:hover,
+.pending-status:active,
+.pending-status:focus {
+    background-color: #e53935;
+}
+.design-status,
+.design-status:hover,
+.design-status:active,
+.design-status:focus {
+    background-color: #fb8c00;
+}
+.print-status,
+.print-status:hover,
+.print-status:active,
+.print-status:focus {
+    color: black;
+    background-color: #fdd835;
+}
+.packaging-status,
+.packaging-status:hover,
+.packaging-status:active,
+.packaging-status:focus {
+    color: black;
+    background-color: #eeff41;
+}
+.ready-status,
+.ready-status:hover,
+.ready-status:active,
+.ready-status:focus {
+    background-color: #4db6ac;
+}
+.delivered-status,
+.delivered-status:hover,
+.delivered-status:active,
+.delivered-status:focus {
+    background-color: #90a4ae;
+}
+
+/* spinner */
+.lds-dual-ring {
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+}
+.lds-dual-ring:after {
+  content: " ";
+  display: block;
+  width: 40px;
+  height: 40px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 4px solid #d81b60;
+  border-color: #d81b60 transparent #d81b60 transparent;
+  animation: lds-dual-ring 1.2s linear infinite;
+}
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

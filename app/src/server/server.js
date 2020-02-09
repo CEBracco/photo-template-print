@@ -7,6 +7,8 @@ const express = require('express');
 const fileUpload = require('express-fileupload');
 const secure = require('express-force-https');
 
+var AdmZip = require('adm-zip');
+
 var config = new Config();
 var logger = new Logger();
 var port = config.get('PORT');
@@ -24,7 +26,13 @@ app.set('view engine', 'html');
 
 app.get(['/', '/index.html'], function (req, res) {
   resetPhotoDirectory();
-  res.render("index", { version: getVersion(), updateAvailable: global.updateAvailable });
+  res.render("index", { 
+    version: getVersion(), 
+    updateAvailable: global.updateAvailable,
+    getTranslatedStatus: getTranslatedStatus,
+    statuses: statuses,
+    defaultStatusesActive: defaultStatusesActive
+  });
   res.end();
 });
 
@@ -126,6 +134,43 @@ app.post(['/addFrame'], function (req, res) {
   });
 });
 
+app.post(['/webformConfig'], function (req, res) {
+  if (getWebformParameters()) {
+    res.json({ ok: true, data: getWebformParameters() });
+  } else {
+    res.json({ ok: false });
+  }
+});
+
+function getWebformParameters() {
+  const fs = require('fs-extra');
+  if (fs.pathExistsSync(path.join(getPhotosDirPath(), 'config.json'))) {
+    let rawdata = fs.readFileSync(path.join(getPhotosDirPath(), 'config.json'));
+    return JSON.parse(rawdata);
+  } else {
+    return false;
+  }
+}
+
+app.post(['/saveWebformConfig'], function (req, res) {
+  if (req.body.url && req.body.token) {
+    var webformConfig = {
+      url: req.body.url.trim(),
+      token: req.body.token.trim()
+    }
+    var fs = require('fs');
+    fs.writeFile(path.join(getPhotosDirPath(), 'config.json'), JSON.stringify(webformConfig), function (err) {
+      if (err) {
+        res.json({ ok: false });
+      } else {
+        res.json({ ok: true, data: getWebformParameters() });
+      }
+    });
+  } else {
+      res.json({ ok: false });
+  }
+});
+
 function getParameters(pageType) {
   switch (pageType) {
     case "polaroid":
@@ -152,13 +197,23 @@ function getPhotos() {
     function (f) { return !/^\./g.test(f)});
 }
 
-function renamePhotos() {
+function getPhotosDetailed() {
+  var fs = require('fs');
+  return _.map(
+    _.filter(fs.readdirSync(path.join(getPhotosDirPath(), '/photos')),function (f) { return !/^\./g.test(f) }), 
+    function(f) {
+      return { name: f}
+    });
+}
+
+function renamePhotos(unique = false) {
   var fs = require('fs');
   var files = []
   getPhotos().forEach(function(file, index){
     let basePath = path.join(getPhotosDirPath(), '/photos/')
     filename = basePath + file;
-    fs.renameSync(filename, basePath + file.replace(/.*\./g, `${index}.`));
+    let timestamp = Date.now()
+    fs.renameSync(filename, basePath + file.replace(/.*\./g, `${unique ? timestamp : ''}-${index}.`));
   });
 }
 
@@ -247,6 +302,69 @@ app.get(['/restart'], function (req, res) {
   }
   res.json({ ok: true });
 });
+
+// order status logic
+let statuses = ['pending', 'design', 'print', 'packaging', 'ready', 'delivered']
+let defaultStatusesActive = ['pending', 'design', 'print', 'packaging', 'ready']
+
+function getTranslatedStatus(status) {
+  switch (status) {
+    case 'pending':
+      return 'Pendiente'
+    case 'design':
+      return 'Diseño'
+    case 'print':
+      return 'Impresión'
+    case 'packaging':
+      return 'Corte y Empaquetado'
+    case 'ready':
+      return 'Listo para la entrega'
+    case 'delivered':
+      return 'Entregado'
+    default:
+      return ''
+  }
+}
+
+app.post(['/downloadOrder'], function (req, res) {
+  var webformParameters = getWebformParameters();
+  var orderHash = req.body.orderHash
+  const https = require('https');
+  const fs = require('fs');
+  const dest = path.join(getPhotosDirPath(), `${orderHash}.zip`)
+  const file = fs.createWriteStream(dest);
+  let downloadURL = path.join(webformParameters.url, `/checkout/${webformParameters.token}/${orderHash}/download`);
+  var request = https.get(downloadURL, function (response) {
+    response.pipe(file);
+    file.on('finish', function () {
+      file.close(cb);  // close() is async, call cb after close completes.
+    });
+  }).on('error', function (err) { // Handle errors
+    fs.unlink(dest); // Delete the file async. (But we don't check the result)
+    if (cb) cb(err.message);
+  });
+  var cb = function(err) {
+    if(!err) {
+      var zip = new AdmZip(dest);
+      zip.extractAllTo(path.join(getPhotosDirPath(), '/photos'), true);
+      fs.unlinkSync(dest);
+      renamePhotos(true)
+      res.json({ ok: true, data: getPhotosDetailed() });
+    } else {
+      res.json({ ok: false });
+    }
+  }
+});
+
+app.post('/deletePhoto', function (req, res) {
+  if (req.body.filename) {
+    const fs = require('fs-extra')
+    fs.removeSync(path.join(getPhotosDirPath(), `/photos/${req.body.filename}`))
+    res.json({ ok: true });
+  } else {
+    res.json({ ok: false });
+  }
+})
 
 module.exports = {
   start: start

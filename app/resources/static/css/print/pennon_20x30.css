@@ -46,3 +46,13 @@
     top: calc(1.85cm * 5);
     left: calc(1cm * 5);
 }
+
+.text-container.text-pennon {
+    width: calc(12.5cm * 5);
+}
+.text-container-wrapper {
+    display: flex;
+    width: calc(12.5cm * 5);
+    position: relative;
+    bottom: calc(4cm * 5);
+}

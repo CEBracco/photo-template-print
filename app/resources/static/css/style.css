@@ -151,6 +151,7 @@ header, main, footer {
 /* Text defaults */
 .photo .text-container {
     text-align: center;
+    line-height: normal;
 }
 .photo .text-container .text {
     font-family: "dry-brush";

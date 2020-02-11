@@ -34,7 +34,7 @@ function addPositionButtons(imageElem) {
 
 function addConfirmButtons(imageElem) {
     imageElem.after(`
-        <div class="confirm-buttons" style="position:absolute; width:${imageElem.width() + 10}px;  transform: translate(-5px, 0px);">
+        <div class="confirm-buttons" style="position:absolute; width:${imageElem.width() + 10}px;  transform: translate(-5px, 0px); z-index: 1;">
             <button class="btn-floating btn-small pink accent-3" onclick="save(event)"><i class="material-icons">check</i></button>
             <button class="btn-floating btn-small grey lighten-1" style="color: #212121;" onclick="discard(event)"><i class="material-icons">clear</i></button>
         </div>
@@ -301,5 +301,5 @@ function refreshStyleChanges() {
 }
 
 function isTextEditionAllowed() {
-    return pageType == 'polaroid' || pageType == 'instax';
+    return pageType == 'polaroid' || pageType == 'instax' || pageType == 'pennon';
 }

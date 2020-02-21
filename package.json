@@ -52,6 +52,7 @@
     "lodash": "^4.17.11",
     "log4js": "^4.1.1",
     "module-alias": "^2.2.0",
+    "sharp": "^0.24.1",
     "websocket": "^1.0.31"
   },
   "devDependencies": {

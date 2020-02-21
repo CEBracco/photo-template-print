@@ -166,12 +166,12 @@ function getAxis(axis){
 }
 
 function rotateRight(e) {
-    rotateImage($(selectedPhoto).find('.image'), -90);
+    rotateImage($(selectedPhoto).find('.image'), 90);
     e.stopPropagation();
 }
 
 function rotateLeft(e) {
-    rotateImage($(selectedPhoto).find('.image'), 90);
+    rotateImage($(selectedPhoto).find('.image'), -90);
     e.stopPropagation();
 }
 

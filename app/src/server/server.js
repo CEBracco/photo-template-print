@@ -112,13 +112,16 @@ app.post(['/processPhotos'], function (req, res) {
 });
 
 app.post(['/rotateImage'], function (req, res) {
-  var Jimp = require('jimp');
-  Jimp.read(path.join(getPhotosDirPath(), `/photos/${req.body.filename}`), (err, image) => {
-    if (err) throw err;
-    image.rotate(req.body.angle ? req.body.angle : 90) 
-      .write(path.join(getPhotosDirPath(), `/photos/${req.body.filename}`)); // save
-    res.json({ ok: true });
-  });
+  var fs = require('fs-extra');
+  const sharp = require('sharp');
+  sharp.cache(false)
+  sharp(path.join(getPhotosDirPath(), `/photos/${req.body.filename}`))
+    .rotate(req.body.angle ? req.body.angle : 90)
+    .toBuffer(function (err, buffer) {
+      fs.writeFile(path.join(getPhotosDirPath(), `/photos/${req.body.filename}`), buffer, function (e) {
+        res.json({ ok: true });
+      });
+    });
 });
 
 app.post(['/addFrame'], function (req, res) {

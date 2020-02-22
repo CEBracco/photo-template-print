@@ -182,3 +182,16 @@ input[type=text]:not(.browser-default).light:focus {
 .text-primary {
     color: #d81b60;
 }
+
+/* scrollbar */
+body::-webkit-scrollbar-track {
+    background-color: #252526;
+}
+body::-webkit-scrollbar-thumb {
+    background-color: #3e3e40;
+    outline: 1px solid #252526;
+    border-radius: 25em;
+}
+body::-webkit-scrollbar-thumb:hover {
+  background-color: #4b4b4d;
+}

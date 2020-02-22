@@ -289,3 +289,7 @@ header, main, footer {
     transform: rotate(360deg);
   }
 }
+
+body::-webkit-scrollbar {
+  width: 0.6em;
+}

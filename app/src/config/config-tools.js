@@ -13,8 +13,8 @@ function configure(basePath) {
         global.updateAvailable = false
         var wsSender = require('@appSrc/websockets/websocketSender.js');
         const { autoUpdater } = require("electron-updater")
-        autoUpdater.logger = require("electron-log")
-        autoUpdater.logger.transports.file.level = "info"
+        // autoUpdater.logger = require("electron-log")
+        // autoUpdater.logger.transports.file.level = "info"
         autoUpdater.on('update-available', function () {
             autoUpdater.logger.info("available!")
         })

@@ -300,8 +300,6 @@ function getPhotosDirPath() {
 
 app.get(['/restart'], function (req, res) {
   if (global.electronApp) {
-    // global.electronApp.relaunch();
-    // global.electronApp.quit();
     setImmediate(() => {
       global.autoUpdater.quitAndInstall();
     })

@@ -30,7 +30,7 @@ function configure(basePath) {
         // checkForUpdates loop
         autoUpdater.checkForUpdates()
         setInterval(function() {
-            if (global.updateAvailable){
+            if (!global.updateAvailable){
                 autoUpdater.checkForUpdates()
             }
         }, 60000)

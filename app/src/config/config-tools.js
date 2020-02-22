@@ -25,7 +25,15 @@ function configure(basePath) {
             global.updateAvailable = true
             wsSender.sendUpdateReady()
         })
+        global.autoUpdater = autoUpdater;
+        
+        // checkForUpdates loop
         autoUpdater.checkForUpdates()
+        setInterval(function() {
+            if (global.updateAvailable){
+                autoUpdater.checkForUpdates()
+            }
+        }, 60000)
     }
 }
 

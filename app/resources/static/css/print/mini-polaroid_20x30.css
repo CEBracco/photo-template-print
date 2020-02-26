@@ -1,0 +1,40 @@
+/* Page 20cm x 30cm */
+.page {
+    height: calc(1134px * var(--print-multiplier));
+    width: calc(755px * var(--print-multiplier));
+    border: 1px solid black;
+    background-color: white;
+    box-sizing: border-box;
+    margin-bottom: 300px;
+}
+.fb-row {
+    padding-top: calc(8px * var(--print-multiplier));
+    margin-left: calc(10px * var(--print-multiplier));
+}
+.photo {
+    border: 1px solid black;
+    float: left;
+    box-sizing: border-box;
+    height: calc(7.25cm * var(--print-multiplier));
+    width: calc(6cm * var(--print-multiplier));
+    padding-left: calc(0.3cm * var(--print-multiplier));
+    padding-right: calc(0.3cm * var(--print-multiplier));
+    padding-top: calc(0.3cm * var(--print-multiplier));
+    margin-right: calc(0.5cm * var(--print-multiplier));
+    margin-top: calc(0.1cm * var(--print-multiplier));
+}
+.photo.horizontal {
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
+    position: relative;
+    bottom: calc(0.75cm * var(--print-multiplier));
+    left: calc(0.75cm * var(--print-multiplier));
+}
+
+.image {
+    height: calc(5.4cm * var(--print-multiplier));
+    width: calc(5.4cm * var(--print-multiplier));
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}

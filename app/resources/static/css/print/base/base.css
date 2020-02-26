@@ -1,5 +1,6 @@
 :root {
     --property-multiplier: 10;
+    --print-multiplier: 5;
 }
 
 .paper {

@@ -1,6 +1,7 @@
 @import "fonts/fonts.css"; 
 :root {
     --property-multiplier: 1;
+    --print-multiplier: 0.5;
 }
 * {
     font-family: 'Roboto Condensed', sans-serif;

@@ -90,6 +90,11 @@ app.get(['/calendar'], function (req, res) {
   res.end();
 });
 
+app.get(['/mini-polaroid'], function (req, res) {
+  res.render("print/mini-polaroid", getParameters('mini-polaroid'));
+  res.end();
+});
+
 app.post(['/upload'], function(req, res){
   if (Object.keys(req.files).length == 0) {
     return res.status(400).send('No files were uploaded.');
@@ -188,6 +193,8 @@ function getParameters(pageType) {
       return { pageType: pageType, pages: _.chunk(getPhotos(), 2), proportion: [100, 100] };
     case "calendar":
       return { pageType: pageType, pages: _.chunk(getPhotos(), 3), proportion: [100, 100] };
+    case "mini-polaroid":
+      return { pageType: pageType, pages: _.chunk(getPhotos(), 12), proportion: [100, 100] };
     default:
       return { pageType: pageType };
   }

@@ -44,38 +44,17 @@
     background-repeat: no-repeat;
 }
 
-/* logo style */
-.fb-container .logo-container {
+/* tag style */
+.fb-container .tag-container {
     float: right;
+    margin-top: calc(8px * var(--print-multiplier));
     margin-right: calc(8px * var(--print-multiplier));
+}
+.fb-container .print-tag .tag {
+    height: calc(5cm * var(--print-multiplier));
     width: calc(9cm * var(--print-multiplier));
-}
-.fb-container .logo-container .print-logo {
-    border: 1px solid black;
-    box-sizing: border-box;
-    height: calc(3cm * var(--print-multiplier));
-    width: calc(5cm * var(--print-multiplier));
-    padding-top: calc(5px * var(--print-multiplier));
-    padding-bottom: calc(5px * var(--print-multiplier));
-    padding-right: calc(1px * var(--print-multiplier));
-    padding-left: calc(1px * var(--print-multiplier));
-}
-.fb-container .logo-container .print-logo.print-logo-white {
-    background-color: black;
-}
-.fb-container .print-logo .logo {
-    height: 100%;
-    width: 100%;
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
-}
-.fb-container .print-logo.print-logo-white .logo {
-    background-image: url("/img/logo-white.png");
-}
-.fb-container .print-logo.print-logo-black .logo {
-    background-image: url("/img/logo-black.png");
-}
-.fb-container .print-logo.print-logo-bw .logo {
-    background-image: url("/img/logo-bw.png");
+    background-image: url("/img/tag.png");
 }

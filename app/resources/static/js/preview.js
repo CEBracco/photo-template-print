@@ -82,6 +82,16 @@ function printImage(format = 'JPEG'){
     });
 }
 
+function sendImage() {
+    $(".progress").show();
+    $('#printButton a').addClass('disabled');
+    printerIframe.printImage(format, function (data) {
+        $(".progress").hide();
+        $('#printButton a').removeClass('disabled');
+        console.log(data)
+    });
+}
+
 function moveUp() {
     alignPhoto($(selectedPhoto).attr('id'), 'y', 1);
 }

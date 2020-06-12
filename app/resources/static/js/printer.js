@@ -1,20 +1,30 @@
 function printImage(format = 'JPEG', complete = function(){}, suscribersSelector = null) {
     var totalPages = $('.page').length
     var pagesProcessed = 0;
-    var saveFunction = totalPages > 1 ? zipIt : downloadDirectly;
+    var saveFunction = getSaveFunction(format, totalPages);
     $('.page').each(function (index) {
         generateImageBlob(this, format, function (blob) {
-            saveFunction(blob, `photo-${index}.jpeg`, totalPages, function(){
+            var oldIndex = `photo-${index}.jpeg`
+            var uuid = `photo-${new Date().getTime()}${index}.jpeg`
+            saveFunction(blob, uuid, totalPages, function(data){
                 pagesProcessed++;
                 if (pagesProcessed < totalPages){
                     $(suscribersSelector).trigger('fileProcessed');
                 } else {
                     $(suscribersSelector).trigger('processCompleted');
-                    complete();
+                    complete(data);
                 }
             });
         });
     });
+}
+
+function getSaveFunction(format, totalPages) {
+    if (format == 'lab') {
+        return uploadToServer;
+    } else {
+        return totalPages > 1 ? zipIt : downloadDirectly;
+    }
 }
 
 function generateImageBlob(element, format, complete){
@@ -52,6 +62,29 @@ function zipIt(blob, filename, filesAmount, complete){
                 zip = new JSZip();
                 complete();
             });
+    }
+}
+
+var fd = new FormData();
+var appendedFilesCounter = 0
+function uploadToServer(blob, filename, filesAmount, complete) {
+    appendedFilesCounter++;
+    if (appendedFilesCounter < filesAmount) {
+        fd.append('photos', blob);
+        complete();
+    } else {
+        fd.append('photos', blob);
+        $.ajax({
+            type: 'POST',
+            url: '/uploadToSend',
+            data: fd,
+            processData: false,
+            contentType: false
+        }).done(function (data) {
+            fd = new FormData();
+            appendedFilesCounter = 0
+            complete(data);
+        });
     }
 }
 

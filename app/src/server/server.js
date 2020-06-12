@@ -302,6 +302,7 @@ function getPhotosDirPath() {
   fs.mkdirpSync(config.get('PHOTOS_DIR_PATH'));
   fs.mkdirpSync(path.join(config.get('PHOTOS_DIR_PATH'), '/photos'));
   fs.mkdirpSync(path.join(config.get('PHOTOS_DIR_PATH'), '/photos-framed'));
+  fs.mkdirpSync(path.join(config.get('PHOTOS_DIR_PATH'), '/to-send'));
   return config.get('PHOTOS_DIR_PATH');
 }
 
@@ -375,6 +376,23 @@ app.post('/deletePhoto', function (req, res) {
   } else {
     res.json({ ok: false });
   }
+})
+
+app.post('/uploadToSend', function (req, res) {
+  const folderName = `${new Date().getTime()}-order` 
+  const dest = path.join(getPhotosDirPath(), `/to-send/${ folderName }`)
+  var fs = require('fs-extra');
+  fs.mkdirpSync(dest);
+  for (let photoIndex = 0; photoIndex < req.files.photos.length; photoIndex++) {
+    const photo = req.files.photos[photoIndex];
+    var photoPath = path.join(dest, `photo-${photoIndex}.jpg`);
+    photo.mv(photoPath, function (err) {
+      if (err) {
+        return res.status(500).send(err);
+      }
+    });
+  }
+  res.json({ ok: true, data: { order: folderName } });
 })
 
 module.exports = {

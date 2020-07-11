@@ -1,0 +1,56 @@
+/* Page 20cm x 30cm */
+.page {
+    width: calc(1134px * var(--print-multiplier));
+    height: calc(755px * var(--print-multiplier));
+    border: 1px solid black;
+    background-color: white;
+    box-sizing: border-box;
+    margin-bottom: 300px;
+}
+.fb-row {
+    margin-left: calc(10px * var(--print-multiplier));
+    margin-top: calc(8px * var(--print-multiplier));
+}
+.photo {
+    border: 1px solid black;
+    float: right;
+    box-sizing: border-box;
+    width: calc(12cm * var(--print-multiplier));
+    height: calc(9.5cm * var(--print-multiplier));
+    padding-left: calc(0.3cm * var(--print-multiplier));
+    padding-right: calc(0.3cm * var(--print-multiplier));
+    padding-top: calc(0.5cm * var(--print-multiplier));
+    margin-top: calc(8px * var(--print-multiplier));
+}
+.fb-row .photo.vertical:nth-child(odd) {
+    margin-right: calc(0.4cm * var(--print-multiplier));
+    /* padding-right: calc(0.4cm * var(--print-multiplier)); */
+}
+
+.image {
+    height: calc(7.25cm * var(--print-multiplier));
+    /* width: calc(11.4cm * var(--print-multiplier)); */
+    width: 100%;
+    /* -webkit-transform: rotate(90deg); */
+    /* transform: rotate(90deg); */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    /* top: calc(1.8cm * var(--print-multiplier));
+    right: calc(1cm * var(--print-multiplier)); */
+}
+
+/* tag style */
+.print-tag {
+    padding-top: calc(28px * var(--print-multiplier));
+}
+.print-tag .tag {
+    height: calc(9cm * var(--print-multiplier));
+    width: calc(5cm * var(--print-multiplier));
+    margin-bottom: calc(8px * var(--print-multiplier));
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url("/img/tag-vertical.png");
+}

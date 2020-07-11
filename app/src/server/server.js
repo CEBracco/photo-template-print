@@ -95,6 +95,11 @@ app.get(['/mini-polaroid'], function (req, res) {
   res.end();
 });
 
+app.get(['/wide'], function (req, res) {
+  res.render("print/wide", getParameters('wide'));
+  res.end();
+});
+
 app.post(['/upload'], function(req, res){
   if (Object.keys(req.files).length == 0) {
     return res.status(400).send('No files were uploaded.');
@@ -136,8 +141,9 @@ app.post(['/addFrame'], function (req, res) {
   var parameters = getParameters(req.body.type)
   fs.mkdirp(framedPhotosDir, function (err) {
     photoFrame.add(photoPath, function(photo) {
-      photo.write(path.join(framedPhotosDir, `${req.body.filename}`));
-      res.json({ ok: true });
+      photoFrame.toFile(photo, path.join(framedPhotosDir, `${req.body.filename}`), function() {
+        res.json({ ok: true });
+      })
     }, parameters.proportion[0], parameters.proportion[1])
   });
 });
@@ -195,6 +201,8 @@ function getParameters(pageType) {
       return { pageType: pageType, pages: _.chunk(getPhotos(), 3), proportion: [100, 100] };
     case "mini-polaroid":
       return { pageType: pageType, pages: _.chunk(getPhotos(), 12), proportion: [100, 100] };
+    case "wide":
+      return { pageType: pageType, pages: _.chunk(getPhotos(), 4), proportion: [100, 63.59] };
     default:
       return { pageType: pageType };
   }

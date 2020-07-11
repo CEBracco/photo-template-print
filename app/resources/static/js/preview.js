@@ -311,5 +311,5 @@ function refreshStyleChanges() {
 }
 
 function isTextEditionAllowed() {
-    return pageType == 'polaroid' || pageType == 'instax' || pageType == 'pennon' || pageType == 'mini-polaroid';
+    return pageType == 'polaroid' || pageType == 'instax' || pageType == 'pennon' || pageType == 'mini-polaroid' || pageType == 'wide';
 }

@@ -45,7 +45,7 @@ app.get(['/print'], function (req, res) {
   let pageType = req.query.type;
   let selectedYear = req.query.year;
   var previewParameters = getParameters(pageType);
-  previewParameters.backgroundStyles = getBackgroundStyles();
+  previewParameters.backgroundStyles = getBackgroundStyles(pageType);
   previewParameters.preview = true;
   previewParameters.selectedYear = selectedYear;
   previewParameters.version = getVersion();
@@ -245,14 +245,19 @@ function resetPhotoDirectory(){
   });
 }
 
-function getBackgroundStyles() {
+function getBackgroundStyles(pageType) {
   var fs = require('fs');
   var collator = new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' });
   var styles = _.map(
     fs.readdirSync(path.join(appPath, '/app/resources/static/backgroundStyles')).sort(collator.compare),
     function (f) { return { name: 'Diseño ' + f.replace(/\..*/g, ''), filename: f } });
   styles.unshift({ name: 'Ninguno', filename: null })
-  return styles;
+  // Filter all that not correspond to actual pageType
+  var pageTypes = ["polaroid", "instax", "square", "strip", "pennon", "calendar", "mini-polaroid", "wide"].filter(pt => pt != pageType.split('-').pop())
+  var filteredStyles = styles.filter(style => {
+    return !pageTypes.some(pt => style.name.includes(pt))
+  })
+  return filteredStyles;
 }
 
 function fixOrientation(photoPath, callback) {

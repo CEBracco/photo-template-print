@@ -253,9 +253,14 @@ function getBackgroundStyles(pageType) {
     function (f) { return { name: 'Diseño ' + f.replace(/\..*/g, ''), filename: f } });
   styles.unshift({ name: 'Ninguno', filename: null })
   // Filter all that not correspond to actual pageType
-  var pageTypes = ["polaroid", "instax", "square", "strip", "pennon", "calendar", "mini-polaroid", "wide"].filter(pt => pt != pageType.split('-').pop())
+  var allPageTypes = ["polaroid", "instax", "square", "strip", "pennon", "calendar", "mini-polaroid", "wide"]
+  var pageTypes= allPageTypes.filter(pt => pt != pageType.split('-').pop())
   var filteredStyles = styles.filter(style => {
     return !pageTypes.some(pt => style.name.includes(pt))
+  }).map(x => {
+    var splitted = x.name.split('-')
+    x.name = splitted.length > 1 ? splitted.slice(0, -1).join('-') : splitted.join('-')
+    return x
   })
   return filteredStyles;
 }

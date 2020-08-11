@@ -1,0 +1,3 @@
+With puppeteer cluster we can try to make screenshots to the print endpoints,
+the inconvenient is the parallel block that puppeteer implements.
+Maybe we can define a print enpoint that print a single page? with this improvement maybe we can handle this.

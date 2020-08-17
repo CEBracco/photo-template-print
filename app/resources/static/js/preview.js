@@ -19,13 +19,15 @@ $(document).ready(function(){
 
     $('.photo').on('contextmenu', event => {
         event.preventDefault();
-        //Add contextual menu here
-        new Contextual({
-            isSticky: false,
-            items: [
-                { label: 'Código QR', onClick: () => { openCodeModal($(event.currentTarget).attr('id')) } }
-            ]
-        });
+        if (!selectedPhoto) {
+            //Add contextual menu
+            new Contextual({
+                isSticky: false,
+                items: [
+                    { label: 'Código QR', onClick: () => { openCodeModal($(event.currentTarget).attr('id')) } }
+                ]
+            });
+        }
     })
 });
 

@@ -5,6 +5,13 @@
         <% if ((photoIndex + 1) % 7 != 0) { %>
         <div id="photo-<%= pageIndex %>-<%= photoIndex %>" class="photo vertical paper">
             <div class="image" style="background-image: url('photos/<%= photo %>');"></div>
+            <div class="code-main">
+                <div class="code-container">
+                    <div class="code"></div>
+                    <input class="code-content" type="hidden">
+                    <input class="code-color" type="hidden">
+                </div>
+            </div>
             <div class="text-container">
                 <span class="text"></span>
             </div>
@@ -12,6 +19,13 @@
         <% } else { %>
         <div id="photo-<%= pageIndex %>-<%= photoIndex %>" class="photo horizontal invert-controls paper">
             <div class="image" style="background-image: url('photos/<%= photo %>');"></div>
+            <div class="code-main">
+                <div class="code-container">
+                    <div class="code"></div>
+                    <input class="code-content" type="hidden">
+                    <input class="code-color" type="hidden">
+                </div>
+            </div>
             <div class="text-container">
                 <span class="text"></span>
             </div>

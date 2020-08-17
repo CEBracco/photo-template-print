@@ -3,7 +3,15 @@
     <div class="fb-row">
         <% page.forEach(function(photo, photoIndex){ %>
         <div id="photo-<%= pageIndex %>-<%= photoIndex %>" class="photo paper">
-            <div class="image" style="background-image: url('photos/<%= photo %>');"></div>
+            <div class="image" style="background-image: url('photos/<%= photo %>');">
+                <div class="code-main">
+                    <div class="code-container">
+                        <div class="code"></div>
+                        <input class="code-content" type="hidden">
+                        <input class="code-color" type="hidden">
+                    </div>
+                </div>
+            </div>
         </div>
         <% }); %>
     </div>

@@ -41,3 +41,25 @@
     background-position: center;
     background-repeat: no-repeat;
 }
+
+/* code */
+.fb-container .photo .code-main {
+    width: 100%;
+    text-align: center;
+    line-height: 11px;
+}
+.fb-container .photo .code-container {
+    display: none;
+    width: calc(54px * var(--print-multiplier));
+    height: calc(54px * var(--print-multiplier));
+    margin-top: calc(4px * var(--print-multiplier));
+    position: relative;
+    background-color: rgb(255,255,255);
+}
+.fb-container .photo .code-container .code {
+    height: 85%;
+    width: 85%;
+    top: 7.5%;
+    left: 6.5%;
+    position: relative;
+}

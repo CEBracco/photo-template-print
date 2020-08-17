@@ -63,6 +63,7 @@
 .fb-container .photo .code-main {
     width: 100%;
     text-align: center;
+    line-height: 11px;
 }
 .fb-container .photo .code-container {
     display: none;

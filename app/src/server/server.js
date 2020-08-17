@@ -50,6 +50,7 @@ app.get(['/print'], function (req, res) {
   previewParameters.selectedYear = selectedYear;
   previewParameters.version = getVersion();
   previewParameters.updateAvailable = global.updateAvailable
+  previewParameters.isCodesAllowed = isCodesAllowed(pageType)
   res.render("print", previewParameters);
   res.end();
 });
@@ -428,6 +429,10 @@ app.post('/uploadToSend', function (req, res) {
   }
   res.json({ ok: true, data: { order: folderName } });
 })
+
+function isCodesAllowed(pageType) {
+  return pageType == 'polaroid' || pageType == 'instax' || pageType == 'pennon' || pageType == 'mini-polaroid' || pageType == 'wide' || pageType == 'square';
+}
 
 module.exports = {
   start: start

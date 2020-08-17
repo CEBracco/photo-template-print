@@ -45,7 +45,9 @@
     </div>
     <ul id="tools-sidenav" class="sidenav sidenav-fixed">
         <li onclick="openGeneralBackgroundSelector()"><a class="tooltipped" data-position="left" data-tooltip="Fondo"><i class="fas fa-image fa-lg"></i></a></li>
+        <% if(isCodesAllowed) { %>
         <li onclick="openCodeModal()"><a class="tooltipped" data-position="left" data-tooltip="Código QR"><i class="fas fa-qrcode fa-lg"></i></a></li>
+        <% } %>
     </ul>
 </header>
 <main>

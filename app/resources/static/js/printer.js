@@ -122,7 +122,7 @@ function refreshPhoto(photoId, newUrl) {
 }
 
 function setBackgroundImage(paperId, backgroundImageValue) {
-    var paper = $(`#${paperId}`);
+    var paper = paperId ? $(`#${paperId}`) : $('.paper');
     paper.css('background-image', backgroundImageValue);
 }
 
@@ -215,4 +215,72 @@ function getRealCssValue(cssProperty, cssValue, scale = 1) {
         default:
             return cssValue
     }
+}
+
+//Code logic
+function setCodeProperties(properties, photoId = null) {
+    properties.forEach(property => {     
+        if (property.cssProperty != 'input-value') {
+            if (photoId == null) { //set to all
+                $('.' + property.elementClass).css(property.cssProperty, property.cssValue);
+            } else {
+                $(`#${photoId} .code-container`)
+                    .find('.' + property.elementClass)
+                    .addBack('.' + property.elementClass)
+                    .css(property.cssProperty, property.cssValue);
+            }
+        }
+    });
+}
+
+var backuppedCodeProperties = []
+function backupCodeProperties(photoId = null) {
+    backuppedCodeProperties = [];
+    var photoSelector = photoId ? `#${photoId}` : '.photo';
+    $(photoSelector).each(function () {
+        backuppedCodeProperties.push([
+            {
+                elementClass: 'code-container',
+                cssProperty: 'display',
+                cssValue: $(this).find('.code-container').css('display')
+            },
+            {
+                elementClass: 'code-container',
+                cssProperty: 'border-radius',
+                cssValue: $(this).find('.code-container').css('border-radius')
+            },
+            {
+                elementClass: 'code-container',
+                cssProperty: 'background-color',
+                cssValue: $(this).find('.code-container').css('background-color')
+            },
+            {
+                elementClass: 'code-container',
+                cssProperty: 'height',
+                cssValue: $(this).find('.code-container').css('height')
+            },
+            {
+                elementClass: 'code-container',
+                cssProperty: 'width',
+                cssValue: $(this).find('.code-container').css('width')
+            },
+            {
+                elementClass: 'code-container',
+                cssProperty: 'bottom',
+                cssValue: $(this).find('.code-container').css('bottom')
+            },
+            {
+                elementClass: 'code',
+                cssProperty: 'background-image',
+                cssValue: $(this).find('.code').css('background-image')
+            }
+        ]);
+    })
+}
+
+function restoreProperties(photoId = null) {
+    var photoSelector = photoId ? `#${photoId}` : '.photo';
+    $(photoSelector).each(function (index) {
+        setCodeProperties(backuppedCodeProperties[index], `${$(this).attr('id')}`)
+    })
 }

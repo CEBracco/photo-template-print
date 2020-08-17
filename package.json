@@ -54,6 +54,7 @@
     "module-alias": "^2.2.0",
     "puppeteer": "^5.2.1",
     "puppeteer-cluster": "^0.21.0",
+    "qrcode": "^1.4.4",
     "sharp": "^0.24.1",
     "websocket": "^1.0.31"
   },

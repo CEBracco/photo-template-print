@@ -55,3 +55,20 @@
     background-repeat: no-repeat;
     background-image: url("/img/tag.png");
 }
+
+/* code */
+.photo .code-container {
+    display: none;
+    width: calc(54px * var(--print-multiplier));
+    height: calc(54px * var(--print-multiplier));
+    margin-left: calc(50% - (27px * var(--print-multiplier)));
+    margin-top: calc(4px * var(--print-multiplier));
+    position: relative;
+}
+.photo .code-container .code {
+    height: 85%;
+    width: 85%;
+    top: 7.5%;
+    left: 7.5%;
+    position: relative;
+}

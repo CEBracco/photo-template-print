@@ -148,6 +148,22 @@ app.post(['/addFrame'], function (req, res) {
   });
 });
 
+app.post(['/previewCode'], function (req, res) {
+  var type = getParameters(req.body.type)
+  var QRCode = require('qrcode');
+  var content = req.body.content ? req.body.content : 'empty';
+  var dotsColor = req.body.dotsColor ? req.body.dotsColor : '#000'; 
+  QRCode.toString(content, {
+    type: 'svg',
+    color: {
+      dark: dotsColor,
+      light: '#0000'
+    }
+  }, function (err, url) {
+      err ? res.json({ ok: false }) : res.send({ ok: true, data: Buffer.from(url).toString('base64') });
+  })
+});
+
 app.post(['/webformConfig'], function (req, res) {
   if (getWebformParameters()) {
     res.json({ ok: true, data: getWebformParameters() });

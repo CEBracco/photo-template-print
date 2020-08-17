@@ -15,6 +15,8 @@
     <link rel="stylesheet" type="text/css" href="lib/spectrum/themes/sp-dark.css">
     <link rel="stylesheet" href="lib/codemirror/lib/codemirror.css">
     <link rel="stylesheet" href="lib/codemirror/theme/material-darker.css">
+    <link rel="stylesheet" href="lib/contextual.js/contextual.css">
+    <link rel="stylesheet" href="lib/contextual.js/contextual.theme.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/themes/default.css">
 </head>
@@ -41,6 +43,10 @@
             <a class="waves-effect waves-light btn-small pink accent-3 waves-effect waves-light restart-button">Reiniciar</a>
         </div>
     </div>
+    <ul id="tools-sidenav" class="sidenav sidenav-fixed">
+        <li onclick="openGeneralBackgroundSelector()"><a class="tooltipped" data-position="left" data-tooltip="Fondo"><i class="fas fa-image fa-lg"></i></a></li>
+        <li onclick="openCodeModal()"><a class="tooltipped" data-position="left" data-tooltip="Código QR"><i class="fas fa-qrcode fa-lg"></i></a></li>
+    </ul>
 </header>
 <main>
     <div class="row">
@@ -246,9 +252,12 @@
 <script src="lib/codemirror/mode/htmlmixed/htmlmixed.js"></script>
 <script src="lib/zoomerang/zoomerang.js"></script>
 <script src="js/base.js"></script>
+<script src="lib/contextual.js/contextual.js"></script>
 <script src="js/versionChecker.js"></script>
 <script src="js/preview.js"></script>
 <script src="js/elements/text.js"></script>
 <% if(pageType == 'calendar') { %><script src="js/elements/calendar.js"></script><% } %>
+
+<% include components/code-modal/code-modal.html %>
 
 </html>

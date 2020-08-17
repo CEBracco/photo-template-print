@@ -1,0 +1,75 @@
+<div id="code-modal" class="modal bottom-sheet preview-bottom-modal">
+    <div class="modal-content">
+        <h5 class="m-t-10">Código QR</h5>
+        <div class="row m-b-0">
+            <div class="col s8">
+                <div class="input-field m-t-0 m-b-0">
+                    <p class="m-b-20 m-t-5">
+                        <label>
+                            <input id="code-enable-input" type="checkbox" class="filled-in" onchange="previewCode()">
+                            <span>Habilitar</span>
+                        </label>
+                    </p>
+                </div>
+                <div class="input-field m-t-0 m-b-15">
+                    <input placeholder="http://google.com" id="code-content-input" type="text" onkeyup="previewCode()">
+                    <label for="code-content">Contenido</label>
+                </div>
+                <div class="row m-b-0">
+                    <div class="col s6">
+                        <div class="input-field m-t-0 m-b-0">
+                            <input value="54" id="code-size-input" type="number" onkeyup="previewCode()" onchange="previewCode()">
+                            <label for="code-content">Tamaño</label>
+                        </div>
+                    </div>
+                    <div class="col s6">
+                        <div class="input-field m-t-0 m-b-0">
+                            <input value="0" id="code-vertical-input" type="number" onkeyup="previewCode()" onchange="previewCode()">
+                            <label for="code-content">Posición Vertical</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row m-b-0">
+                    <div class="col s4 center-align">
+                        <div class="input-field m-t-0 m-b-0">
+                            <small class="label">Forma</small>
+                            <div class="switch m-t-5">
+                                <label>
+                                    <i class="fas fa-square fa-lg"></i>
+                                    <input type="checkbox" id="code-shape-input" onchange="previewCode()">
+                                    <span class="lever"></span>
+                                    <i class="fas fa-circle fa-lg"></i>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col s4 center-align">
+                        <div class="code-color-field">
+                            <label>Color de código</label>
+                            <br>
+                            <input type="text" id="code-color" onchange="previewCode()">
+                        </div>
+                    </div>
+                    <div class="col s4 center-align">
+                        <div class="code-color-field">
+                            <label>Color de fondo</label>
+                            <br>
+                            <input type="text" id="code-background-color" onchange="previewCode()">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col s4 center-align">
+                <div class="preview-code-container">
+                    <div class="preview-code"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect btn-flat" onclick="restoreProperties()">Descartar</a>
+        <a href="#!" class="modal-close waves-effect btn btn-primary">Guardar</a>
+    </div>
+</div>
+
+<script src="js/components/codeModal.js"></script>

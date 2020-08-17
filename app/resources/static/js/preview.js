@@ -16,6 +16,17 @@ $(document).ready(function(){
         }
         e.stopPropagation();
     });
+
+    $('.photo').on('contextmenu', event => {
+        event.preventDefault();
+        //Add contextual menu here
+        new Contextual({
+            isSticky: false,
+            items: [
+                { label: 'Código QR', onClick: () => { openCodeModal($(event.currentTarget).attr('id')) } }
+            ]
+        });
+    })
 });
 
 function addPositionButtons(imageElem) {
@@ -271,17 +282,24 @@ $(document).ready(function(params) {
         }
     });
     $('.design').click(function() {
+        var previewSelector = selectedPaper ? selectedPaper : '.paper';
+        var iframeSelector = selectedPaper ? $(selectedPaper).attr('id') : null;
         var backgroundImageValue = $(this).data('filename') ? `url("/backgroundStyles/${$(this).data('filename')}")` : 'none';
-        $(selectedPaper).css('background-image', backgroundImageValue);
-        printerIframe.setBackgroundImage($(selectedPaper).attr('id'), backgroundImageValue);
+        $(previewSelector).css('background-image', backgroundImageValue);
+        printerIframe.setBackgroundImage(iframeSelector, backgroundImageValue);
         $('#background-selector').modal('close');
     });
 });
 
+function openGeneralBackgroundSelector() {
+    selectedPaper = null;
+    $('#background-selector').modal('open');
+}
+
 $(document).ready(function () {
     $('.fixed-action-btn').floatingActionButton();
     $('.tooltipped').tooltip();
-    $('.modal').modal();
+    $('.modal:not(#code-modal)').modal();
     $('.color-field input').spectrum({ 
         showAlpha: true, 
         showInput: true,

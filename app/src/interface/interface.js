@@ -44,6 +44,13 @@ function start() {
                     mainWindow.show();
                 }, 40);
             });
+
+            // pinch zoom config
+            let webContents = mainView.webContents
+            webContents.on('did-finish-load', () => {
+                mainView.webContents.setVisualZoomLevelLimits(1, 3)
+                mainView.webContents.setLayoutZoomLevelLimits(1, 3)
+            })
     
             mainWindow.on('maximize', setViewBounds);
             mainWindow.on('resize', setViewBounds);

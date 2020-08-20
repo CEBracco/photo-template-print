@@ -24,7 +24,7 @@
 }
 .fb-row .photo.vertical:nth-child(odd) {
     margin-right: calc(0.4cm * var(--print-multiplier));
-    /* padding-right: calc(0.4cm * var(--print-multiplier)); */
+    margin-left: calc(0.15cm * var(--print-multiplier));
 }
 
 .image {

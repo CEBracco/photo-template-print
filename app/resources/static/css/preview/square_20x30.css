@@ -32,8 +32,6 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    display: flex;
-    align-items: flex-end;
 }
 
 
@@ -42,6 +40,8 @@
     width: 100%;
     text-align: center;
     line-height: 11px;
+    position: relative;
+    bottom: calc(50px * var(--print-multiplier));
 }
 .fb-container .photo .code-container {
     display: none;

@@ -92,7 +92,8 @@ $(document).ready(function(){
         }
     })
 
-    $('.modal').modal();
+    $('#webform-config-modal').modal();
+    $('#order-list').modal();
 });
 
 function downloadOrder(orderId) {

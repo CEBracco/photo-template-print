@@ -37,6 +37,15 @@
             <a class="waves-effect waves-light btn-small pink accent-3 waves-effect waves-light restart-button">Reiniciar</a>
         </div>
     </div>
+    <ul id="tools-sidenav" class="sidenav sidenav-fixed">
+        <li style="visibility: hidden;"><a href=""><i class="fas fa-cloud-upload-alt fa-lg"></i></a></li>
+        <li class="bottom-option" onclick="openSendToLabModal()">
+            <a class="tooltipped" data-position="left" data-tooltip="Pedidos al Laboratorio">
+                <i class="fas fa-cloud-upload-alt fa-lg"></i>
+                <span class="upload-badge hide"><small></small></span>
+            </a>
+        </li>
+    </ul>
 </header>
 <main>
     <div class="fullscreen-container">
@@ -60,7 +69,7 @@
             tus archivos sobre esta ventana.</h5>
         <button class="btn pink accent-3 waves-effect waves-light upload-button"><i class="material-icons left">add_circle</i>Cargar Fotos</button>
     </div>
-    <div class="fixed-action-btn">
+    <div id="upload-floating" class="fixed-action-btn">
         <a class="btn-floating btn-large pink accent-3 waves-effect waves-light confirm-upload">
             <i class="material-icons">send</i>
         </a>
@@ -198,3 +207,6 @@
 <script src="js/services/orderService.js"></script>
 <script src="js/components/ordersList.js"></script>
 <script src="js/upload.js"></script>
+
+<% include components/send-to-lab-modal/send-to-lab-modal.html %>
+<% include components/mail-modal/mail-modal.html %>

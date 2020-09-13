@@ -1,5 +1,6 @@
 $(document).ready(function() {
     setPaceOptions();
+    setAmountOfCompleted();
 })
 
 function setPaceOptions(){
@@ -126,4 +127,17 @@ function rgbaToHex(rgba) {
 
 function ContextMenus() {
     console.log("context menu called");
+}
+
+function setAmountOfCompleted() {
+    $.ajax({
+        url: "/labUploads",
+        contentType: 'application/json',
+        method: "POST"
+    }).done(function (res) {
+        if (res.ok) {
+            res.pending.length == 0 ? $('.upload-badge').addClass('hide') : $('.upload-badge').removeClass('hide');
+            $('.upload-badge small').text(res.pending.length);
+        }
+    });
 }

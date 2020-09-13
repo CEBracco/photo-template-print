@@ -2,6 +2,7 @@ const config = require('@localModules/config/Config.js');
 const Logger = require('@localModules/logger/Logger.js');
 var logger = new Logger().getLogger();
 var connectionPool = require('../connectionPool/connectionPool');
+var nextConnectionIdentifier = 1;
 
 
 function start(server) {
@@ -13,6 +14,8 @@ function start(server) {
 
     wsServer.on('connect', function (connection) {
         // logger.debug((new Date()) + ' Connection accepted.');
+        connection.identifier = nextConnectionIdentifier;
+        nextConnectionIdentifier++;
         connectionPool.pushConnection(connection);
     })
 

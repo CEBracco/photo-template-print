@@ -37,7 +37,9 @@
   },
   "homepage": "https://github.com/CEBracco/photo-template-print#readme",
   "dependencies": {
+    "@google-cloud/storage": "^5.3.0",
     "adm-zip": "^0.4.14",
+    "bestzip": "^2.1.7",
     "dotenv": "^8.0.0",
     "ejs": "^2.6.1",
     "electron-context-menu": "^0.16.0",
@@ -52,6 +54,8 @@
     "lodash": "^4.17.13",
     "log4js": "^4.1.1",
     "module-alias": "^2.2.0",
+    "mustache": "^4.0.1",
+    "nodemailer": "^6.4.11",
     "puppeteer": "^5.2.1",
     "puppeteer-cluster": "^0.21.0",
     "qrcode": "^1.4.4",

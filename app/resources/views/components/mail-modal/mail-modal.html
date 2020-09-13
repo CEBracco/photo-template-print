@@ -1,0 +1,35 @@
+<div id="mail-modal" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <h5 class="m-t-10">Enviar al Laboratorio</h5>
+        <div class="row">
+            <div class="col s12">
+                <div class="input-field">
+                    <input id="email" type="email" class="validate primary" required>
+                    <label for="email">Email</label>
+                </div>
+            </div>
+            <div class="col s12">
+                <div class="input-field">
+                    <input id="email-subject" type="text" class="primary" required>
+                    <label for="email-subject">Asunto</label>
+                </div>
+            </div>
+            <div class="row">
+                <form class="col s12">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <textarea id="email-body" class="materialize-textarea primary" required></textarea>
+                            <label for="email-body">Cuerpo del Mensaje</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect btn-flat">Cancelar</a>
+        <a href="#!" class="waves-effect btn btn-primary send-mail-button" onclick="sendMail()">Enviar</a>
+    </div>
+</div>
+
+<script src="js/components/mailModal.js"></script>

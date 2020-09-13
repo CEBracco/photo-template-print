@@ -16,6 +16,9 @@ function createConnection() {
                 case "updateReady":
                     showUpdateReady()
                     break;
+                case "uploadToLabComplete":
+                    setAmountOfCompleted();
+                    break;
                 default:
                     break;
             }

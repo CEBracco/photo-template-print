@@ -48,6 +48,12 @@
         <% if(isCodesAllowed) { %>
         <li onclick="openCodeModal()"><a class="tooltipped" data-position="left" data-tooltip="Código QR"><i class="fas fa-qrcode fa-lg"></i></a></li>
         <% } %>
+        <li class="bottom-option" onclick="openSendToLabModal()">
+            <a class="tooltipped" data-position="left" data-tooltip="Pedidos al Laboratorio">
+            <i class="fas fa-cloud-upload-alt fa-lg"></i>
+            <span class="upload-badge hide"><small></small></span>
+        </a>
+        </li>
     </ul>
 </header>
 <main>
@@ -65,7 +71,7 @@
                     <i class="large material-icons" onclick="printImage()">get_app</i>
                 </a>
                 <ul>
-                    <!-- <li><a class="btn-floating deep-purple darken-3 tooltipped" data-position="left" data-tooltip="lab" onclick="printImage('lab')"><i class="material-icons">photo</i></a></li> -->
+                    <li><a class="btn-floating deep-purple darken-3 tooltipped" data-position="left" data-tooltip="Enviar al Laboratorio" onclick="printImage('lab')"><i class="material-icons">store</i></a></li>
                     <li><a class="btn-floating deep-purple darken-3 tooltipped" data-position="left" data-tooltip="JPG" onclick="printImage('JPEG')"><i class="material-icons">photo</i></a></li>
                     <li><a class="btn-floating deep-purple darken-3 tooltipped" data-position="left" data-tooltip="PNG" onclick="printPng('PNG')"><i class="material-icons">gradient</i></a></li>
                 </ul>
@@ -242,6 +248,7 @@
     var pageType = "<%= pageType %>";
 </script>
 <script src="lib/jquery/jquery.min.js"></script>
+<script src="/lib/mustache.js/mustache.min.js"></script>
 <script src="lib/materialize/js/materialize.min.js"></script>
 <script src="lib/pace/pace.min.js"></script>
 <script src="lib/jBox/jBox.all.min.js"></script>
@@ -261,5 +268,7 @@
 <% if(pageType == 'calendar') { %><script src="js/elements/calendar.js"></script><% } %>
 
 <% include components/code-modal/code-modal.html %>
+<% include components/send-to-lab-modal/send-to-lab-modal.html %>
+<% include components/mail-modal/mail-modal.html %>
 
 </html>

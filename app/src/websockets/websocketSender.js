@@ -8,7 +8,17 @@ function sendUpdateReady() {
     websocketUtils.broadcastMessage({ type: 'updateReady' });
 }
 
+function sendUploadToLabStatus(file, progress) {
+    websocketUtils.broadcastMessage({ type: 'uploadToLabProgress', file: file, progress: progress });
+}
+
+function sendUploadToLabComplete(file) {
+    websocketUtils.broadcastMessage({ type: 'uploadToLabComplete', file: file});
+}
+
 module.exports = {
     sendDownloadStatus: sendDownloadStatus,
-    sendUpdateReady: sendUpdateReady
+    sendUpdateReady: sendUpdateReady,
+    sendUploadToLabStatus: sendUploadToLabStatus,
+    sendUploadToLabComplete: sendUploadToLabComplete
 }

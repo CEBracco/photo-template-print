@@ -38,8 +38,15 @@ main {
 #tools-sidenav li a {
     padding: 0 16px;
 }
+#tools-sidenav li.bottom-option {
+    position: absolute;
+    bottom: 75px;
+}
+#tools-sidenav li.bottom-option a {
+    padding: 0 12px;
+}
 
-#printButton {
+#printButton, #upload-floating {
     right: 65px;
 }
 
@@ -82,6 +89,24 @@ main {
 .photo.invert-controls .confirm-buttons button { 
     -webkit-transform: rotate(-90deg);
     transform: rotate(-90deg);
+}
+
+.btn-small {
+  height: 30px;
+  line-height: 32px;
+  font-size: 0.8rem;
+}
+.btn-small .mdi:before {
+  font-size: 1.3rem;
+}
+.btn-small i {
+  line-height: 1.45;
+}
+.btn-small i.left {
+  margin-right: 9px;
+}
+.btn-rounded {
+  border-radius: 25px;
 }
 
 .fullscreen-container {
@@ -154,6 +179,13 @@ main {
 }
 .m-b-30 {
     margin-bottom: 30px !important;
+}
+
+/* toasts */
+#toast-container {
+    bottom: 5%;
+    right: 5%;
+    top: initial;
 }
 
 /* Design selection */
@@ -370,4 +402,27 @@ body::-webkit-scrollbar {
     top: 7.5%;
     left: 7.5%;
     position: relative;
+}
+
+/* Upload Manager */
+#send-to-lab-modal .file-list-container {
+    display: block;
+}
+#send-to-lab-modal .file-list-container .upload-list .title {
+    color: #353535;
+}
+#send-to-lab-modal .collection .collection-item.avatar .secondary-content {
+    color: #9e9e9e;
+}
+#send-to-lab-modal .collection .collection-item.avatar .secondary-content:hover {
+    color: #7c7c7c;
+}
+
+.upload-badge {
+    position: absolute;
+    display: block;
+    transform: translate(12px, 24px);
+    line-height: 1rem;
+    padding: 0px 5px;
+    border-radius: 50%;
 }

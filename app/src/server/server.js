@@ -2,14 +2,17 @@ const path = require('path');
 const Config = require('@localModules/config/Config.js');
 const Logger = require('@localModules/logger/Logger.js');
 const photoFrame = require('@localModules/utils/photoFrame/photoFrame.js');
+const labUploader = require('@localModules/utils/labUploader/labUploader.js');
 const _ = require('lodash');
 const express = require('express');
 const fileUpload = require('express-fileupload');
 const secure = require('express-force-https');
 
 var AdmZip = require('adm-zip');
+var zip = require('bestzip');
 
 var config = new Config();
+global.logger = (new Logger()).getLogger();
 var logger = new Logger();
 var port = config.get('PORT');
 var app = express();
@@ -307,21 +310,13 @@ function getVersion() {
   return pjson.version; 
 }
 
-function start() {
-  port = port ? port : 3000;
-  app.listen(port, function () {
-    logger.getLogger().debug("Static file server running at port => " + port);
-  }).on('error', function (err) {
-    process.exit(0)
-  });
-}
-
 function initWebsocketServer(server) {
   var wsServer = require('@appSrc/websockets/server/websocketServer.js');
   return wsServer.start(server);
 }
 
 function start() {
+  deletePendingUploads();
   port = port ? port : 3000;
   const server = require('http').createServer(app);
   initWebsocketServer(server);
@@ -338,6 +333,9 @@ function getPhotosDirPath() {
   fs.mkdirpSync(path.join(config.get('PHOTOS_DIR_PATH'), '/photos'));
   fs.mkdirpSync(path.join(config.get('PHOTOS_DIR_PATH'), '/photos-framed'));
   fs.mkdirpSync(path.join(config.get('PHOTOS_DIR_PATH'), '/to-send'));
+  fs.mkdirpSync(path.join(config.get('PHOTOS_DIR_PATH'), '/to-send/pending'));
+  fs.mkdirpSync(path.join(config.get('PHOTOS_DIR_PATH'), '/to-send/completed'));
+  fs.mkdirpSync(path.join(config.get('PHOTOS_DIR_PATH'), '/credentials'));
   return config.get('PHOTOS_DIR_PATH');
 }
 
@@ -414,21 +412,99 @@ app.post('/deletePhoto', function (req, res) {
 })
 
 app.post('/uploadToSend', function (req, res) {
-  const folderName = `${new Date().getTime()}-order` 
+  const timestamp = new Date().getTime()
+  const folderName = `florbarraufotografia-${timestamp}` 
   const dest = path.join(getPhotosDirPath(), `/to-send/${ folderName }`)
   var fs = require('fs-extra');
   fs.mkdirpSync(dest);
+  var photoPromisses = [];
+  if (!Array.isArray(req.files.photos)) {
+    req.files.photos = [req.files.photos]
+  }
   for (let photoIndex = 0; photoIndex < req.files.photos.length; photoIndex++) {
     const photo = req.files.photos[photoIndex];
-    var photoPath = path.join(dest, `photo-${photoIndex}.jpg`);
-    photo.mv(photoPath, function (err) {
-      if (err) {
-        return res.status(500).send(err);
-      }
-    });
+    var photoPath = path.join(dest, `photo-${timestamp}-${photoIndex}.jpg`);
+    photoPromisses.push(
+      photo.mv(photoPath, function (err) {
+        if (err) {
+          return res.status(500).send(err);
+        }
+      })
+    )
   }
-  res.json({ ok: true, data: { order: folderName } });
+  Promise.all(photoPromisses).then(() => {
+    zip({
+      source: '*',
+      destination: `${dest}.zip`,
+      cwd: dest
+    }).then(function () {
+      var fs = require('fs-extra');
+      fs.removeSync(dest)
+      labUploader.upload(`${dest}.zip`)
+      res.json({ ok: true, data: { order: folderName } });
+    }).catch(function (err) {
+      return res.status(500).send(err);
+    });
+  })
 })
+
+app.post('/labUploads', function (req, res) {
+  var fs = require('fs');
+  res.json({ 
+    ok: true, 
+    uploads: _.filter(fs.readdirSync(path.join(getPhotosDirPath(), '/to-send/'), { withFileTypes: true }), function (f) { 
+      return f.isFile() && !/^\./g.test(f)
+    }).map(dirent => dirent.name),
+    pending: _.filter(fs.readdirSync(path.join(getPhotosDirPath(), '/to-send/pending'), { withFileTypes: true }), function (f) {
+      return f.isFile() && !/^\./g.test(f)
+    }).map(dirent => dirent.name),
+    completed: _.filter(fs.readdirSync(path.join(getPhotosDirPath(), '/to-send/completed'), { withFileTypes: true }), function (f) {
+      return f.isFile() && !/^\./g.test(f)
+    }).map(dirent => dirent.name)  
+  });
+})
+
+app.post('/deleteLabUpload', function (req, res) {
+  var fs = require('fs-extra');
+
+  fs.removeSync(path.join(getPhotosDirPath(), '/to-send/', req.body.filename));
+  deleteIfMatch('/to-send/pending', req.body.filename)
+  deleteIfMatch('/to-send/completed', req.body.filename)
+
+  res.json({ ok: true })
+})
+
+function deleteIfMatch(basePath, filename) {
+  var fs = require('fs-extra');
+
+  _.filter(fs.readdirSync(path.join(getPhotosDirPath(), basePath), { withFileTypes: true }), function (f) {
+    return f.isFile() && !/^\./g.test(f)
+  }).map(dirent => dirent.name).forEach(fileInDir => {
+    if (fileInDir.includes(filename)) {
+      fs.removeSync(path.join(getPhotosDirPath(), basePath, fileInDir));
+      return
+    }
+  });
+  fs.removeSync(path.join(getPhotosDirPath(), basePath, filename));
+}
+
+function deletePendingUploads() {
+  var fs = require('fs-extra');
+  var basePath = '/to-send/';
+  _.filter(fs.readdirSync(path.join(getPhotosDirPath(), basePath), { withFileTypes: true }), function (f) {
+    return f.isFile() && !/^\./g.test(f)
+  }).map(dirent => dirent.name).forEach(fileInDir => {
+      fs.removeSync(path.join(getPhotosDirPath(), basePath, fileInDir));
+  });
+}
+
+app.post('/sendMail', function (req, res) {
+  var emailUtils = require('@localModules/utils/emailUtils/emailUtils.js'); 
+  emailUtils.sendMail(req.body.email, req.body.subject, req.body.emailBody, req.body.filename, function() {
+    res.json({ ok: true })
+  });
+})
+
 
 function isCodesAllowed(pageType) {
   return pageType == 'polaroid' || pageType == 'instax' || pageType == 'pennon' || pageType == 'mini-polaroid' || pageType == 'wide' || pageType == 'square';

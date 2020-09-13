@@ -158,6 +158,41 @@ textarea.materialize-textarea:focus:not([readonly])+label {
     color: white !important;
 }
 
+input.primary:not([type]):focus:not([readonly]),
+input.primary[type=text]:not(.browser-default):focus:not([readonly]),
+input.primary[type=password]:not(.browser-default):focus:not([readonly]),
+input.primary[type=email]:not(.browser-default):focus:not([readonly]),
+input.primary[type=url]:not(.browser-default):focus:not([readonly]),
+input.primary[type=time]:not(.browser-default):focus:not([readonly]),
+input.primary[type=date]:not(.browser-default):focus:not([readonly]),
+input.primary[type=datetime]:not(.browser-default):focus:not([readonly]),
+input.primary[type=datetime-local]:not(.browser-default):focus:not([readonly]),
+input.primary[type=tel]:not(.browser-default):focus:not([readonly]),
+input.primary[type=number]:not(.browser-default):focus:not([readonly]),
+input.primary[type=search]:not(.browser-default):focus:not([readonly]),
+textarea.primary.materialize-textarea:focus:not([readonly]) {
+    color: black !important;
+    border-bottom: 1px solid #d81b60;
+    -webkit-box-shadow: 0 1px 0 0 #d81b60;
+    box-shadow: 0 1px 0 0 #d81b60;
+}
+input.primary:not([type]):focus:not([readonly])+label,
+input.primary:not(.light):not([type]):focus:not([readonly])+label,  
+input.primary[type=text]:not(.browser-default):focus:not([readonly])+label, 
+input.primary[type=password]:not(.browser-default):focus:not([readonly])+label, 
+input.primary[type=email]:not(.browser-default):focus:not([readonly])+label, 
+input.primary[type=url]:not(.browser-default):focus:not([readonly])+label, 
+input.primary[type=time]:not(.browser-default):focus:not([readonly])+label, 
+input.primary[type=date]:not(.browser-default):focus:not([readonly])+label, 
+input.primary[type=datetime]:not(.browser-default):focus:not([readonly])+label, 
+input.primary[type=datetime-local]:not(.browser-default):focus:not([readonly])+label, 
+input.primary[type=tel]:not(.browser-default):focus:not([readonly])+label, 
+input.primary[type=number]:not(.browser-default):focus:not([readonly])+label, 
+input.primary[type=search]:not(.browser-default):focus:not([readonly])+label, 
+textarea.primary.materialize-textarea:focus:not([readonly])+label {
+    color: #d81b60 !important;
+}
+
 input[type=text].light:focus:not([readonly])+label {
     color: #0d0d0d !important;
 }
@@ -220,4 +255,9 @@ body::-webkit-scrollbar-thumb:hover {
 }
 .preview-bottom-modal .modal-footer a {
     color: #dedede;
+}
+
+.upload-badge {
+    color: white;
+    background-color: #d81b60;
 }

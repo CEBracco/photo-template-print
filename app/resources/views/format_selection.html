@@ -37,6 +37,15 @@
             <a class="waves-effect waves-light btn-small pink accent-3 waves-effect waves-light restart-button">Reiniciar</a>
         </div>
     </div>
+    <ul id="tools-sidenav" class="sidenav sidenav-fixed">
+        <li style="visibility: hidden;"><a href=""><i class="fas fa-cloud-upload-alt fa-lg"></i></a></li>
+        <li class="bottom-option" onclick="openSendToLabModal()">
+            <a class="tooltipped" data-position="left" data-tooltip="Pedidos al Laboratorio">
+                <i class="fas fa-cloud-upload-alt fa-lg"></i>
+                <span class="upload-badge hide"><small></small></span>
+            </a>
+        </li>
+    </ul>
 </header>
 <main>
     <div class="row">
@@ -153,14 +162,18 @@
 
 
 <script src="lib/jquery/jquery.min.js"></script>
+<script src="/lib/mustache.js/mustache.min.js"></script>
 <script src="lib/materialize/js/materialize.min.js"></script>
 <script src="lib/pace/pace.min.js"></script>
 <script src="js/base.js"></script>
 <script src="js/versionChecker.js"></script>
 <script>
 $(document).ready(function () {
-    $('.modal').modal();
+    $('#year-selector').modal();
 });
 </script>
+
+<% include components/send-to-lab-modal/send-to-lab-modal.html %>
+<% include components/mail-modal/mail-modal.html %>
 
 </html>

@@ -64,7 +64,7 @@
     "websocket": "^1.0.31"
   },
   "devDependencies": {
-    "electron": "^5.0.1",
+    "electron": "^7.2.4",
     "electron-builder": "^21.2.0",
     "electron-packager": "^13.1.1",
     "nodemon": "^2.0.4"

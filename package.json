@@ -6,6 +6,7 @@
   "scripts": {
     "start": "electron index.js",
     "test": "nodemon index.js",
+    "debug": "electron index.js --remote-debugging-port=8315",
     "build:pack": "electron-builder --dir",
     "build:dist": "electron-builder",
     "build:release": "electron-builder --publish always"

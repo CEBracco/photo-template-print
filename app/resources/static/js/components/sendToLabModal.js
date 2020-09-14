@@ -63,23 +63,23 @@ function loadUploadItemTemplates() {
 }
 
 function appendUpload(upload) {
-    var rendered = Mustache.render(uploadItemTemplate, { upload: upload, uploadId: upload.replaceAll('.', '') });
+    var rendered = Mustache.render(uploadItemTemplate, { upload: upload, uploadId: upload.replace(/\./, '') });
     $('.upload-list').append(rendered)
 }
 
 function appendPending(upload) {
-    var rendered = Mustache.render(uploadItemPendingTemplate, { upload: upload, uploadId: upload.replaceAll('.', '') });
+    var rendered = Mustache.render(uploadItemPendingTemplate, { upload: upload, uploadId: upload.replace(/\./, '') });
     $('.upload-list').append(rendered)
 }
 
 function appendCompleted(upload) {
-    var rendered = Mustache.render(uploadItemCompletedTemplate, { upload: upload, uploadId: upload.replaceAll('.', '') });
+    var rendered = Mustache.render(uploadItemCompletedTemplate, { upload: upload, uploadId: upload.replace(/\./, '') });
     $('.upload-list').append(rendered)
 }
 
 function showUploadStatus(file, progress) {
     var roundedPercentage = Math.round(progress);
-    var fileId = file.replaceAll('.', '');
+    var fileId = file.replace(/\./, '');
     $(`#${fileId} .details`).removeClass('hide');
     $(`#${fileId} .details .progress-percentage`).text(`${roundedPercentage}%`);
     $(`#${fileId} .progress .determinate`).css('width', `${roundedPercentage}%`);

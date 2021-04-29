@@ -64,6 +64,10 @@ main {
     text-align: center;
 }
 
+#year-selector .dropdown-content.select-dropdown {
+    height: calc(80vh - 200px) !important;
+}
+
 .photo .image {
     cursor: pointer;
 }

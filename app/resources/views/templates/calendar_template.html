@@ -5,8 +5,10 @@
         return date;
     }
     var months = ['ENE','FEB','MAR','ABR','MAY','JUN','JUL','AGO','SEP','OCT','NOV','DIC'];
-    var startYear = selectedYear ? selectedYear : new Date().getFullYear();
-    var calendarDate = new Date(`${startYear}-01-01 00:00:00`);
+    var startYear = selectedYear != null ? selectedYear : new Date().getFullYear();
+    var startMonth = selectedMonth != null ? selectedMonth : new Date().getMonth();
+    var paddedMonth = padFunction(startMonth + 1, 2);
+    var calendarDate = new Date(`${startYear}-${paddedMonth}-01 00:00:00`);
 %>
 <% pages.forEach(function(page, pageIndex){ %>
 <div id="page-<%= pageIndex %>" class="page">

@@ -141,22 +141,48 @@
 </main>
 
 <!-- Year Selector -->
-<div id="year-selector" class="modal modal-fixed-footer" style="width: 25%; height:100%; max-height: 80%;">
+<div id="year-selector" class="modal modal-fixed-footer" style="width: 40%; height:100%; max-height: 80%;">
     <div class="modal-content">
-        <h5>Seleccioná el año del calendario:</h5>
+        <h5>Seleccioná el mes y año en el que comienza el calendario:</h5>
         <div class="row">
             <div class="input-field col s12">
-                <% var startYear = (new Date()).getFullYear(); %>
-                <ul class="collection year-selector">
-                <% for (let year = startYear; year < (startYear + 30); year++) { %>
-                    <a class="collection-item" href="print?type=calendar&year=<%= year %>"><%= year %></a>
-                <% } %>
-                </ul>
+                <% var startYear = (new Date()).getFullYear() - 50; %>
+                <% var actualYear = (new Date()).getFullYear(); %>
+                <% var finishYear=(new Date()).getFullYear() + 50; %>
+                <% var months=['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Augosto', 'Septembre', 'Octubre', 'Noviembre', 'Diciembre']; %>
+                <% var actualMonthIndex=(new Date()).getMonth(); %>
+                
+                <div class="input-field col s6">
+                    <select class="year-select">
+                    <% for (let year=startYear; year < finishYear; year++) { %>
+                        <% if(year == actualYear) { %>
+                            <option value="<%= year %>" selected><%= year %></option>
+                        <% } else { %>
+                            <option value="<%= year %>"><%= year %></option>
+                        <% } %>
+                    <% } %>
+                    </select>
+                    <label>Año</label>
+                </div>
+
+                <div class="input-field col s6">
+                    <select class="month-select">
+                    <% months.forEach((month, monthIndex) => { %>
+                        <% if(monthIndex == actualMonthIndex) { %>
+                            <option value="<%= monthIndex %>" selected><%= month %></option>
+                        <% } else { %>
+                            <option value="<%= monthIndex %>"><%= month %></option>
+                        <% } %>
+                    <% }); %>
+                    </select>
+                    <label>Mes</label>
+                </div>
             </div>
         </div>
     </div>
     <div class="modal-footer">
-        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cerrar</a>
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
+        <a href="#!" class="waves-effect btn btn-primary send-mail-button" onclick="selectYearAndMonth()">Aceptar</a>
     </div>
 </div>
 
@@ -170,7 +196,14 @@
 <script>
 $(document).ready(function () {
     $('#year-selector').modal();
+    $('#year-selector select').formSelect();
 });
+
+function selectYearAndMonth() {
+    var year = $('#year-selector .year-select').val();
+    var month = $('#year-selector .month-select').val();
+    window.location.href = `print?type=calendar&year=${year}&month=${month}`;
+}
 </script>
 
 <% include components/send-to-lab-modal/send-to-lab-modal.html %>

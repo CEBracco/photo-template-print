@@ -46,14 +46,13 @@ app.get(['/format_selection'], function (req, res) {
 
 app.get(['/print'], function (req, res) {
   let pageType = req.query.type;
-  let selectedYear = req.query.year;
   var previewParameters = getParameters(pageType);
   previewParameters.backgroundStyles = getBackgroundStyles(pageType);
   previewParameters.preview = true;
-  previewParameters.selectedYear = selectedYear;
   previewParameters.version = getVersion();
   previewParameters.updateAvailable = global.updateAvailable
   previewParameters.isCodesAllowed = isCodesAllowed(pageType)
+  previewParameters = setCalendarParameters(req, previewParameters);
   res.render("print", previewParameters);
   res.end();
 });
@@ -86,10 +85,9 @@ app.get(['/pennon'], function (req, res) {
 });
 
 app.get(['/calendar'], function (req, res) {
-  let selectedYear = req.query.year;
   var printParameters = getParameters('calendar');
   printParameters.preview = false;
-  printParameters.selectedYear = selectedYear;
+  printParameters = setCalendarParameters(req, printParameters);
   res.render("print/calendar", printParameters);
   res.end();
 });
@@ -508,6 +506,19 @@ app.post('/sendMail', function (req, res) {
 
 function isCodesAllowed(pageType) {
   return pageType == 'polaroid' || pageType == 'instax' || pageType == 'pennon' || pageType == 'mini-polaroid' || pageType == 'wide' || pageType == 'square';
+}
+
+function setCalendarParameters(req, printParameters) {
+  let selectedYear = parseInt(req.query.year);
+  let selectedMonth = parseInt(req.query.month);
+  printParameters.selectedYear = selectedYear;
+  printParameters.selectedMonth = selectedMonth;
+  printParameters.padFunction = function (n, width, z = '0') {
+    z = z || '0';
+    n = n + '';
+    return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+  }
+  return printParameters;
 }
 
 module.exports = {

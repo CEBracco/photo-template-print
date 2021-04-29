@@ -78,7 +78,7 @@
             </div>
         </div>
     </div>
-    <iframe id="printerIframe" src="<%= pageType %><%= selectedYear ? `?year=${selectedYear}` : '' %>" frameborder="0"></iframe>
+    <iframe id="printerIframe" src="<%= pageType %><%= (selectedYear != null && selectedMonth != null) ? `?year=${selectedYear}&month=${selectedMonth}` : '' %>" frameborder="0"></iframe>
 </main>
 
 <!-- Background Selector -->

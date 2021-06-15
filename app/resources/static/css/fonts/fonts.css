@@ -2,39 +2,73 @@
     font-family: 'dry-brush';
     src: url('fontFiles/Dry_Brush.ttf');
 }
+
 @font-face {
     font-family: 'geektastic';
     src: url('fontFiles/geektastic.ttf');
 }
+
 @font-face {
     font-family: 'good-vibes';
     src: url('fontFiles/Good_Vibes.ttf');
 }
+
 @font-face {
     font-family: 'jadyn-maria';
     src: url('fontFiles/Jadyn_Maria.ttf');
 }
+
 @font-face {
     font-family: 'love-and-romance';
     src: url('fontFiles/Love_And_Romance.otf');
 }
+
 @font-face {
     font-family: 'natasa';
     src: url('fontFiles/natasa.ttf');
 }
+
 @font-face {
     font-family: 'notera';
     src: url('fontFiles/Notera.ttf');
 }
+
 @font-face {
     font-family: 'prestige';
     src: url('fontFiles/prestige.ttf');
 }
+
 @font-face {
     font-family: 'remachine-script';
     src: url('fontFiles/RemachineScript.ttf');
 }
+
 @font-face {
     font-family: 'shutter-stone';
     src: url('fontFiles/Shutter_Stone_Standard.ttf');
+}
+
+@font-face {
+    font-family: 'blaimim';
+    src: url('fontFiles/blaimim.ttf');
+}
+
+@font-face {
+    font-family: 'coves';
+    src: url('fontFiles/coves_light.otf');
+}
+
+@font-face {
+    font-family: 'de-valencia';
+    src: url('fontFiles/de_valencia.otf');
+}
+
+@font-face {
+    font-family: 'jalliestha';
+    src: url('fontFiles/jalliestha.ttf');
+}
+
+@font-face {
+    font-family: 'sacramento';
+    src: url('fontFiles/sacramento-regular.ttf');
 }

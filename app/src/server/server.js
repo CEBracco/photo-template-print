@@ -377,13 +377,21 @@ app.post(['/downloadOrder'], function (req, res) {
   const dest = path.join(getPhotosDirPath(), `${orderHash}.zip`)
   const file = fs.createWriteStream(dest);
   let downloadURL = path.join(webformParameters.url, `/checkout/${webformParameters.token}/${orderHash}/download`);
-  var request = https.get(downloadURL, function (response) {
+  let requestOptions = { 
+    host: webformParameters.url.replace('https://', ''), 
+    path: `/checkout/${webformParameters.token}/${orderHash}/download`, 
+    rejectUnauthorized: false 
+  }
+  // Fix strange electron ssl download error
+  //var request = https.get(downloadURL, function (response) {
+  var request = https.get(requestOptions, function (response) {
     response.pipe(file);
     file.on('finish', function () {
       file.close(cb);  // close() is async, call cb after close completes.
     });
   }).on('error', function (err) { // Handle errors
-    fs.unlink(dest); // Delete the file async. (But we don't check the result)
+    console.log(err);
+    fs.unlink(dest, () => {}); // Delete the file async. (But we don't check the result)
     if (cb) cb(err.message);
   });
   var cb = function(err) {

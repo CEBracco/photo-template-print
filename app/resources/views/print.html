@@ -78,7 +78,11 @@
             </div>
         </div>
     </div>
-    <iframe id="printerIframe" src="<%= pageType %><%= (selectedYear != null && selectedMonth != null) ? `?year=${selectedYear}&month=${selectedMonth}` : '' %>" frameborder="0"></iframe>
+    <% if(pageType != 'strip' ) { %>
+        <iframe id="printerIframe" src="<%= pageType %><%= (selectedYear != null && selectedMonth != null) ? `?year=${selectedYear}&month=${selectedMonth}` : '' %>" frameborder="0"></iframe>
+    <% } else { %>
+        <iframe id="printerIframe" src="<%= pageType %><%= (pagesAmount != null && stripsAmount != null) ? `?pagesAmount=${pagesAmount}&stripsAmount=${stripsAmount}` : '' %>" frameborder="0"></iframe>
+    <% } %>
 </main>
 
 <!-- Background Selector -->

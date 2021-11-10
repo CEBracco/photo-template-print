@@ -84,7 +84,7 @@
                     </a>
                 </div>
                 <div class="col m3">
-                    <a href="print?type=strip">
+                    <a class="modal-trigger" href="#strips-selector">
                         <div class="card">
                             <div class="card-content">
                                 <img class="responsive-img" src="img/strip.png">
@@ -186,6 +186,36 @@
     </div>
 </div>
 
+<!-- Strips Selector -->
+<div id="strips-selector" class="modal modal-fixed-footer" style="width: 40%; height:50%; max-height: 50%;">
+    <div class="modal-content">
+        <h5>Seleccioná las cantidades de paginas y strips</h5>
+        <p>Las strips son un monton de fotos, en el caso que te pasen menos de las necesarias para llenar una pagina podes podes repetir la cantidad de fotos por pagina y generar mas copias a imprimir</p>
+        <div class="row">
+            <div class="col s12 m-t-10">
+                <label>
+                    <input type="checkbox" class="filled-in set-strips-amounts">
+                    <span>Especificar cantidades</span>
+                </label>
+            </div>
+            <div class="input-field col s6">
+                <input id="strips-amount" type="number" class="strips-amount primary" disabled>
+                <label for="strips-amount">Cantidad de strips por página</label>
+            </div>
+            <div class="input-field col s6">
+                <input id="pages-amount" type="number" class="pages-amount primary" disabled>
+                <label for="pages-amount">Cantidad de páginas</label>
+            </div>
+        </div>
+        <p><b>Nota:</b> En el caso de que no quieras especificar las cantidades y que las planchas se armen solo con las fotos subidas sin repetir destildar la opcion "Especificar cantidades".</p>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
+        <a href="#!" class="waves-effect btn btn-primary send-mail-button" onclick="selectStripsAmount()">Aceptar</a>
+    </div>
+</div>
+
+
 
 <script src="lib/jquery/jquery.min.js"></script>
 <script src="/lib/mustache.js/mustache.min.js"></script>
@@ -203,6 +233,22 @@ function selectYearAndMonth() {
     var year = $('#year-selector .year-select').val();
     var month = $('#year-selector .month-select').val();
     window.location.href = `print?type=calendar&year=${year}&month=${month}`;
+}
+</script>
+<script>
+$(document).ready(function () {
+    $('#strips-selector').modal();
+    $('#strips-selector .set-strips-amounts').change(function() {
+       $('#strips-selector .strips-amount').prop("disabled", !this.checked)
+       $('#strips-selector .pages-amount').prop("disabled", !this.checked)
+    });
+});
+
+function selectStripsAmount() {
+    var setStripsAmounts = $('#strips-selector .set-strips-amounts')[0].checked;
+    var pagesAmount = setStripsAmounts ? $('#strips-selector .strips-amount').val() : 0;
+    var stripsAmount = setStripsAmounts ? $('#strips-selector .pages-amount').val() : 0;
+    window.location.href = `print?type=strip&pagesAmount=${pagesAmount ? pagesAmount : 0}&stripsAmount=${stripsAmount ? stripsAmount: 0}`;
 }
 </script>
 

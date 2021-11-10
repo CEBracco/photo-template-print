@@ -53,6 +53,9 @@ app.get(['/print'], function (req, res) {
   previewParameters.updateAvailable = global.updateAvailable
   previewParameters.isCodesAllowed = isCodesAllowed(pageType)
   previewParameters = setCalendarParameters(req, previewParameters);
+  if (pageType == 'strip') {
+    previewParameters = setStripParameters(req, previewParameters);
+  }
   res.render("print", previewParameters);
   res.end();
 });
@@ -63,7 +66,9 @@ app.get(['/polaroid'], function (req, res) {
 });
 
 app.get(['/strip'], function (req, res) {
-  res.render("print/strip", getParameters('strip'));
+  var printParameters = getParameters('strip');
+  printParameters = setStripParameters(req, printParameters);
+  res.render("print/strip", printParameters);
   res.end();
 });
 
@@ -525,6 +530,45 @@ function setCalendarParameters(req, printParameters) {
     z = z || '0';
     n = n + '';
     return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+  }
+  return printParameters;
+}
+
+
+function setStripParameters(req, printParameters) {
+  stripsAmount = req.query.stripsAmount ? req.query.stripsAmount : 0;
+  pagesAmount = req.query.pagesAmount ? req.query.pagesAmount : 0;
+  if (pagesAmount > 0) {
+    var pagesAmountActual = pagesAmount;
+    var pagesIndex = 0;
+    var pagesArray = []
+    while (pagesAmountActual > 0) {
+      if (printParameters.pages[pagesIndex]) {
+        pagesArray.push(printParameters.pages[pagesIndex]);
+        pagesIndex++;
+        pagesAmountActual--;
+      } else {
+        pagesIndex = 0;
+      }
+    }
+    //printParameters.pages = _.chunk(_.chunk(getPhotos(), 4), 6);
+    printParameters.pages = pagesArray;
+  }
+  if (stripsAmount > 0 && stripsAmount <= 6) {
+    printParameters.pages.forEach(page => {
+      var stripsAmountActual = 0;
+      var stripsIndex = 0;
+      while (stripsAmountActual < stripsAmount) {
+        if (!page[stripsAmountActual]) {
+          if (stripsIndex >= page.length) {
+            stripsIndex = 0;
+          }
+          page.push(page[stripsIndex]);
+          stripsIndex++;
+        }
+        stripsAmountActual++;
+      }
+    });
   }
   return printParameters;
 }

@@ -1,6 +1,6 @@
 {
   "name": "photo-template-print",
-  "version": "1.17.4",
+  "version": "1.17.5",
   "description": "A tiny program to print photo templates",
   "main": "index.js",
   "scripts": {

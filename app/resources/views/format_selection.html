@@ -199,11 +199,11 @@
                 </label>
             </div>
             <div class="input-field col s6">
-                <input id="strips-amount" type="number" class="strips-amount primary" disabled>
+                <input id="strips-amount" type="number" class="strips-amount primary" min="1" max="6" disabled>
                 <label for="strips-amount">Cantidad de strips por página</label>
             </div>
             <div class="input-field col s6">
-                <input id="pages-amount" type="number" class="pages-amount primary" disabled>
+                <input id="pages-amount" type="number" class="pages-amount primary" min="1" disabled>
                 <label for="pages-amount">Cantidad de páginas</label>
             </div>
         </div>
@@ -241,6 +241,26 @@ $(document).ready(function () {
     $('#strips-selector .set-strips-amounts').change(function() {
        $('#strips-selector .strips-amount').prop("disabled", !this.checked)
        $('#strips-selector .pages-amount').prop("disabled", !this.checked)
+    });
+
+    $('#strips-selector .strips-amount').on("keypress", function (e) {
+        var currentValue = String.fromCharCode(e.which);
+        if (!/[0-9]+/g.test(currentValue)) {
+            e.preventDefault();
+            return false;
+        }
+        var finalValue = $(this).val() + currentValue;
+        if (finalValue > 6) {
+            e.preventDefault();
+        }
+    });
+
+    $('#strips-selector .pages-amount').on("keypress", function (e) {
+        var currentValue = String.fromCharCode(e.which);
+        if (!/[0-9]+/g.test(currentValue)) {
+            e.preventDefault();
+            return false;
+        }
     });
 });
 

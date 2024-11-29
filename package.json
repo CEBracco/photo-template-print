@@ -52,7 +52,7 @@
     "fs-extra": "^8.1.0",
     "jimp": "^0.6.4",
     "jpeg-autorotate": "^5.0.1",
-    "lodash": "^4.17.13",
+    "lodash": "^4.17.21",
     "log4js": "^4.1.1",
     "module-alias": "^2.2.0",
     "mustache": "^4.0.1",
